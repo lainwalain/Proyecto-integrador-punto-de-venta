@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Empleados - MarketGo</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- ===== Encabezado ===== -->
+  <header class="navbar">
+    <div class="logo">
+      <img src="logo.png" alt="MarketGo Logo">
+      <h1>MarketGo</h1>
+    </div>
+    <div class="user-info">
+      <span>Empleado</span>
+      <span class="tag">Cajero</span>
+      <button class="logout">⏻ Cerrar Sesión</button>
+    </div>
+    <button class="menu-btn" onclick="toggleMenu()">☰</button>
+  </header>
+
+  <!-- ===== Tabs ===== -->
+  <nav class="tabs">
+    <button onclick="showSection('venta')">🛒 Punto de Venta</button>
+    <button onclick="showSection('inventario')">📦 Inventario</button>
+    <button onclick="showSection('notificaciones')">🔔 Notificaciones</button>
+    <button onclick="showSection('perfil')">👤 Mi Perfil</button>
+  </nav>
+
+  <!-- ===== Contenido ===== -->
+  <main>
+    <section id="venta" class="tab-content active">
+      <h2>🛒 Punto de Venta</h2>
+      <p>Aquí irá el sistema de ventas...</p>
+    </section>
+
+    <section id="inventario" class="tab-content">
+      <h2>📦 Inventario</h2>
+      <p>Gestión de stock y productos.</p>
+    </section>
+
+    <section id="notificaciones" class="tab-content">
+      <h2>🔔 Notificaciones</h2>
+      <p>Avisos y alertas del sistema.</p>
+    </section>
+
+    <section id="perfil" class="tab-content">
+      <h2>👤 Mi Perfil</h2>
+      <p>Datos del empleado y estadísticas.</p>
+    </section>
+  </main>
+
+  <!-- ===== Menú lateral ===== -->
+  <aside id="sidebar" class="sidebar">
+    <button class="close-btn" onclick="toggleMenu()">✖</button>
+    <h3>Menú</h3>
+    <a href="Index.html">🏠 Inicio</a>
+    <a href="administradores.html">⚙️ Administrador</a>
+    <a href="empleados.html">👨‍💼 Empleado</a>
+    <a href="#">⏻ Cerrar Sesión</a>
+  </aside>
+
+  <script src="script.js"></script>
+</body>
+</html>

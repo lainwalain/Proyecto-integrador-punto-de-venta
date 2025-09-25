@@ -1,0 +1,120 @@
+body {
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  background: linear-gradient(180deg, #0f172a, #000);
+  color: #fff;
+}
+
+/* Header */
+.header {
+  background: linear-gradient(90deg, #ec4899, #8b5cf6, #3b82f6);
+  padding: 12px 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  color: #fff;
+}
+
+.logo-circle {
+  width: 42px;
+  height: 42px;
+  background: #fff;
+  color: #ec4899;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.logo .brand {
+  font-size: 1.4rem;
+  font-weight: bold;
+}
+
+/* Caja central */
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 80vh;
+}
+
+.login-box {
+  background: linear-gradient(145deg, #0f172a, #111827);
+  padding: 40px;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+  text-align: center;
+  width: 360px;
+  border: 1px solid #333;
+}
+
+.login-icon {
+  margin-bottom: 20px;
+}
+
+.circle-icon {
+  width: 60px;
+  height: 60px;
+  background: #fbbf24;
+  color: #000;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  margin: auto;
+}
+
+h2 {
+  margin: 10px 0;
+  font-weight: 600;
+}
+
+p {
+  font-size: 0.95rem;
+  color: #cbd5e1;
+  margin-bottom: 20px;
+}
+
+/* Botones */
+.btn {
+  display: block;
+  padding: 12px;
+  margin: 12px 0;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 600;
+  transition: 0.3s;
+}
+
+.btn.empleado {
+  background: linear-gradient(90deg, #fbbf24, #d97706);
+  color: #000;
+}
+
+.btn.empleado:hover {
+  background: #f59e0b;
+}
+
+.btn.admin {
+  background: linear-gradient(90deg, #f59e0b, #fbbf24);
+  color: #000;
+}
+
+.btn.admin:hover {
+  background: #facc15;
+}
+
+.btn.volver {
+  background: #fff;
+  color: #6b7280;
+  pointer-events: none;
+}
