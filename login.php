@@ -22,7 +22,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $_SESSION['usuario_nombre'] = $usuario['nombre'];
 
             // Redirigir al inicio del sistema
-            header("Location: index.php");
+            header("Location: index.html");
             exit;
         } else {
             echo "<script>alert('❌ Contraseña incorrecta'); window.location.href='login.html';</script>";

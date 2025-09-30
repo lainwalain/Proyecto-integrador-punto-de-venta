@@ -2,7 +2,7 @@
 $host = "localhost";
 $user = "root";       // usuario de MySQL
 $pass = "";           // contraseña de MySQL
-$db   = "MarketGo_db"; // nombre de la base de datos
+$db   = "marketgo_usuarios"; // nombre de la base de datos
 
 $conn = new mysqli($host, $user, $pass, $db);
 
