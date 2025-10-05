@@ -24,7 +24,7 @@
       <a href="Index.html">Inicio</a>
       <a href="productos.html">Productos</a>
       <a href="Carrito.html">Carrito</a>
-      <a href="contacto.html">Contacto</a>
+      <a href="Favorito.html">Favoritos</a>
     </nav>
     <!-- Ícono de menú -->
     <div class="menu-icon" onclick="toggleMenu()">&#9776;</div>
@@ -35,9 +35,18 @@
     <div class="sidebar-header">
       <h2>MarketGo</h2>
     </div>
-    <ul>
-      <li><a href="login.html">Inicio de Sesión</a></li>
-      <li><a href="register.html">Registro</a></li>
+    <ul style="font-size: 0.85rem;">
+      <li><a href="Index.html">Inicio</a></li>
+      <li><a href="MiCuenta.html">Mi cuenta</a></li>
+      <li><a href="Carrito.html">Carrito</a></li>
+      <li><a href="Favorito.html">Favorito</a></li>
+      <li><a href="Historial.html">Historial</a></li>
+      <!-- Botón Cerrar sesión con clase especial -->
+      <li>
+        <button class="btn-logout" onclick="window.location.href='Index.html'">
+          Cerrar sesión
+        </button>
+      </li>
     </ul>
     <div class="close-btn" onclick="toggleMenu()">✖</div>
   </aside>
@@ -53,6 +62,24 @@
       </div>
     </div>
   </section>
+
+  <!-- ===== Franja Programa de Recompensas ===== -->
+  <div class="rewards-bar">
+    <div class="rewards-flex">
+      <div class="rewards-left">
+        <span class="rewards-points">Tienes <b>150 puntos</b></span>
+        <span class="rewards-msg">¡Sigue así!</span>
+      </div>
+      <div class="rewards-center">
+        <span class="rewards-icon">🎁</span>
+        <span class="rewards-title">Programa de Recompensas</span>
+      </div>
+      <div class="rewards-right">
+        <span class="rewards-medal">🥈</span>
+        <span class="rewards-level">Silver</span>
+      </div>
+    </div>
+  </div>
 
   <!-- ===== Categorías ===== -->
   <section class="categorias">
@@ -70,7 +97,6 @@
       <button class="cat-btn" data-category="Alcohol">Bebidas alcoholicas</button>
     </div>
   </section>
-
   <!-- ===== Productos destacados ===== -->
   <section class="productos">
     <h2>Productos</h2>
