@@ -2,6 +2,9 @@
 session_start();
 include 'db_conn.php';
 
+
+
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email    = $_POST['email'];
     $password = $_POST['password'];
@@ -22,7 +25,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $_SESSION['usuario_nombre'] = $usuario['nombre'];
 
             // Redirigir al inicio del sistema
-            header("Location: index.html");
+            header("Location: index.php");
             exit;
         } else {
             echo "<script>alert('❌ Contraseña incorrecta'); window.location.href='login.html';</script>";
