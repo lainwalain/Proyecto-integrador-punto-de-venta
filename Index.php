@@ -7,33 +7,6 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <!-- Barra de navegación -->
-  <div class="navbar">
-    <div class="logo">
-      <a href="index.php">MarketGo</a>
-    </div>
-
-    <div class="menu">
-      <div class="dropdown">
-        <button class="dropbtn">
-          <img src="user-icon.png" alt="Usuario" class="user-icon">
-        </button>
-        <div class="dropdown-content">
-          <?php if ($usuario): ?>
-            <p class="user-name">👤 <?php echo htmlspecialchars($usuario); ?></p>
-            <a href="carrito.php">🛒 Carrito de Compras</a>
-            <a href="perfil.php">⚙️ Mi Cuenta</a>
-            <a href="logout.php">🚪 Cerrar Sesión</a>
-          <?php else: ?>
-            <a href="login.html">🔑 Iniciar Sesión</a>
-            <a href="registro.html">📝 Registrarse</a>
-          <?php endif; ?>
-        </div>
-      </div>
-    </div>
-  </div>
-
-
   <!-- ===== Encabezado ===== -->
 
   <header class="header">
@@ -64,6 +37,14 @@
       <h2>MarketGo</h2>
     </div>
     <ul>
+       <!-- Barra de navegación -->
+  <div class="navbar">
+    <div class="logo">
+      <a href="index.php">MarketGo</a>
+    </div>
+      <li><a href="carrito.php">🛒 Carrito de Compras</a></li>
+      <li><a href="perfil.php">⚙️ Mi Cuenta</a></div></li>
+      <li><a href="logout.php">🚪 Cerrar Sesión</a></li>
       <li><a href="login.html">Inicio de Sesión</a></li>
       <li><a href="register.html">Registro</a></li>
     </ul>
