@@ -4,3 +4,15 @@ CREATE TABLE usuarios (
     email VARCHAR(100) UNiQUE,
     contrasena VARCHAR(255)
 )
+
+CREATE TABLE Empleados (
+ id INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(100),
+    contrasena VARCHAR(255)
+)
+
+CREATE TABLE Admin (
+ id INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(100),
+    contrasena VARCHAR(255)
+)
