@@ -15,10 +15,12 @@
     <h2>Login Empleado</h2>
     <p>Accede con tus credenciales</p>
     <form>
-      <input type="text" placeholder="Usuario">
-      <input type="password" placeholder="Contraseña">
+      <form action="login_empleado.php" method="POST">
+      <input type="text" name="email" placeholder="Correo o usuario" required>
+      <input type="password" name="password" placeholder="Contraseña" required>
       <button type="submit">Entrar</button>
     </form>
+    
     <a href="system.html">⬅ Volver</a>
   </div>
 </body>

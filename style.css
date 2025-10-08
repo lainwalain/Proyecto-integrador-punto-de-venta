@@ -1,3 +1,77 @@
+/* Barra de navegación */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #6C63FF;
+  padding: 10px 20px;
+  color: white;
+  font-family: Arial, sans-serif;
+}
+
+.logo a {
+  text-decoration: none;
+  color: white;
+  font-size: 22px;
+  font-weight: bold;
+}
+
+/* Dropdown estilo YouTube */
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropbtn {
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.user-icon {
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  right: 0;
+  background: white;
+  min-width: 200px;
+  box-shadow: 0px 4px 8px rgba(0,0,0,0.2);
+  border-radius: 8px;
+  z-index: 1000;
+}
+
+.dropdown-content a, 
+.dropdown-content p {
+  color: #333;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+.dropdown-content a:hover {
+  background: #f0f0f0;
+}
+
+.user-name {
+  font-weight: bold;
+  border-bottom: 1px solid #ddd;
+  margin: 0;
+  padding: 10px 16px;
+  color: #444;
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+
+
+
 /* ===== Reset ===== */
 * {
   margin: 0;
