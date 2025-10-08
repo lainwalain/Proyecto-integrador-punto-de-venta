@@ -1,0 +1,152 @@
+[
+    {
+        "id": "lacteo-01",
+        "titulo": "Leche Lala Entera 1L",
+        "imagen": "img/lala1l.jpg",
+        "categoria": {
+            "nombre": "Lácteos",
+            "id": "lacteos"
+        },
+        "precio": 25
+    },
+    {
+        "id": "lacteo-02",
+        "titulo": "Yogur Natural 500g",
+        "imagen": "img/yogur500.jpg",
+        "categoria": {
+            "nombre": "Lácteos",
+            "id": "lacteos"
+        },
+        "precio": 30
+    },
+    {
+        "id": "lacteo-03",
+        "titulo": "Queso Panela 250g",
+        "imagen": "img/panela.jpg",
+        "categoria": {
+            "nombre": "Lácteos",
+            "id": "lacteos"
+        },
+        "precio": 40
+    },
+    {
+        "id": "lacteo-04",
+        "titulo": "Crema Ácida 200ml",
+        "imagen": "img/crema.jpg",
+        "categoria": {
+            "nombre": "Lácteos",
+            "id": "lacteos"
+        },
+        "precio": 22
+    },
+    {
+        "id": "lacteo-05",
+        "titulo": "Mantequilla sin sal 90g",
+        "imagen": "img/mantequi.jpg",
+        "categoria": {
+            "nombre": "Lácteos",
+            "id": "lacteos"
+        },
+        "precio": 35
+    },
+    {
+        "id": "verdura-01",
+        "titulo": "Tomate Saladet 1kg",
+        "imagen": "img/tomate.jpg",
+        "categoria": {
+            "nombre": "Verduras",
+            "id": "verduras"
+        },
+        "precio": 18
+    },
+    {
+        "id": "verdura-02",
+        "titulo": "Cebolla Blanca 1kg",
+        "imagen": "img/cebolla.jpg",
+        "categoria": {
+            "nombre": "Verduras",
+            "id": "verduras"
+        },
+        "precio": 15
+    },
+    {
+        "id": "verdura-03",
+        "titulo": "Zanahoria 1kg",
+        "imagen": "img/zanahoria.jpg",
+        "categoria": {
+            "nombre": "Verduras",
+            "id": "verduras"
+        },
+        "precio": 12
+    },
+    {
+        "id": "verdura-04",
+        "titulo": "Lechuga Romana",
+        "imagen": "img/lechuga.jpg",
+        "categoria": {
+            "nombre": "Verduras",
+            "id": "verduras"
+        },
+        "precio": 10
+    },
+    {
+        "id": "verdura-05",
+        "titulo": "Aguacate Hass 1kg",
+        "imagen": "img/aguacate.jpg",
+        "categoria": {
+            "nombre": "Verduras",
+            "id": "verduras"
+        },
+        "precio": 50
+    },
+    {
+        "id": "carne-01",
+        "titulo": "Carne Molida de Res 500g",
+        "imagen": "img/carne.png",
+        "categoria": {
+            "nombre": "Carnes",
+            "id": "carnes"
+        },
+        "precio": 60
+    },
+    {
+        "id": "carne-02",
+        "titulo": "Pechuga de Pollo 1kg",
+        "imagen": "img/pollo.png",
+        "categoria": {
+            "nombre": "Carnes",
+            "id": "carnes"
+        },
+        "precio": 85
+    },
+    {
+        "id": "carne-03",
+        "titulo": "Chuleta de Cerdo 1kg",
+        "imagen": "img/cerdo.jpg",
+        "categoria": {
+            "nombre": "Carnes",
+            "id": "carnes"
+        },
+        "precio": 90
+    },
+    {
+        "id": "carne-04",
+        "titulo": "Costilla de Res 1kg",
+        "imagen": "img/costilla.jpg",
+        "categoria": {
+            "nombre": "Carnes",
+            "id": "carnes"
+        },
+        "precio": 95
+    },
+    {
+        "id": "carne-05",
+        "titulo": "Filete de Pescado 500g",
+        "imagen": "img/filete.jpeg",
+        "categoria": {
+            "nombre": "Carnes",
+            "id": "carnes"
+        },
+        "precio": 70
+    }
+]
