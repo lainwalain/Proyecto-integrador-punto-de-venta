@@ -24,7 +24,7 @@
     <nav class="nav-links">
       <a href="Index.html">Inicio</a>
       <a href="products.html">Productos</a>
-      <a href="cart.html">Carrito</a>
+      <a href="carrito1.html">Carrito</a>
       <a href="contact.html">Contacto</a>
     </nav>
     <!-- Ícono de menú -->

@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Mi Cuenta - MarketGo</title>
+
+  <!-- Google Font Poppins -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+  <!-- Estilos -->
+  <link rel="stylesheet" href="MiCuenta.css">
+
+  <!-- Íconos sencillos (SVG inline en CSS/HTML para evitar dependencias) -->
+</head>
+<body>
+  <!-- HEADER / NAVBAR -->
+  <header class="site-header">
+    <div class="header-inner">
+      <div class="brand">
+        <a href="#" class="logo">
+          <span class="logo-title">MarketGo</span>
+          <small class="logo-tag">¡Siempre fresco, siempre cerca!</small>
+        </a>
+      </div>
+
+      <nav class="main-nav">
+        <ul id="nav-list">
+          <li><a href="Index.html">Inicio</a></li>
+          <li><a href="productos.html">Productos</a></li>
+          <li><a href="Carrito.html">Carrito</a></li>
+          <li><a href="Favorito.html">Favoritos</a></li>
+          <li><a href="MiCuenta.html" class="active">Mi Cuenta</a></li>
+        </ul>
+      </nav>
+
+      <button id="hamburger" class="hamburger" aria-label="Abrir menú">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+
+    <!-- Menú móvil -->
+    <div id="mobile-menu" class="mobile-menu">
+      <ul>
+        <li><a href="Index.html">Inicio</a></li>
+        <li><a href="productos.html">Productos</a></li>
+        <li><a href="Carrito.html">Carrito</a></li>
+        <li><a href="Favorito.html">Favoritos</a></li>
+        <li><a href="MiCuenta.html" class="active">Mi Cuenta</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <!-- MAIN: Perfil -->
+  <main class="container">
+    <h1 class="page-title">Mi Cuenta</h1>
+
+    <section class="profile-card">
+      <div class="cover"></div>
+
+      <div class="avatar-wrapper">
+        <div class="avatar">U</div>
+        <button id="edit-avatar" class="edit-avatar" title="Editar foto">✎</button>
+      </div>
+
+      <div class="profile-body">
+        <h2 id="user-name" class="user-name">Usuario Demo</h2>
+        <p id="user-email" class="user-email">suridayanaa@gmail.com</p>
+
+        <div class="badges">
+          <div class="badge level" id="user-level">Nivel Silver</div>
+          <div class="badge points" id="user-points">150 puntos</div>
+        </div>
+
+        <button id="btn-edit-info" class="btn edit-info">✎ Editar Información</button>
+
+        <h3 class="section-title">Información Personal</h3>
+
+        <div class="info-grid">
+          <div class="form-group">
+            <label>Nombre Completo</label>
+            <input id="info-nombre" type="text" readonly value="Usuario Demo" />
+          </div>
+
+          <div class="form-group">
+            <label>Correo Electrónico</label>
+            <input id="info-correo" type="text" readonly value="suridayanaa@gmail.com" />
+          </div>
+
+          <div class="form-group full">
+            <label>Teléfono</label>
+            <input id="info-telefono" type="text" readonly placeholder="No registrado" />
+          </div>
+        </div>
+
+        <div class="stats-cards">
+          <div class="stat">
+            <div class="stat-number" id="stat-compras">0</div>
+            <div class="stat-label">Compras Realizadas</div>
+          </div>
+          <div class="stat">
+            <div class="stat-number" id="stat-favs">0</div>
+            <div class="stat-label">Productos Favoritos</div>
+          </div>
+          <div class="stat">
+            <div class="stat-number" id="stat-total">$0</div>
+            <div class="stat-label">Total Gastado</div>
+          </div>
+          <div class="stat">
+            <div class="stat-number" id="stat-puntos">0</div>
+            <div class="stat-label">Puntos Ganados</div>
+          </div>
+        </div>
+
+        <div class="actions">
+          <button class="btn primary">❤ Ver Mis Favoritos</button>
+          <button class="btn outline">📦 Ver Historial de Compras</button>
+          <button class="btn ghost">🛒 Continuar Comprando</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- MODAL: Editar Información -->
+  <div id="modal" class="modal" aria-hidden="true">
+    <div class="modal-backdrop" id="modal-backdrop"></div>
+    <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+      <h4 id="modal-title">Editar Información</h4>
+      <form id="edit-form">
+        <label>Nombre Completo</label>
+        <input name="nombre" id="form-nombre" type="text" required>
+
+        <label>Correo Electrónico</label>
+        <input name="correo" id="form-correo" type="email" required>
+
+        <label>Teléfono</label>
+        <input name="telefono" id="form-telefono" type="text">
+
+        <div class="modal-actions">
+          <button type="button" id="modal-cancel" class="btn outline">Cancelar</button>
+          <button type="submit" class="btn primary">Guardar (simulado)</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="MiCuenta.js"></script>
+</body>
+</html>
