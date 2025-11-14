@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MarketGo - Cajero</title>
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
+  <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+  <link rel="stylesheet" href="csscajero.css">
+</head>
+
+<body>
+
+<div class="cajero">
+
+    <div class="productos">
+        <input type="text" id="buscador" placeholder="Buscar producto...">
+
+        <div id="lista-productos" class="lista-productos"></div>
+    </div>
+
+   
+    <div class="carrito">
+        <h2>Carrito</h2>
+
+        <div id="items-carrito"></div>
+
+        <div class="totales">
+            <p>Subtotal: $<span id="subtotal">0.00</span></p>
+            <p>Total: $<span id="total">0.00</span></p>
+        </div>
+    </div>
+
+  
+    <div class="cobro">
+        <h2>Cobro</h2>
+
+        <label>Monto recibido:</label>
+        <input type="number" id="efectivo" placeholder="Efectivo...">
+
+        <p>Cambio: $<span id="cambio">0.00</span></p>
+
+        <button id="finalizar">Finalizar venta</button>
+    </div>
+
+</div>
+
+<script src="./js/main.js"></script>
+
+</body>
+</html>
