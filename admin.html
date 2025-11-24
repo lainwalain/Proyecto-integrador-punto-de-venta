@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Panel</title>
+  <link rel="stylesheet" href="admin.css">
+  <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+</head>
+<body>
+  <div class="panel-contenedor"> 
+
+    <div class="container">
+
+      
+      <aside class="sidebar">
+        <div class="logo">Administrador</div>
+        <ul class="menu">
+          <li><i class="bi bi-house"></i> Inicio</li>
+          
+          <li><i class="bi bi-calendar"></i> Reportes</li>
+          <li class="active"><i class="bi bi-people"></i> Empleados</li>
+       
+          <li><i class="bi bi-folder"></i> agregar empleado</li>
+          <li><i class="bi bi-file-text"></i> Productos</li>
+       
+        </ul>
+        <div class="user">
+          <img src="https://via.placeholder.com/40" alt="User">
+          
+        </div>
+      </aside>
+
+    
+      <main class="main-content">
+        <header class="topbar">
+          <div class="left">
+          
+          
+          </div>
+          <div class="right">
+            <input type="text" placeholder="Type searching...">
+            <button class="search"><i class="bi bi-search"></i></button>
+            <i class="bi bi-bell"></i>
+            <i class="bi bi-envelope"></i>
+          </div>
+        </header>
+
+        <section class="management">
+          <h1>Panel administrador</h1>
+          <div class="timeline">
+            <div class="task" style="grid-column:2/span 2;">Design - 2h</div>
+            <div class="task" style="grid-column:2/span 5;">Mobile Apps - 5h</div>
+            <div class="task" style="grid-column:4/span 5;">Infography - 5h</div>
+            <div class="task" style="grid-column:5/span 3;">Wireframes - 3h</div>
+          </div>
+        </section>
+
+        <section class="sidebar-widgets">
+          <div class="ongoing-projects">
+            <h2>Ongoing projects</h2>
+            <p>Sales trend: 68.5%</p>
+            <canvas id="chart"></canvas>
+          </div>
+
+          <div class="file-preview">
+            <h2>File Preview</h2>
+            <div class="preview-image">
+              <img src="https://via.placeholder.com/150" alt="">
+            
+
+</html>
