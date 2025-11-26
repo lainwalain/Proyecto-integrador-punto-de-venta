@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>MarketGo - Productos</title>
+  <link rel="stylesheet" href="productos.css">
+  <script src="productos.js" defer></script>
+</head>
+<body>
+
+  <header class="main-header">
+    <div class="logo">MarketGo</div>
+    <nav>
+      <a href="Index.html">Inicio</a>
+      <a href="productos.html" class="active">Productos</a>
+      <a href="carrito1.html">Carrito</a>
+      <a href="corazon.html">Favoritos</a>
+      <a href="MiCuenta.html">Mi Cuenta</a>
+    </nav>
+  </header>
+
+
+  <section class="productos-header">
+    <h1>Nuestros Productos</h1>
+    <p>Descubre toda nuestra variedad de productos frescos y de calidad</p>
+    <input type="text" id="buscador" placeholder="Buscar productos...">
+  </section>
+
+  
+  <section id="productos-container" class="productos-grid">
+    <?php include 'productos.php'; ?>
+  </section>
+
+  
+  <section class="no-encontrado">
+    <h2>¿No encuentras lo que buscas?</h2>
+    <p>Contáctanos para solicitar productos especiales o conocer próximas incorporaciones a nuestro catálogo.</p>
+    <div class="acciones">
+      <a href="Index.html" class="btn">Volver al Inicio</a>
+      <a href="carrito1.html" class="btn">Ver Carrito (0)</a>
+    </div>
+  </section>
+
+
+  <footer class="main-footer">
+    <p>© 2025 MarketGo - Todos los derechos reservados</p>
+  </footer>
+</body>
+</html>

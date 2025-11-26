@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MarketGo - Inicio</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- ===== Encabezado ===== -->
+  <header class="header">
+   <a href="system.html" class="logo">
+  <div class="logo-circle">
+    <!-- SVG -->
+  </div>
+  <div class="logo-text">
+    <span class="brand">MarketGo</span>
+    <p class="slogan">¡Siempre fresco, siempre cerca!</p>
+  </div>
+</a>
+
+    <!-- Menú principal -->
+    <nav class="nav-links">
+      <a href="Index.html">Inicio</a>
+      <a href="productos.html">Productos</a>
+      <a href="Carrito.html">Carrito</a>
+      <a href="Favorito.html">Favoritos</a>
+    </nav>
+    <!-- Ícono de menú -->
+    <div class="menu-icon" onclick="toggleMenu()">&#9776;</div>
+  </header>
+
+  <!-- ===== Menú lateral ===== -->
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-header">
+      <h2>MarketGo</h2>
+    </div>
+    <ul style="font-size: 0.85rem;">
+      <li><a href="Index.html">Inicio</a></li>
+      <li><a href="MiCuenta.html">Mi cuenta</a></li>
+      <li><a href="Carrito.html">Carrito</a></li>
+      <li><a href="Favorito.html">Favorito</a></li>
+      <li><a href="Historial.html">Historial</a></li>
+      <!-- Botón Cerrar sesión con clase especial -->
+      <li>
+        <button class="btn-logout" onclick="window.location.href='Index.html'">
+          Cerrar sesión
+        </button>
+      </li>
+    </ul>
+    <div class="close-btn" onclick="toggleMenu()">✖</div>
+  </aside>
+
+  <!-- ===== Sección Hero ===== -->
+  <section class="hero">
+    <div class="hero-content">
+      <h1>¡Bienvenido a <span>MarketGo</span>!</h1>
+      <p>Tu tienda de abarrotes favorita con los mejores productos frescos</p>
+      <div class="search-container">
+        <input type="text" id="searchInput" placeholder="Buscar productos..." class="search-bar">
+        <button class="search-btn" onclick="searchProducts()">🔍</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Franja Programa de Recompensas ===== -->
+  <div class="rewards-bar">
+    <div class="rewards-flex">
+      <div class="rewards-left">
+        <span class="rewards-points">Tienes <b>150 puntos</b></span>
+        <span class="rewards-msg">¡Sigue así!</span>
+      </div>
+      <div class="rewards-center">
+        <span class="rewards-icon">🎁</span>
+        <span class="rewards-title">Programa de Recompensas</span>
+      </div>
+      <div class="rewards-right">
+        <span class="rewards-medal">🥈</span>
+        <span class="rewards-level">Silver</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== Categorías ===== -->
+  <section class="categorias">
+    <h2>Categorías</h2>
+    <div class="categorias-grid">
+      <button class="cat-btn" data-category="Limpieza">Limpieza del hogar</button>
+      <button class="cat-btn" data-category="Higiene">Higiene</button>
+      <button class="cat-btn" data-category="frutas-verduras">Frutas y Verduras</button>
+      <button class="cat-btn" data-category="Chucherias">Chucherias</button>
+      <button class="cat-btn" data-category="Bebidas">Bebidas</button>
+      <button class="cat-btn" data-category="papeleria">Papelería</button>
+      <button class="cat-btn" data-category="Carne y embutidos">Carne y embutidos</button>
+      <button class="cat-btn" data-category="lacteos">Lácteos</button>
+      <button class="cat-btn" data-category="pollo">Pollo</button>
+      <button class="cat-btn" data-category="Alcohol">Bebidas alcoholicas</button>
+    </div>
+  </section>
+  <!-- ===== Productos destacados ===== -->
+  <section class="productos">
+    <h2>Productos</h2>
+    <div class="cards" id="productList">
+      <div class="card" data-category="cereal golocinas">
+        <img src="producto1.jpg" alt="Cereales y Granola">
+        <h3>Cereales y Granola</h3>
+        <p>Cereales integrales y granola natural</p>
+        <span class="precio">$35</span>
+        <span class="stock">Stock: 3</span>
+        <button class="btn">Agregar al Carrito</button>
+      </div>
+      <div class="card" data-category="refrescos">
+        <img src="producto2.jpg" alt="Bebidas Refrescantes">
+        <h3>Bebidas Refrescantes</h3>
+        <p>Refrescos y aguas saborizadas</p>
+        <span class="precio">$18.50</span>
+        <span class="stock agotado">Stock: 0</span>
+        <button class="btn disabled" disabled>Agotado</button>
+      </div>
+      <div class="card" data-category="golocinas papas">
+        <img src="producto3.jpg" alt="Snacks y Botanas">
+        <h3>Snacks y Botanas</h3>
+        <p>Variedad de botanas y snacks</p>
+        <span class="precio">$22.99</span>
+        <span class="stock">Stock: 15</span>
+        <button class="btn">Agregar al Carrito</button>
+      </div>
+      <div class="card" data-category="lacteos">
+        <img src="producto4.jpg" alt="Lácteos">
+        <h3>Lácteos</h3>
+        <p>Leche, quesos y yogures</p>
+        <span class="precio">$45.00</span>
+        <span class="stock">Stock: 10</span>
+        <button class="btn">Agregar al Carrito</button>
+      </div>
+      <div class="card" data-category="frutas-verduras">
+        <img src="producto5.jpg" alt="Frutas">
+        <h3>Frutas</h3>
+        <p>Frutas frescas de temporada</p>
+        <span class="precio">$30.00</span>
+        <span class="stock">Stock: 20</span>
+        <button class="btn">Agregar al Carrito</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Footer ===== -->
+  <footer class="footer">
+    <p>© 2025 MarketGo - Todos los derechos reservados</p>
+  </footer>
+
+  <script src="main.js"></script>
+</body>
+</html>

@@ -1,52 +1,162 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MarketGo - Cajero</title>
-
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
-  <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
-  <link rel="stylesheet" href="csscajero.css">
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cajero</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css" />
+  <link rel="stylesheet" href="csscajero.css" />
 </head>
-
 <body>
 
-<div class="cajero">
+  <section class="carrito-hero"></section>
 
-    <div class="productos">
-        <input type="text" id="buscador" placeholder="Buscar producto...">
+  <div class="carrito-contenedor">
+    <main class="carrito-main layout-pos">
 
-        <div id="lista-productos" class="lista-productos"></div>
-    </div>
+     
+      <div class="columna-izquierda">
+
+       
+        <div class="buscador">
+          <input 
+            type="text" 
+            id="buscar" 
+            placeholder="Buscar producto o escanear código..." 
+            autofocus
+          >
+          <div id="resultados"></div>
+        </div>
+
+        <p id="carrito-vacio" class="carrito-vacio">El cajero está vacío</p>
 
    
-    <div class="carrito">
-        <h2>Carrito</h2>
+        <section id="carrito-productos" class="carrito-productos disabled"></section>
 
-        <div id="items-carrito"></div>
+      
+        <p id="carrito-comprado" class="carrito-comprado disabled">
+          Gracias por tu compra <i class="bi bi-emoji-laughing"></i>
+        </p>
 
-        <div class="totales">
-            <p>Subtotal: $<span id="subtotal">0.00</span></p>
-            <p>Total: $<span id="total">0.00</span></p>
+      </div> 
+    
+      <aside class="cobro-panel">
+        <h2>COBRO</h2>
+
+        <div class="cobro-box">
+          <label>Efectivo recibido:</label>
+          <input type="number" id="efectivo" placeholder="Cantidad recibida">
+
+          <div class="carrito-total">
+            <p>Total:</p>
+            <p id="total">$0.00</p>
+          </div>
+
+          <button id="carrito-acciones-vaciar" class="btn-vaciar">Vaciar carrito</button>
+          <button id="finalizar" class="btn-finalizar">Finalizar Venta</button>
+          
+          <p class="resultado">Cambio: $<span id="cambio">0.00</span></p>
         </div>
-    </div>
+      </aside>
 
-  
-    <div class="cobro">
-        <h2>Cobro</h2>
+    </main>
+  </div>
 
-        <label>Monto recibido:</label>
-        <input type="number" id="efectivo" placeholder="Efectivo...">
+  <footer class="carrito-footer">
+    <p>© Market.GO — Todos los derechos reservados</p>
+  </footer>
 
-        <p>Cambio: $<span id="cambio">0.00</span></p>
+  <!-- SCRIPTS -->
+  <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
 
-        <button id="finalizar">Finalizar venta</button>
-    </div>
+  <!-- CALCULAR CAMBIO -->
+  <script>
+  document.getElementById("efectivo").addEventListener("input", () => {
+      let total = parseFloat(document.getElementById("total").textContent.replace("$","")) || 0;
+      let efectivo = parseFloat(document.getElementById("efectivo").value) || 0;
+      document.getElementById("cambio").textContent = (efectivo - total).toFixed(2);
+  });
+  </script>
 
-</div>
+  <!-- BUSCAR Y AGREGAR PRODUCTOS -->
+  <script>
+  const buscar = document.getElementById("buscar");
+  const resultados = document.getElementById("resultados");
+  const carritoVacio = document.getElementById("carrito-vacio");
+  const contProductos = document.getElementById("carrito-productos");
+  const acciones = document.getElementById("cobro-panel");
 
-<script src="./js/main.js"></script>
+  let carrito = [];
+
+  buscar.addEventListener("keyup", () => {
+      let text = buscar.value.trim();
+      if (text.length === 0) { resultados.innerHTML = ""; return; }
+
+      fetch("buscar.php?busqueda=" + text)
+          .then(res => res.json())
+          .then(data => {
+              resultados.innerHTML = "";
+              data.forEach(p => {
+                  let item = document.createElement("div");
+                  item.classList.add("item-busqueda");
+                  item.innerHTML = `
+                      <strong>${p.nombre}</strong> - $${p.precio}
+                      <button onclick="agregar(${p.id}, '${p.nombre}', ${p.precio})">Agregar</button>
+                  `;
+                  resultados.appendChild(item);
+              });
+          });
+  });
+
+  function agregar(id, nombre, precio) {
+      carrito.push({ id, nombre, precio });
+      mostrarCarrito();
+      buscar.value = "";
+      resultados.innerHTML = "";
+  }
+
+  function mostrarCarrito() {
+      carritoVacio.classList.add("disabled");
+      contProductos.classList.remove("disabled");
+
+      let total = 0;
+      contProductos.innerHTML = "";
+
+      carrito.forEach(p => {
+          total += p.precio;
+          contProductos.innerHTML += `<div class="producto">${p.nombre} - $${p.precio}</div>`;
+      });
+
+      document.getElementById("total").textContent = "$" + total.toFixed(2);
+  }
+
+  // Vaciar carrito
+  document.getElementById("carrito-acciones-vaciar").addEventListener("click", () => {
+      carrito = [];
+      mostrarCarrito();
+      carritoVacio.classList.remove("disabled");
+      contProductos.classList.add("disabled");
+  });
+
+  // Finalizar venta
+  document.getElementById("finalizar").addEventListener("click", () => {
+      if (carrito.length === 0) { alert("El carrito está vacío."); return; }
+      let total = parseFloat(document.getElementById("total").textContent.replace("$",""));
+      let efectivo = parseFloat(document.getElementById("efectivo").value);
+      if (isNaN(efectivo) || efectivo < total) { alert("Efectivo insuficiente."); return; }
+
+      // Generar ticket (ejemplo: abrir ventana con JSON)
+      alert("Venta finalizada. Total: $" + total.toFixed(2));
+      carrito = [];
+      mostrarCarrito();
+      carritoVacio.classList.remove("disabled");
+      contProductos.classList.add("disabled");
+      document.getElementById("efectivo").value = "";
+      document.getElementById("cambio").textContent = "0.00";
+  });
+  </script>
 
 </body>
 </html>

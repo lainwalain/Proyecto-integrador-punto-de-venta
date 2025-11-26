@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Carrito</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css" />
+  <link rel="stylesheet" href="./css/main.css">
+
+
+</head>
+<body>
+
+  <header class="carrito-header">
+    <div class="carrito-header__logo">Market.GO</div>
+
+    <nav class="carrito-header__nav">
+      <a href="Index.html">Volver a inicio <img src="img/casa.png" alt="" width="30" height="30"></a>
+      <a href="corazon.html">favoritos <img src="img/cora.png" alt="" width="30" height="30"></a>
+    </nav>
+
+  
+    </button>
+
+    <button class="hamburger" aria-label="Abrir menú" aria-expanded="false" type="button">
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+    </button>
+  </header>
+
+  <!-- Backdrop -->
+  <div class="mobile-backdrop" aria-hidden="true"></div>
+
+  <!-- Menú móvil (panel lateral) -->
+  <nav class="mobile-menu" aria-label="Menú móvil" role="navigation">
+    <button class="mobile-menu__close" aria-label="Cerrar menú" type="button">&times;</button>
+
+    <div class="mobile-menu__header"></div>
+
+    <ul class="mobile-menu__list">
+      <li><a class="mobile-menu__link" href="Index.html"><img src="img/casa.png" alt="" width="18" height="18" aria-hidden="true"> Volver a inicio</a></li>
+      <li><a class="mobile-menu__link" href="corazon.html"><img src="img/cora.png" alt="" width="18" height="18" aria-hidden="true"> Favoritos</a></li>
+    </ul>
+  </nav>
+
+  <section class="carrito-hero">
+    <div class="carrito-hero__contenido">
+      <h2>Tu carrito</h2>
+      <p>Te damos la bienvenida a tu carrito de compras</p>
+    </div>
+  </section>
+
+  <div class="carrito-contenedor">
+    <main class="carrito-main">
+      <p id="carrito-vacio" class="carrito-vacio">Tu carrito está vacío. <i class="bi bi-emoji-frown"></i></p>
+
+      <section id="carrito-productos" class="carrito-productos disabled"></section>
+
+      <section id="carrito-acciones" class="carrito-acciones disabled">
+        <div class="carrito-total">
+          <p>Total:</p>
+          <p id="total">$0.00</p>
+        </div>
+        <div class="carrito-botones">
+          <button id="carrito-acciones-vaciar" class="btn-vaciar">Vaciar carrito</button>
+          <button id="carrito-acciones-comprar" class="btn-comprar">Comprar ahora</button>
+        </div>
+      </section>
+
+      <p id="carrito-comprado" class="carrito-comprado disabled">Gracias por tu compra <i class="bi bi-emoji-laughing"></i></p>
+    </main>
+  </div>
+
+  <footer class="carrito-footer">
+    <p>© Market.GO — Todos los derechos reservados</p>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="./js/carrito.js"></script>
+
+  <script>
+  (function () {
+    function initMenu() {
+      const btn = document.querySelector('.hamburger');
+      const menu = document.querySelector('.mobile-menu');
+      const closeBtn = document.querySelector('.mobile-menu__close');
+      let backdrop = document.querySelector('.mobile-backdrop');
+
+      if (!menu) return;
+
+      if (!backdrop) {
+        backdrop = document.createElement('div');
+        backdrop.className = 'mobile-backdrop';
+        backdrop.setAttribute('aria-hidden', 'true');
+        document.body.appendChild(backdrop);
+      }
+
+      function openMenu() {
+        if (btn) btn.setAttribute('aria-expanded', 'true');
+        menu.classList.add('active');
+        backdrop.classList.add('visible');
+        document.documentElement.style.overflow = 'hidden';
+        document.body.style.overflow = 'hidden';
+        const first = menu.querySelector('a,button');
+        if (first) first.focus();
+        if (btn) btn.classList.add('open');
+      }
+
+      function closeMenu() {
+        if (btn) btn.setAttribute('aria-expanded', 'false');
+        menu.classList.remove('active');
+        backdrop.classList.remove('visible');
+        document.documentElement.style.overflow = '';
+        document.body.style.overflow = '';
+        if (btn) { btn.focus(); btn.classList.remove('open'); }
+      }
+
+      function toggleMenu() {
+        menu.classList.contains('active') ? closeMenu() : openMenu();
+      }
+
+      window.toggleMenu = toggleMenu;
+
+      if (btn) {
+        btn.addEventListener('click', (e) => { e.stopPropagation(); toggleMenu(); });
+        btn.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggleMenu(); } });
+      }
+
+      if (closeBtn) closeBtn.addEventListener('click', closeMenu);
+      backdrop.addEventListener('click', closeMenu);
+
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && menu.classList.contains('active')) closeMenu();
+      });
+
+      menu.addEventListener('click', (e) => {
+        if (e.target.closest('a')) closeMenu();
+      });
+
+      window.addEventListener('resize', () => {
+        if (window.innerWidth > 768 && menu.classList.contains('active')) closeMenu();
+      });
+    }
+
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', initMenu);
+    else initMenu();
+  })();
+  </script>
+
+  <!-- ===== tema.js integrado (script del tema con loader y mapeo main.css -> mainnegro.css) ===== -->
+  <script>
+  (function () {
+    if (window.__tema_inicializado__) return;
+    window.__tema_inicializado__ = true;
+
+    const STORAGE_KEY = 'modoOscuroActivo';
+
+    const MAPA = {
+      'style.css': 'style-dark.css',
+      'main.css': 'mainnegro.css',
+      'main1.css': 'negrofav.css',
+      'csscajero.css': 'csscajeronegro.css',
+      'carrito.css': 'carritonegro.css'
+    };
+
+    function nombreArchivo(href) {
+      if (!href) return '';
+      return href.split('/').pop().split('?')[0].split('#')[0];
+    }
+
+    function construirHrefConNuevoNombre(originalHref, nuevoNombre) {
+      if (!originalHref) return nuevoNombre;
+      const url = new URL(originalHref, document.baseURI);
+      url.pathname = url.pathname.replace(/[^/]+$/, nuevoNombre);
+      url.searchParams.set('v', Date.now());
+      return url.toString();
+    }
+
+    function mostrarLoader(modoOscuro) {
+      let overlay = document.getElementById('tema-loader');
+      if (!overlay) {
+        overlay = document.createElement('div');
+        overlay.id = 'tema-loader';
+        overlay.setAttribute('role', 'status');
+        overlay.setAttribute('aria-live', 'polite');
+        overlay.style.position = 'fixed';
+        overlay.style.inset = '0';
+        overlay.style.display = 'flex';
+        overlay.style.flexDirection = 'column';
+        overlay.style.alignItems = 'center';
+        overlay.style.justifyContent = 'center';
+        overlay.style.zIndex = 999999;
+        overlay.style.transition = 'opacity 0.4s ease';
+
+        const style = document.createElement('style');
+        style.id = 'tema-loader-style';
+        style.textContent = `
+          #tema-loader { opacity: 1; }
+          .loader-container { width: min(780px, 92vw); display: grid; grid-template-columns: 1fr; gap: 16px; }
+          .loader-title { font-weight: 600; margin-bottom: 12px; text-align: center; }
+          .loader-card { border-radius: 12px; overflow: hidden; position: relative; height: 96px; }
+          .loader-line { height: 16px; width: 60%; border-radius: 8px; margin: 12px 16px; }
+          .shimmer { position: absolute; inset: 0; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.24), transparent); animation: shimmer-move 1.2s infinite; }
+          @keyframes shimmer-move { 0% { transform: translateX(-100%);} 100% { transform: translateX(100%);} }
+        `;
+        document.head.appendChild(style);
+
+        const wrap = document.createElement('div');
+        wrap.className = 'loader-container';
+
+        const titulo = document.createElement('div');
+        titulo.className = 'loader-title';
+        titulo.textContent = 'Cambiando tema...';
+        wrap.appendChild(titulo);
+
+        for (let i = 0; i < 3; i++) {
+          const card = document.createElement('div'); card.className = 'loader-card';
+          const line1 = document.createElement('div'); line1.className = 'loader-line';
+          const line2 = document.createElement('div'); line2.className = 'loader-line'; line2.style.width = '40%';
+          const shimmer = document.createElement('div'); shimmer.className = 'shimmer';
+          card.appendChild(line1); card.appendChild(line2); card.appendChild(shimmer);
+          wrap.appendChild(card);
+        }
+
+        overlay.appendChild(wrap);
+        document.body.appendChild(overlay);
+      }
+
+      const bgDark = '#0f1216', bgLight = '#f5f6f7';
+      const cardDark = '#151922', cardLight = '#ffffff';
+      const lineDark = '#1e2430', lineLight = '#e9edf3';
+      const textDark = '#eaeff7', textLight = '#30343a';
+
+      overlay.style.background = modoOscuro ? bgDark : bgLight;
+      overlay.querySelectorAll('.loader-card').forEach(c => c.style.background = modoOscuro ? cardDark : cardLight);
+      overlay.querySelectorAll('.loader-line').forEach(l => l.style.background = modoOscuro ? lineDark : lineLight);
+      const titulo = overlay.querySelector('.loader-title'); if (titulo) titulo.style.color = modoOscuro ? textDark : textLight;
+
+      overlay.style.opacity = '1';
+      overlay.style.pointerEvents = 'auto';
+    }
+
+    function ocultarLoader() {
+      const overlay = document.getElementById('tema-loader');
+      const style = document.getElementById('tema-loader-style');
+      if (overlay) { overlay.style.opacity = '0'; overlay.style.pointerEvents = 'none'; setTimeout(() => overlay.remove(), 300); }
+      if (style) { setTimeout(() => style.remove(), 300); }
+    }
+
+    async function aplicarModo(modoOscuro) {
+      mostrarLoader(modoOscuro);
+
+      const links = Array.from(document.querySelectorAll('link[rel="stylesheet"]'));
+      const pares = [];
+
+      console.group('Tema — links detectados');
+      links.forEach(l => console.log('href:', l.getAttribute('href'), 'file:', nombreArchivo(l.getAttribute('href') || '').toLowerCase()));
+      console.groupEnd();
+
+      links.forEach(linkClaro => {
+        const href = linkClaro.getAttribute('href') || '';
+        const nombreClaro = nombreArchivo(href).toLowerCase();
+        const nombreOscuro = MAPA[nombreClaro];
+        if (!nombreOscuro) return;
+
+        const nuevoHref = construirHrefConNuevoNombre(href, nombreOscuro);
+        let linkOscuro = Array.from(document.querySelectorAll('link[rel="stylesheet"]'))
+          .find(l => nombreArchivo(l.getAttribute('href') || '').toLowerCase() === nombreOscuro.toLowerCase());
+
+        if (!linkOscuro) {
+          linkOscuro = document.createElement('link');
+          linkOscuro.rel = 'stylesheet';
+          linkOscuro.href = nuevoHref;
+          linkOscuro.disabled = true;
+          linkOscuro.setAttribute('data-tema-oscuro', nombreOscuro);
+          linkClaro.parentNode.insertBefore(linkOscuro, linkClaro.nextSibling);
+        }
+        pares.push({ claro: linkClaro, oscuro: linkOscuro, nombreClaro });
+      });
+
+      if (pares.length === 0) { ocultarLoader(); return; }
+
+      await Promise.all(pares.map(p => new Promise(resolve => {
+        if (p.oscuro.sheet) return resolve();
+        p.oscuro.addEventListener('load', resolve, { once: true });
+        setTimeout(resolve, 1200);
+      })));
+
+      pares.forEach(({ claro, oscuro, nombreClaro }) => {
+        const esStyleBase = nombreClaro === 'style.css';
+        const esMainCarrito = nombreClaro === 'main.css';
+
+        if (esStyleBase) {
+          claro.disabled = false;
+          oscuro.disabled = !modoOscuro;
+        } else if (esMainCarrito) {
+          claro.disabled = modoOscuro;
+          oscuro.disabled = !modoOscuro;
+        } else {
+          claro.disabled = modoOscuro;
+          oscuro.disabled = !modoOscuro;
+        }
+
+        if (oscuro.previousElementSibling !== claro) {
+          claro.parentNode.insertBefore(oscuro, claro.nextSibling);
+        }
+      });
+
+      console.group('Tema — estado final');
+      pares.forEach(({ claro, oscuro, nombreClaro }) => {
+        console.log(nombreArchivo(claro.getAttribute('href') || ''), '->', nombreArchivo(oscuro.getAttribute('href') || ''), 'claro.disabled:', claro.disabled, 'oscuro.disabled:', oscuro.disabled);
+      });
+      console.groupEnd();
+
+      const btn = document.getElementById('btn-tema');
+      if (btn) btn.setAttribute('aria-pressed', String(modoOscuro));
+
+      setTimeout(ocultarLoader, 260);
+    }
+
+    function toggleTema() {
+      const activo = localStorage.getItem(STORAGE_KEY) === 'true';
+      const nuevo = !activo;
+      aplicarModo(nuevo);
+      localStorage.setItem(STORAGE_KEY, nuevo ? 'true' : 'false');
+    }
+
+    function init() {
+      const guardado = localStorage.getItem(STORAGE_KEY) === 'true';
+      aplicarModo(guardado);
+
+      const btn = document.getElementById('btn-tema');
+      if (btn) {
+        btn.setAttribute('aria-pressed', String(guardado));
+        btn.addEventListener('click', (e) => { e.preventDefault(); toggleTema(); });
+      }
+
+      window.toggleTema = toggleTema;
+      window.aplicarModo = aplicarModo;
+    }
+
+    document.addEventListener('DOMContentLoaded', init);
+  })();
+  </script>
+</body>
+</html>
