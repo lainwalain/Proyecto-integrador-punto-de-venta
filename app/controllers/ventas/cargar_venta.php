@@ -1,10 +1,5 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: HILARIWEB
- * Date: 14/3/2023
- * Time: 16:25
- */
+
 
 $sql_ventas = "SELECT *, cli.nombre_cliente as nombre_cliente 
                FROM tb_ventas as ve INNER JOIN tb_clientes as cli ON cli.id_cliente = ve.id_cliente where ve.id_venta = '$id_venta_get' ";

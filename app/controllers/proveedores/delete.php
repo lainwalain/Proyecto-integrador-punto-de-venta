@@ -1,10 +1,5 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: HILARIWEB
- * Date: 12/2/2023
- * Time: 14:59
- */
+
 include ('../../config.php');
 
 $id_proveedor = $_GET['id_proveedor'];

@@ -1,10 +1,5 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: HILARIWEB
- * Date: 12/2/2023
- * Time: 18:45
- */
+
 
 $id_compra_get = $_GET['id'];
 
