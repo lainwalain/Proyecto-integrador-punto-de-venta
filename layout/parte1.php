@@ -60,7 +60,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
         <!-- Brand Logo -->
         <a href="<?php echo $URL;?>" class="brand-link">
             <img src="<?php echo $URL;?>/public/images/logo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
-            <span class="brand-text font-weight-light">SIS VENTAS</span>
+            <span class="brand-text font-weight-light">Market Go</span>
         </a>
 
         <!-- Sidebar -->

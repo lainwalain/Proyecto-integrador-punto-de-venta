@@ -1,3 +1,6 @@
+<?php
+session_start();
+?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -297,11 +300,6 @@
 </head>
 <body class="hold-transition login-page">
 
-<?php
-// MOVER session_start() AL INICIO DEL ARCHIVO, ANTES DE CUALQUIER SALIDA HTML
-session_start();
-?>
-
 <div class="login-box">
     <!-- Mensajes de sesión -->
     <?php
@@ -431,7 +429,7 @@ session_start();
 <script src="https://cdnjs.cloudflare.com/ajax/libs/admin-lte/3.2.0/js/adminlte.min.js"></script>
 
 <script>
-    // Función para mostrar/ocultar contraseña
+    
     document.getElementById('togglePassword').addEventListener('click', function() {
         const passwordInput = document.getElementById('passwordInput');
         const toggleIcon = this;
@@ -449,7 +447,7 @@ session_start();
         }
     });
 
-    // Validación básica del formulario
+    
     document.getElementById('loginForm').addEventListener('submit', function(e) {
         const email = document.querySelector('input[name="email"]');
         const password = document.querySelector('input[name="password_user"]');
@@ -466,7 +464,7 @@ session_start();
             return;
         }
         
-        // Validación de formato de email
+
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if (!emailRegex.test(email.value)) {
             e.preventDefault();
@@ -479,12 +477,11 @@ session_start();
             return;
         }
         
-        // Cambiar texto del botón durante el envío
+    
         btnIngresar.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Ingresando...';
         btnIngresar.disabled = true;
     });
 
-    // Efecto hover en inputs
     document.querySelectorAll('.form-control').forEach(input => {
         input.addEventListener('focus', function() {
             this.style.borderColor = '#e67e22';
@@ -497,7 +494,7 @@ session_start();
         });
     });
 
-    // Efecto de animación al cargar la página
+
     document.addEventListener('DOMContentLoaded', function() {
         document.querySelector('.login-box').style.opacity = '0';
         document.querySelector('.login-box').style.transform = 'translateY(20px)';

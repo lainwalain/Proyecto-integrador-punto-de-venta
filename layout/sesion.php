@@ -1,10 +1,5 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: HILARIWEB
- * Date: 18/1/2023
- * Time: 15:02
- */
+
 
 session_start();
 if(isset($_SESSION['sesion_email'])){
@@ -24,3 +19,4 @@ if(isset($_SESSION['sesion_email'])){
     echo "no existe sesion";
     header('Location: '.$URL.'/login');
 }
+
