@@ -61,7 +61,14 @@ include ('../app/controllers/clientes/listado_de_clientes.php');
                                         <td><center><?php echo $contador = $contador + 1;?></center></td>
                                         <td><?php echo $clientes_dato['nombre_cliente'];?></td>
                                         <td><?php echo $clientes_dato['nit_ci_cliente'];?></td>
-                                        <td><center><?php echo $clientes_dato['celular_cliente'];?></center></td>
+                                        <td><center>
+                                            <a href="https://wa.me/52<?php echo $clientes_dato['celular_cliente']; ?>?text=Hola%20<?php echo urlencode($clientes_dato['nombre_cliente']); ?>%20te%20contacto%20desde%20Market%20Go" 
+                                               target="_blank" 
+                                               class="btn btn-success btn-sm"
+                                               title="Contactar por WhatsApp">
+                                                <i class="fab fa-whatsapp"></i> <?php echo $clientes_dato['celular_cliente'];?>
+                                            </a>
+                                        </center></td>
                                         <td><center><?php echo $clientes_dato['email_cliente'];?></center></td>
                                     </tr>
                                     <?php
@@ -147,6 +154,4 @@ include ('../app/controllers/clientes/listado_de_clientes.php');
             ],
         }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
     });
-</script>
-
 </script>
