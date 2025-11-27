@@ -93,6 +93,392 @@
       navbarMenu.classList.toggle("active"); // Toggle la visibilidad del menú
     });
   </script>
-  
+  <script>
+
+(function () {
+  const STORAGE_KEY = 'marketgo_lang';
+  const DEFAULT_LANG = 'es';
+
+  const DICT = {
+    es: {
+      brand: 'Market.GO',
+      nav_inicio: 'Inicio',
+      nav_carrito: 'Carrito',
+      nav_favoritos: 'Favoritos',
+      hero_title: '¡Marketgo te da la <span>Bienvenida</span>!',
+      hero_sub: 'Encuentra ofertas, productos frescos y entrega rápida.',
+      productos_title: 'Productos',
+      buscar_placeholder: 'Buscar productos...',
+      buscar_btn: 'Buscar',
+      usuario_h3: 'Usuario',
+      login: 'Inicio de Sesión',
+      cuenta: 'Cuenta',
+      categorias_h3: 'Categorías',
+      cat_todos: 'Todos',
+      cat_lacteos: 'Lácteos',
+      cat_verduras: 'Verduras',
+      cat_carnes: 'Carnes',
+      cat_limpieza: 'Limpieza del hogar',
+      cat_higiene: 'Higiene',
+      cat_frutas: 'Frutas y Verduras',
+      cat_chucherias: 'Chucherías',
+      cat_bebidas: 'Bebidas',
+      cat_papeleria: 'Papelería',
+      cat_carne_embutidos: 'Carne y Embutidos',
+      cat_pollo: 'Pollo',
+      cat_alcohol: 'Bebidas alcohólicas',
+      favoritos_empty: 'No tienes productos favoritos.',
+      footer: '© Market.GO. Todos los derechos reservados.',
+      mobile_inicio: 'Inicio',
+      mobile_carrito: 'Carrito',
+      mobile_favoritos: 'Favoritos',
+      btn_remove: 'Eliminar',
+      btn_comprar_now: 'Comprar ahora',
+      /* cajero */
+      cajero_buscador_placeholder: 'Buscar producto o escanear código...',
+      cajero_vacio: 'El cajero está vacío',
+      cajero_comprado: 'Gracias por tu compra',
+      cajero_cobro_h2: 'COBRO',
+      cajero_label_efectivo: 'Efectivo recibido:',
+      cajero_placeholder_efectivo: 'Cantidad recibida',
+      cajero_total_label: 'Total:',
+      cajero_btn_vaciar: 'Vaciar carrito',
+      cajero_btn_finalizar: 'Finalizar Venta',
+      cajero_resultado_cambio: 'Cambio: $',
+      cajero_alert_carrito_vacio: 'El carrito está vacío.',
+      cajero_alert_efectivo_insuficiente: 'Efectivo insuficiente.',
+      cajero_alert_venta_finalizada: 'Venta finalizada. Total: $',
+      /* favoritos */
+      favoritos_hero_title: 'Favoritos',
+      favoritos_hero_sub: 'Tus productos favoritos aquí',
+      favoritos_btn_remove: 'Eliminar'
+    },
+    en: {
+      brand: 'Market.GO',
+      nav_inicio: 'Home',
+      nav_carrito: 'Cart',
+      nav_favoritos: 'Favorites',
+      hero_title: 'MarketGo <span>welcomes</span> you!',
+      hero_sub: 'Find deals, fresh products and fast delivery.',
+      productos_title: 'Products',
+      buscar_placeholder: 'Search products...',
+      buscar_btn: 'Search',
+      usuario_h3: 'User',
+      login: 'Sign in',
+      cuenta: 'Account',
+      categorias_h3: 'Categories',
+      cat_todos: 'All',
+      cat_lacteos: 'Dairy',
+      cat_verduras: 'Vegetables',
+      cat_carnes: 'Meat',
+      cat_limpieza: 'Home cleaning',
+      cat_higiene: 'Hygiene',
+      cat_frutas: 'Fruits & Vegetables',
+      cat_chucherias: 'Snacks',
+      cat_bebidas: 'Drinks',
+      cat_papeleria: 'Stationery',
+      cat_carne_embutidos: 'Meat & Cold Cuts',
+      cat_pollo: 'Chicken',
+      cat_alcohol: 'Alcoholic beverages',
+      favoritos_empty: 'You have no favorite products.',
+      footer: '© Market.GO. All rights reserved.',
+      mobile_inicio: 'Home',
+      mobile_carrito: 'Cart',
+      mobile_favoritos: 'Favorites',
+      btn_remove: 'Remove',
+      btn_comprar_now: 'Buy now',
+      cajero_buscador_placeholder: 'Search product or scan code...',
+      cajero_vacio: 'The cashier is empty',
+      cajero_comprado: 'Thanks for your purchase',
+      cajero_cobro_h2: 'PAYMENT',
+      cajero_label_efectivo: 'Cash received:',
+      cajero_placeholder_efectivo: 'Amount received',
+      cajero_total_label: 'Total:',
+      cajero_btn_vaciar: 'Empty cart',
+      cajero_btn_finalizar: 'Complete Sale',
+      cajero_resultado_cambio: 'Change: $',
+      cajero_alert_carrito_vacio: 'The cart is empty.',
+      cajero_alert_efectivo_insuficiente: 'Insufficient cash.',
+      cajero_alert_venta_finalizada: 'Sale completed. Total: $',
+      favoritos_hero_title: 'Favorites',
+      favoritos_hero_sub: 'Your favorite products here',
+      favoritos_btn_remove: 'Remove'
+    }
+  };
+
+  function getLang() {
+    return localStorage.getItem(STORAGE_KEY) || DEFAULT_LANG;
+  }
+  function setLang(lang) {
+    localStorage.setItem(STORAGE_KEY, lang);
+    applyTranslations(lang);
+    updateLangButton(lang);
+    document.documentElement.lang = lang;
+    console.info('[i18n] idioma establecido a', lang);
+  }
+
+  function updateLangButton(lang) {
+    const btn = document.getElementById('btn-lang');
+    if (!btn) return;
+    btn.textContent = lang === 'es' ? 'ES' : 'EN';
+    btn.title = lang === 'es' ? 'Cambiar a English' : 'Switch to Español';
+    btn.setAttribute('aria-pressed', String(lang === 'en'));
+  }
+
+  /* Core: aplica traducciones a selectores conocidos y a elementos marcados con data-i18n */
+  function applyTranslations(lang) {
+    const d = DICT[lang] || DICT[DEFAULT_LANG];
+    if (!d) return;
+
+    // data-i18n (texto) y data-i18n-html (innerHTML)
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+      const key = el.getAttribute('data-i18n');
+      if (!key) return;
+      const v = d[key];
+      if (v === undefined) return;
+      if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') el.placeholder = v;
+      else el.textContent = v;
+    });
+    document.querySelectorAll('[data-i18n-html]').forEach(el => {
+      const key = el.getAttribute('data-i18n-html');
+      if (!key) return;
+      const v = d[key];
+      if (v === undefined) return;
+      el.innerHTML = v;
+    });
+
+    // header / brand
+    const brand = document.querySelector('.navbar__brand') || document.querySelector('.carrito-header__logo') || document.querySelector('.logo-text .brand');
+    if (brand && d.brand) brand.textContent = d.brand;
+
+    // nav links by href
+    document.querySelectorAll('header a, .navbar__menu a, .nav-links a').forEach(a => {
+      const href = (a.getAttribute('href') || '').toLowerCase();
+      if (href.includes('index')) a.innerHTML = `${d.nav_inicio} <img src="img/casa.png" alt="" width="30" height="30">`;
+      else if (href.includes('carrito')) a.innerHTML = `${d.nav_carrito} <img src="img/carri.png" alt="" width="30" height="30">`;
+      else if (href.includes('corazon') || href.includes('favoritos')) a.innerHTML = `${d.nav_favoritos} <img src="img/cora.png" alt="" width="30" height="30">`;
+      else {
+        const txt = (a.textContent || '').trim().toLowerCase();
+        if (txt.includes('comprar') || txt.includes('buy')) a.textContent = d.btn_comprar_now || a.textContent;
+      }
+    });
+
+    // mobile menu anchors
+    const mobileMenu = document.getElementById('mobileMenu') || document.querySelector('.mobile-menu');
+    if (mobileMenu) {
+      const anchors = Array.from(mobileMenu.querySelectorAll('a'));
+      if (anchors[0] && d.mobile_inicio) anchors[0].textContent = d.mobile_inicio;
+      if (anchors[1] && d.mobile_carrito) anchors[1].textContent = d.mobile_carrito;
+      if (anchors[2] && d.mobile_favoritos) anchors[2].textContent = d.mobile_favoritos;
+    }
+
+    // hero
+    const heroH1 = document.querySelector('.hero-content h1') || document.querySelector('.hero h1') || document.querySelector('.carrito-hero__contenido h2');
+    if (heroH1 && d.hero_title) heroH1.innerHTML = d.hero_title;
+    const heroP = document.querySelector('.hero-content p') || document.querySelector('.hero p') || document.querySelector('.carrito-hero__contenido p');
+    if (heroP && d.hero_sub) heroP.textContent = d.hero_sub;
+
+    // productos title
+    const titulo = document.getElementById('titulo-principal') || document.querySelector('.titulo-principal');
+    if (titulo && d.productos_title) titulo.textContent = d.productos_title;
+
+    // search inputs
+    const inputSearch = document.getElementById('busqueda') || document.querySelector('.barra-busqueda input');
+    if (inputSearch && d.buscar_placeholder) inputSearch.placeholder = d.buscar_placeholder;
+    const buscarBtn = document.querySelector('.barra-busqueda button') || document.querySelector('.barra-busqueda-btn');
+    if (buscarBtn && d.buscar_btn) buscarBtn.textContent = d.buscar_btn;
+
+    // favoritos page
+    const favHeroH1 = document.querySelector('.favoritos h1') || document.querySelector('.hero h1');
+    if (favHeroH1 && d.favoritos_hero_title) favHeroH1.textContent = d.favoritos_hero_title;
+    const favHeroP = document.querySelector('.favoritos p') || document.querySelector('.hero p');
+    if (favHeroP && d.favoritos_hero_sub) favHeroP.textContent = d.favoritos_hero_sub;
+    const favoritosContainer = document.getElementById('favoritos-container');
+    if (favoritosContainer) {
+      const empty = favoritosContainer.querySelector('.empty');
+      if (empty && d.favoritos_empty) empty.textContent = d.favoritos_empty;
+      favoritosContainer.querySelectorAll('.btn-remove, .btn-eliminar').forEach(b => {
+        if (d.favoritos_btn_remove) b.textContent = d.favoritos_btn_remove;
+        else if (d.btn_remove) b.textContent = d.btn_remove;
+      });
+    }
+
+    // footer
+    const footerP = document.querySelector('footer.footer p') || document.querySelector('footer p');
+    if (footerP && d.footer) footerP.textContent = d.footer;
+
+    // cajero specifics
+    const buscarInput = document.getElementById('buscar');
+    if (buscarInput && d.cajero_buscador_placeholder) buscarInput.placeholder = d.cajero_buscador_placeholder;
+
+    const cajeroVacio = document.getElementById('carrito-vacio') || document.querySelector('.carrito-vacio');
+    if (cajeroVacio && d.cajero_vacio) cajeroVacio.textContent = d.cajero_vacio;
+
+    const cajeroComprado = document.getElementById('carrito-comprado') || document.querySelector('.carrito-comprado');
+    if (cajeroComprado) {
+      const iconHTML = cajeroComprado.querySelector('i') ? cajeroComprado.querySelector('i').outerHTML : '';
+      cajeroComprado.innerHTML = (d.cajero_comprado || cajeroComprado.textContent) + (iconHTML ? ' ' + iconHTML : '');
+    }
+
+    const cobroH2 = document.querySelector('.cobro-panel h2');
+    if (cobroH2 && d.cajero_cobro_h2) cobroH2.textContent = d.cajero_cobro_h2;
+
+    const labelEfectivo = document.querySelector('.cobro-box label');
+    if (labelEfectivo && d.cajero_label_efectivo) labelEfectivo.textContent = d.cajero_label_efectivo;
+
+    const efectivoInput = document.getElementById('efectivo');
+    if (efectivoInput && d.cajero_placeholder_efectivo) efectivoInput.placeholder = d.cajero_placeholder_efectivo;
+
+    const ps = document.querySelectorAll('.carrito-total p');
+    if (ps && ps[0] && d.cajero_total_label) ps[0].textContent = d.cajero_total_label;
+
+    const btnVaciar = document.getElementById('carrito-acciones-vaciar') || document.querySelector('.btn-vaciar');
+    if (btnVaciar && d.cajero_btn_vaciar) btnVaciar.textContent = d.cajero_btn_vaciar;
+    const btnFinalizar = document.getElementById('finalizar') || document.querySelector('.btn-finalizar');
+    if (btnFinalizar && d.cajero_btn_finalizar) btnFinalizar.textContent = d.cajero_btn_finalizar;
+
+    const resultadoP = document.querySelector('.resultado');
+    if (resultadoP && d.cajero_resultado_cambio) {
+      const spanCambio = resultadoP.querySelector('#cambio');
+      resultadoP.textContent = d.cajero_resultado_cambio;
+      if (spanCambio) resultadoP.appendChild(spanCambio);
+    }
+
+    // generic remove buttons across pages
+    document.querySelectorAll('.btn-remove, .btn-eliminar').forEach(b => {
+      if (b && d.btn_remove) b.textContent = d.btn_remove;
+    });
+  }
+
+  /* Override alert for known cajero messages (keeps numeric part) */
+  (function overrideAlert() {
+    const nativeAlert = window.alert.bind(window);
+    window.alert = function (msg) {
+      const lang = getLang();
+      const map = {
+        'El carrito está vacío.': { en: DICT.en.cajero_alert_carrito_vacio, es: DICT.es.cajero_alert_carrito_vacio },
+        'Efectivo insuficiente.': { en: DICT.en.cajero_alert_efectivo_insuficiente, es: DICT.es.cajero_alert_efectivo_insuficiente },
+        'Venta finalizada. Total: $': { en: DICT.en.cajero_alert_venta_finalizada, es: DICT.es.cajero_alert_venta_finalizada },
+        [DICT.en.cajero_alert_carrito_vacio]: { en: DICT.en.cajero_alert_carrito_vacio, es: DICT.es.cajero_alert_carrito_vacio },
+        [DICT.en.cajero_alert_efectivo_insuficiente]: { en: DICT.en.cajero_alert_efectivo_insuficiente, es: DICT.es.cajero_alert_efectivo_insuficiente },
+        [DICT.en.cajero_alert_venta_finalizada]: { en: DICT.en.cajero_alert_venta_finalizada, es: DICT.es.cajero_alert_venta_finalizada }
+      };
+
+      const ventaPrefixEs = DICT.es.cajero_alert_venta_finalizada;
+      const ventaPrefixEn = DICT.en.cajero_alert_venta_finalizada;
+
+      if (typeof msg === 'string') {
+        if (msg.startsWith(ventaPrefixEs) || msg.startsWith(ventaPrefixEn)) {
+          const numericPart = msg.slice(msg.indexOf('$') >= 0 ? msg.indexOf('$') : msg.length);
+          const prefix = (lang === 'en') ? ventaPrefixEn : ventaPrefixEs;
+          nativeAlert(prefix + numericPart);
+          return;
+        }
+        const entry = map[msg];
+        if (entry) {
+          nativeAlert(entry[lang === 'en' ? 'en' : 'es']);
+          return;
+        }
+      }
+      nativeAlert(msg);
+    };
+  })();
+
+  /* Create language toggle button */
+  function createLangButton() {
+    if (document.getElementById('btn-lang')) return;
+    const menu = document.getElementById('mobileMenu') || document.querySelector('.mobile-menu');
+    const headerMenu = document.querySelector('.navbar__menu') || document.querySelector('.nav-links') || document.querySelector('header');
+
+    const btn = document.createElement('button');
+    btn.id = 'btn-lang';
+    btn.type = 'button';
+    btn.className = 'btn-lang';
+    btn.style.padding = '8px 12px';
+    btn.style.borderRadius = '999px';
+    btn.style.border = 'none';
+    btn.style.cursor = 'pointer';
+    btn.style.fontWeight = '700';
+    btn.style.background = 'linear-gradient(180deg,#fbbf24,#f59e0b)';
+    btn.style.color = '#0b1220';
+    btn.style.boxShadow = '0 8px 20px rgba(0,0,0,0.2)';
+    btn.style.minWidth = '56px';
+
+    const lang = getLang();
+    btn.textContent = lang === 'es' ? 'ES' : 'EN';
+    btn.title = lang === 'es' ? 'Cambiar a English' : 'Switch to Español';
+    btn.setAttribute('aria-pressed', String(lang === 'en'));
+
+    btn.addEventListener('click', () => {
+      const current = getLang();
+      const nuevo = current === 'es' ? 'en' : 'es';
+      setLang(nuevo);
+    });
+
+    if (menu) {
+      const closeMobile = menu.querySelector('.close-mobile');
+      if (closeMobile && closeMobile.parentNode) closeMobile.parentNode.insertBefore(btn, closeMobile.nextSibling);
+      else menu.insertBefore(btn, menu.firstChild);
+    } else if (headerMenu) {
+      headerMenu.appendChild(btn);
+    } else {
+      document.body.insertBefore(btn, document.body.firstChild);
+    }
+  }
+
+  /* MutationObserver: reaplica traducciones si se agregan nodos dinámicamente */
+  let observer = null;
+  function startObserver() {
+    if (observer) return;
+    observer = new MutationObserver(mutations => {
+      // small debounce
+      clearTimeout(observer._t);
+      observer._t = setTimeout(() => {
+        applyTranslations(getLang());
+      }, 120);
+    });
+    observer.observe(document.documentElement, { childList: true, subtree: true });
+  }
+
+  /* Public API */
+  function reapplyTranslations() { applyTranslations(getLang()); }
+  window.setMarketGoLang = setLang;
+  window.getMarketGoLang = getLang;
+  window.reapplyTranslations = reapplyTranslations;
+  window.t = function (k) { const d = DICT[getLang()] || DICT[DEFAULT_LANG]; return d[k] || k; };
+
+  /* Init on DOMContentLoaded and also on load (in case some pages render later) */
+  function init() {
+    createLangButton();
+    applyTranslations(getLang());
+    updateLangButton(getLang());
+    document.documentElement.lang = getLang();
+    startObserver();
+    console.info('[i18n] initialized, lang=', getLang());
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+    window.addEventListener('load', () => { applyTranslations(getLang()); });
+  } else {
+    init();
+  }
+
+  /* Debug helper: run in console to list missing selectors */
+  window.i18nDebug = function () {
+    const checks = [
+      '#mobileMenu or .mobile-menu',
+      'header .nav-links or .navbar__menu',
+      '.hero h1 or .hero-content h1',
+      '#titulo-principal or .titulo-principal',
+      '#buscar or .barra-busqueda input',
+      '#favoritos-container',
+      '#carrito-vacio, #carrito-comprado, #buscar, #efectivo, #finalizar'
+    ];
+    console.info('[i18n] debug checks:');
+    checks.forEach(s => console.log(s, !!document.querySelector(s)));
+  };
+})();
+</script>
+
 </body>
 </html>

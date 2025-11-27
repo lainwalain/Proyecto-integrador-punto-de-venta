@@ -13,13 +13,23 @@
 </head>
 <body>
 
-  <header class="carrito-header">
-    <div class="carrito-header__logo">Market.GO</div>
 
-    <nav class="carrito-header__nav">
-      <a href="Index.html">Volver a inicio <img src="img/casa.png" alt="" width="30" height="30"></a>
-      <a href="corazon.html">favoritos <img src="img/cora.png" alt="" width="30" height="30"></a>
-    </nav>
+   <header class="carrito-header">
+  <div class="carrito-header__logo">Market.GO</div>
+
+  <nav class="carrito-header__nav">
+    <a href="Index.html">Volver a inicio <img src="img/casa.png" alt="" width="30" height="30"></a>
+    <a href="corazon.html">Favoritos <img src="img/cora.png" alt="" width="30" height="30"></a>
+  </nav>
+
+  <!-- Botones de idioma en el header -->
+  <div class="language-buttons">
+    <button class="lang-btn" data-lang="es">🇪🇸 Español</button>
+    <button class="lang-btn" data-lang="en">🇬🇧 English</button>
+  </div>
+
+
+</header>
 
   
     </button>
@@ -43,6 +53,9 @@
     <ul class="mobile-menu__list">
       <li><a class="mobile-menu__link" href="Index.html"><img src="img/casa.png" alt="" width="18" height="18" aria-hidden="true"> Volver a inicio</a></li>
       <li><a class="mobile-menu__link" href="corazon.html"><img src="img/cora.png" alt="" width="18" height="18" aria-hidden="true"> Favoritos</a></li>
+      <!-- Selector de idioma unificado -->
+
+
     </ul>
   </nav>
 
@@ -81,6 +94,68 @@
   <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <script src="./js/carrito.js"></script>
+<script>
+  const translations = {
+    es: {
+      inicio: "Volver a inicio",
+      favoritos: "Favoritos",
+      carritoTitulo: "Tu carrito",
+      carritoBienvenida: "Te damos la bienvenida a tu carrito de compras",
+      carritoVacio: "Tu carrito está vacío.",
+      total: "Total:",
+      vaciar: "Vaciar carrito",
+      comprar: "Comprar ahora",
+      comprado: "Gracias por tu compra",
+      footer: "© Market.GO — Todos los derechos reservados"
+    },
+    en: {
+      inicio: "Back to home",
+      favoritos: "Favorites",
+      carritoTitulo: "Your cart",
+      carritoBienvenida: "Welcome to your shopping cart",
+      carritoVacio: "Your cart is empty.",
+      total: "Total:",
+      vaciar: "Empty cart",
+      comprar: "Buy now",
+      comprado: "Thank you for your purchase",
+      footer: "© Market.GO — All rights reserved"
+    }
+  };
+
+  function applyLanguage(lang) {
+    document.querySelector(".carrito-header__nav a:first-child").innerHTML = translations[lang].inicio + ' <img src="img/casa.png" width="30" height="30">';
+    document.querySelector(".carrito-header__nav a:last-child").innerHTML = translations[lang].favoritos + ' <img src="img/cora.png" width="30" height="30">';
+    document.querySelector(".carrito-hero__contenido h2").textContent = translations[lang].carritoTitulo;
+    document.querySelector(".carrito-hero__contenido p").textContent = translations[lang].carritoBienvenida;
+    document.getElementById("carrito-vacio").childNodes[0].textContent = translations[lang].carritoVacio + " ";
+    document.querySelector(".carrito-total p").textContent = translations[lang].total;
+    document.getElementById("carrito-acciones-vaciar").textContent = translations[lang].vaciar;
+    document.getElementById("carrito-acciones-comprar").textContent = translations[lang].comprar;
+    document.getElementById("carrito-comprado").childNodes[0].textContent = translations[lang].comprado + " ";
+    document.querySelector(".carrito-footer p").textContent = translations[lang].footer;
+
+    // Marcar botón activo
+    document.querySelectorAll(".lang-btn").forEach(btn => {
+      btn.classList.remove("active");
+      if (btn.dataset.lang === lang) btn.classList.add("active");
+    });
+  }
+
+  // Evento para botones
+  document.querySelectorAll(".lang-btn").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const lang = btn.dataset.lang;
+      localStorage.setItem("language", lang);
+      applyLanguage(lang);
+    });
+  });
+
+  // Al cargar la página
+  window.onload = () => {
+    const savedLang = localStorage.getItem("language") || "es";
+    applyLanguage(savedLang);
+  };
+</script>
 
   <script>
   (function () {
@@ -346,5 +421,7 @@
     document.addEventListener('DOMContentLoaded', init);
   })();
   </script>
+ 
+
 </body>
 </html>

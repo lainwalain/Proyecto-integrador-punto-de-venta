@@ -35,6 +35,33 @@ a{color:inherit;text-decoration:none}
   box-shadow:0 6px 20px rgba(11,15,30,0.04);
   z-index:60;
 }
+.idioma-switch {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin: 20px 0;
+}
+
+.idioma-switch button {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 20px;
+  background: linear-gradient(135deg, #4CAF50, #2E7D32);
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 14px;
+}
+
+.idioma-switch button:hover {
+  transform: scale(1.05);
+  background: linear-gradient(135deg, #66BB6A, #388E3C);
+}
+
+.idioma-switch button.active {
+  background: linear-gradient(135deg, #2196F3, #1565C0);
+}
 
 /* logo */
 .logo{display:flex;align-items:center;gap:10px;text-decoration:none;color:inherit}

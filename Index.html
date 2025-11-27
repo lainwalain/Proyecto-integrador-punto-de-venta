@@ -4,51 +4,37 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>MarketGo - Inicio</title>
-   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
-    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
+  <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
   <link rel="stylesheet" href="style.css">
-  <link rel="stylesheet" href="style.css">
-<link rel="stylesheet" href="css/main.css">
-<link rel="stylesheet" href="css/main1.css">
-<link rel="stylesheet" href="css/csscajero.css">
-
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/main1.css">
+  <link rel="stylesheet" href="css/csscajero.css">
 </head>
 <body>
 
+<header class="header">
+  <a class="logo">
+    <div class="logo-circle"></div>
+    <div class="logo-text">
+      <span class="brand">MarketGo</span>
+    </div>
+  </a>
 
-  <header class="header">
-   <a  class="logo">
-  <div class="logo-circle">
- 
-  </div>
-  <div class="logo-text">
-    <span class="brand">MarketGo</span>
-    
-  </div>
-</a>
+  <nav class="nav-links">
+    <a href="Index.html">Inicio <img src="img/casa.png" alt="" width="30" height="30"></a>
+    <a href="carrito1.html">Carrito <img src="img/carri.png" alt="" width="30" height="30"></a>
+    <a href="corazon.html">Favoritos <img src="img/cora.png" alt="" width="30" height="30"></a>
+  </nav>
 
-    
-    <nav class="nav-links">
-      <a href="Index.html">Inicio <img src="img/casa.png" alt="" width="30" height="30"></a>
-      <a href="carrito1.html">carrito<img src="img/carri.png" alt="" width="30" height="30"></a>
-      <a href="corazon.html">favoritos<img src="img/cora.png" alt="" width="30" height="30"></a>
-      
- 
-    </nav>
-    
-   
-    <div class="menu-icon" onclick="toggleMenu()">&#9776;</div>
-  </header>
+  <div class="menu-icon" onclick="toggleMenu()">&#9776;</div>
+</header>
 
-
-
-  <div id="mobileMenu" class="mobile-menu">
+<div id="mobileMenu" class="mobile-menu">
   <div class="close-mobile" onclick="toggleMobile()">
- 
-<button class="mobile-close" aria-label="Cerrar menú">✕</button>
-
+    <button class="mobile-close" aria-label="Cerrar menú">✕</button>
   </div>
-  <button id="btn-tema" class="btn-tema"><img src="img/moon.png" alt="" width="30" height="30"></a></button>
+  <button id="btn-tema" class="btn-tema"><img src="img/moon.png" alt="" width="30" height="30"></button>
 
   <a href="Index.html">Inicio</a>
   <a href="carrito1.html">Carrito</a>
@@ -56,38 +42,33 @@
 
   <h3>Usuario</h3>
   <a href="./login/login.html">Inicio de Sesión</a>
-  <a href="MiCuenta.html">Cuenta</a>
+ 
 
   <h3>Categorías</h3>
   <div class="mobile-categorias">
-    <button class="cat-btn" data-category="todos">Todos</button>
-    <button class="cat-btn" data-category="lacteos">Lácteos</button>
-    <button class="cat-btn" data-category="verduras">Verduras</button>
-    <button class="cat-btn" data-category="carnes">Carnes</button>
-    <button class="cat-btn" data-category="Limpieza">Limpieza del hogar</button>
-    <button class="cat-btn" data-category="Higiene">Higiene</button>
-    <button class="cat-btn" data-category="frutas-verduras">Frutas y Verduras</button>
-    <button class="cat-btn" data-category="Chucherias">Chucherías</button>
-    <button class="cat-btn" data-category="Bebidas">Bebidas</button>
-    <button class="cat-btn" data-category="papeleria">Papelería</button>
-    <button class="cat-btn" data-category="Carne y embutidos">Carne y Embutidos</button>
-    <button class="cat-btn" data-category="pollo">Pollo</button>
-    <button class="cat-btn" data-category="Alcohol">Bebidas alcohólicas</button>
+    <button class="cat-btn">Todos</button>
+    <button class="cat-btn">Lácteos</button>
+    <button class="cat-btn">Verduras</button>
+    <button class="cat-btn">Carnes</button>
+    <button class="cat-btn">Limpieza del hogar</button>
+    <button class="cat-btn">Higiene</button>
+    <button class="cat-btn">Frutas y Verduras</button>
+    <button class="cat-btn">Chucherías</button>
+    <button class="cat-btn">Bebidas</button>
+    <button class="cat-btn">Papelería</button>
+    <button class="cat-btn">Carne y Embutidos</button>
+    <button class="cat-btn">Pollo</button>
+    <button class="cat-btn">Bebidas alcohólicas</button>
+  </div>
+
+
+  <div class="idioma-switch">
+    <button onclick="changeLanguage('es')">ES</button>
+    <button onclick="changeLanguage('en')">EN</button>
   </div>
 </div>
 
-  <script>
-    function toggleMenu() {
-      const sidebar = document.getElementById('sidebar');
-      sidebar.classList.toggle('active');
-    }
-  </script>
-  
-</body>
-</html>
-
-
-  <section class="hero" aria-label="Hero principal">
+<section class="hero" aria-label="Hero principal">
   <div class="hero-bg" aria-hidden="true">
     <div class="layer active" style="background-image:url('img/comes.jpg')"></div>
     <div class="layer" style="background-image:url('img/waitress.jpg')"></div>
@@ -96,120 +77,141 @@
   </div>
 
   <div class="hero-content">
-    <h1>¡Marketgo te da la <span>Bienvenida</span>!</h1>
+    <h1>¡MarketGo te da la <span>Bienvenida</span>!</h1>
     <p>Encuentra ofertas, productos frescos y entrega rápida.</p>
   </div>
 </section>
 
+<section class="seccion-tienda">
+  <main>
+    <h2 class="titulo-principal" id="titulo-principal">Productos</h2>
+    <div class="barra-busqueda">
+      <input type="text" id="busqueda" placeholder="Buscar productos...">
+      <button onclick="filtrarProductos()">Buscar</button>
+    </div>
+    <div id="contenedor-productos" class="contenedor-productos"></div>
+  </main>
+</section>
 
-<body>
+<footer class="footer">
+  <p>© 2025 MarketGo - Todos los derechos reservados</p>
+</footer>
 
-  
-  <section class="seccion-tienda">
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+<script src="./js/main1.js"></script>
+<script src="./js/menu.js"></script>
+<script src="js/tema.js"></script>
 
-  
-
-   
-   <main>
-  <h2 class="titulo-principal" id="titulo-principal">Productos</h2>
-
- <div class="barra-busqueda">
-  <input type="text" id="busqueda" placeholder="Buscar productos...">
-  <button onclick="filtrarProductos()">Buscar</button>
-</div>
-
-  <div id="contenedor-productos" class="contenedor-productos">
-    
-  </div>
-</main>
-
-    <main>
-      
-      <div id="contenedor-productos" class="contenedor-productos">
-       
-      </div>
-    </main>
-
-  </section>
-
-</body>
-
-
-
-  <footer class="footer">
-    <p>© 2025 MarketGo - Todos los derechos reservados</p>
-  </footer>
-
-
-    
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
-    <script src="./js/main1.js"></script>
-    <script src="./js/menu.js"></script>
-    <script src="js/tema.js"></script>
-
-
-
-  
 <script>
 function toggleMobile() {
   const menu = document.getElementById("mobileMenu");
   menu.classList.toggle("active");
 }
-
 document.querySelector(".menu-icon").addEventListener("click", toggleMobile);
 </script>
+
 <script>
-  const hero = document.querySelector('.hero');
-  const images = [
-    'img/comes.jpg',
-    'img/waitress.jpg',
-    'img/viej.jpg',
-    'img/wae.jpg',
-   
-  ];
-  let index = 0;
+  const translations = {
+    es: {
+      inicio: "Inicio",
+      carrito: "Carrito",
+      favoritos: "Favoritos",
+      usuario: "Usuario",
+      login: "Inicio de Sesión",
+      cuenta: "Cuenta",
+      categorias: "Categorías",
+      productos: "Productos",
+      buscar: "Buscar productos...",
+      bienvenida: "¡MarketGo te da la ",
+      bienvenidaSpan: "Bienvenida",
+      descripcionHero: "Encuentra ofertas, productos frescos y entrega rápida.",
+      footer: "© 2025 MarketGo - Todos los derechos reservados",
+      categoriasList: [
+        "Todos","Lácteos","Verduras","Carnes","Limpieza del hogar","Higiene",
+        "Frutas y Verduras","Chucherías","Bebidas","Papelería","Carne y Embutidos",
+        "Pollo","Bebidas alcohólicas"
+      ]
+    },
+    en: {
+      inicio: "Home",
+      carrito: "Cart",
+      favoritos: "Favorites",
+      usuario: "User",
+      login: "Login",
+      cuenta: "Account",
+      categorias: "Categories",
+      productos: "Products",
+      buscar: "Search products...",
+      bienvenida: "MarketGo ",
+      bienvenidaSpan: "welcomes you!",
+      descripcionHero: "Find deals, fresh products, and fast delivery.",
+      footer: "© 2025 MarketGo - All rights reserved",
+      categoriasList: [
+        "All","Dairy","Vegetables","Meat","Home Cleaning","Hygiene",
+        "Fruits and Vegetables","Snacks","Drinks","Stationery","Meat and Sausages",
+        "Chicken","Alcoholic Beverages"
+      ]
+    }
+  };
 
-  setInterval(() => {
-    index = (index + 1) % images.length;
-    hero.style.backgroundImage = `url('${images[index]}')`;
-  }, 3000);
-</script>
-<script>
-(function(){
-  const layers = Array.from(document.querySelectorAll('.hero-bg .layer'));
-  if (!layers.length) return;
+  function changeLanguage(lang) {
+    // Menú superior
+    document.querySelectorAll(".nav-links a")[0].innerHTML = translations[lang].inicio + ' <img src="img/casa.png" width="30" height="30">';
+    document.querySelectorAll(".nav-links a")[1].innerHTML = translations[lang].carrito + ' <img src="img/carri.png" width="30" height="30">';
+    document.querySelectorAll(".nav-links a")[2].innerHTML = translations[lang].favoritos + ' <img src="img/cora.png" width="30" height="30">';
 
-  let idx = 0;
-  const INTERVAL = 4500; // tiempo entre cambios (ms)
-  const FADE_MS = 1000;  // debe coincidir con transition de opacity en CSS
+    // Menú móvil
+    document.querySelector("#mobileMenu h3").textContent = translations[lang].usuario;
+    document.querySelector("#mobileMenu a[href='./login/login.html']").textContent = translations[lang].login;
+    document.querySelector("#mobileMenu a[href='MiCuenta.html']").textContent = translations[lang].cuenta;
+    document.querySelector("#mobileMenu h3:nth-of-type(2)").textContent = translations[lang].categorias;
 
-  function show(next) {
-    layers.forEach((l, i) => l.classList.toggle('active', i === next));
-  }
+    // Categorías
+    const catBtns = document.querySelectorAll(".mobile-categorias .cat-btn");
+    translations[lang].categoriasList.forEach((txt, i) => {
+      if (catBtns[i]) catBtns[i].textContent = txt;
+    });
 
-  // Inicia ciclo
-  setInterval(() => {
-    const next = (idx + 1) % layers.length;
-    show(next);
-    idx = next;
-  }, INTERVAL);
+    // Productos
+    document.getElementById("titulo-principal").textContent = translations[lang].productos;
+    document.getElementById("busqueda").placeholder = translations[lang].buscar;
 
-  // Opcional: pausa la rotación si el usuario pasa el mouse (mejora UX)
-  const hero = document.querySelector('.hero');
-  let timer = null;
-  if (hero) {
-    hero.addEventListener('mouseenter', () => { clearInterval(timer); });
-    hero.addEventListener('mouseleave', () => {
-      // reinicia el intervalo con pequeño retraso
-      timer = setInterval(() => {
-        const next = (idx + 1) % layers.length;
-        show(next);
-        idx = next;
-      }, INTERVAL);
+    // Hero
+    const heroH1 = document.querySelector(".hero-content h1");
+    const span = heroH1.querySelector("span");
+    heroH1.firstChild.textContent = translations[lang].bienvenida; 
+    span.textContent = translations[lang].bienvenidaSpan;
+
+    document.querySelector(".hero-content p").textContent = translations[lang].descripcionHero;
+
+    // Footer
+    document.querySelector(".footer p").textContent = translations[lang].footer;
+
+    // Guardar idioma en localStorage
+    localStorage.setItem("language", lang);
+
+    // Marcar botón activo
+    document.querySelectorAll(".idioma-switch button").forEach(btn => {
+      btn.classList.remove("active");
+      if (btn.textContent.toLowerCase().includes(lang)) btn.classList.add("active");
     });
   }
-})();
+
+  // Eventos de los botones
+  document.querySelectorAll(".idioma-switch button").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const lang = btn.textContent.toLowerCase().includes("es") ? "es" : "en";
+      changeLanguage(lang);
+    });
+  });
+
+  // Al cargar la página, aplicar idioma guardado
+  window.onload = () => {
+    const savedLang = localStorage.getItem("language") || "es";
+    changeLanguage(savedLang);
+  };
 </script>
 
-</body>
-</html>
+
+<style>
+

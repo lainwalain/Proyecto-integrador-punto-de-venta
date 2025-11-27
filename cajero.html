@@ -16,10 +16,21 @@
   <div class="carrito-contenedor">
     <main class="carrito-main layout-pos">
 
-     
       <div class="columna-izquierda">
 
-       
+        <!-- Selector de idioma -->
+        <div class="language-switch">
+          <select id="language-select">
+            <option value="es">🇪🇸 Español</option>
+            <option value="en">🇬🇧 English</option>
+          </select>
+        </div>
+
+        <!-- Botón modo oscuro -->
+        <div class="theme-switch">
+          <button id="toggle-theme">🌙 Modo Oscuro</button>
+        </div>
+
         <div class="buscador">
           <input 
             type="text" 
@@ -32,10 +43,8 @@
 
         <p id="carrito-vacio" class="carrito-vacio">El cajero está vacío</p>
 
-   
         <section id="carrito-productos" class="carrito-productos disabled"></section>
 
-      
         <p id="carrito-comprado" class="carrito-comprado disabled">
           Gracias por tu compra <i class="bi bi-emoji-laughing"></i>
         </p>
@@ -43,21 +52,21 @@
       </div> 
     
       <aside class="cobro-panel">
-        <h2>COBRO</h2>
+        <h2 id="cobro-title">COBRO</h2>
 
         <div class="cobro-box">
-          <label>Efectivo recibido:</label>
+          <label id="efectivo-label">Efectivo recibido:</label>
           <input type="number" id="efectivo" placeholder="Cantidad recibida">
 
           <div class="carrito-total">
-            <p>Total:</p>
+            <p id="total-label">Total:</p>
             <p id="total">$0.00</p>
           </div>
 
           <button id="carrito-acciones-vaciar" class="btn-vaciar">Vaciar carrito</button>
           <button id="finalizar" class="btn-finalizar">Finalizar Venta</button>
           
-          <p class="resultado">Cambio: $<span id="cambio">0.00</span></p>
+          <p class="resultado" id="cambio-label">Cambio: $<span id="cambio">0.00</span></p>
         </div>
       </aside>
 
@@ -65,7 +74,7 @@
   </div>
 
   <footer class="carrito-footer">
-    <p>© Market.GO — Todos los derechos reservados</p>
+    <p id="footer-text">© Market.GO — Todos los derechos reservados</p>
   </footer>
 
   <!-- SCRIPTS -->
@@ -73,51 +82,50 @@
 
   <!-- CALCULAR CAMBIO -->
   <script>
-  document.getElementById("efectivo").addEventListener("input", () => {
-      let total = parseFloat(document.getElementById("total").textContent.replace("$","")) || 0;
-      let efectivo = parseFloat(document.getElementById("efectivo").value) || 0;
+    document.getElementById("efectivo").addEventListener("input", () => {
+      const total = parseFloat(document.getElementById("total").textContent.replace("$","")) || 0;
+      const efectivo = parseFloat(document.getElementById("efectivo").value) || 0;
       document.getElementById("cambio").textContent = (efectivo - total).toFixed(2);
-  });
+    });
   </script>
 
   <!-- BUSCAR Y AGREGAR PRODUCTOS -->
   <script>
-  const buscar = document.getElementById("buscar");
-  const resultados = document.getElementById("resultados");
-  const carritoVacio = document.getElementById("carrito-vacio");
-  const contProductos = document.getElementById("carrito-productos");
-  const acciones = document.getElementById("cobro-panel");
+    const buscar = document.getElementById("buscar");
+    const resultados = document.getElementById("resultados");
+    const carritoVacio = document.getElementById("carrito-vacio");
+    const contProductos = document.getElementById("carrito-productos");
 
-  let carrito = [];
+    let carrito = [];
 
-  buscar.addEventListener("keyup", () => {
-      let text = buscar.value.trim();
+    buscar.addEventListener("keyup", () => {
+      const text = buscar.value.trim();
       if (text.length === 0) { resultados.innerHTML = ""; return; }
 
-      fetch("buscar.php?busqueda=" + text)
-          .then(res => res.json())
-          .then(data => {
-              resultados.innerHTML = "";
-              data.forEach(p => {
-                  let item = document.createElement("div");
-                  item.classList.add("item-busqueda");
-                  item.innerHTML = `
-                      <strong>${p.nombre}</strong> - $${p.precio}
-                      <button onclick="agregar(${p.id}, '${p.nombre}', ${p.precio})">Agregar</button>
-                  `;
-                  resultados.appendChild(item);
-              });
+      fetch("buscar.php?busqueda=" + encodeURIComponent(text))
+        .then(res => res.json())
+        .then(data => {
+          resultados.innerHTML = "";
+          data.forEach(p => {
+            const item = document.createElement("div");
+            item.classList.add("item-busqueda");
+            item.innerHTML = `
+              <strong>${p.nombre}</strong> - $${p.precio}
+              <button onclick="agregar(${p.id}, '${p.nombre.replace(/'/g, "\\'")}', ${p.precio})">Agregar</button>
+            `;
+            resultados.appendChild(item);
           });
-  });
+        });
+    });
 
-  function agregar(id, nombre, precio) {
+    function agregar(id, nombre, precio) {
       carrito.push({ id, nombre, precio });
       mostrarCarrito();
       buscar.value = "";
       resultados.innerHTML = "";
-  }
+    }
 
-  function mostrarCarrito() {
+    function mostrarCarrito() {
       carritoVacio.classList.add("disabled");
       contProductos.classList.remove("disabled");
 
@@ -125,38 +133,144 @@
       contProductos.innerHTML = "";
 
       carrito.forEach(p => {
-          total += p.precio;
-          contProductos.innerHTML += `<div class="producto">${p.nombre} - $${p.precio}</div>`;
+        total += p.precio;
+        contProductos.innerHTML += `<div class="producto">${p.nombre} - $${p.precio.toFixed(2)}</div>`;
       });
 
       document.getElementById("total").textContent = "$" + total.toFixed(2);
-  }
+    }
 
-  // Vaciar carrito
-  document.getElementById("carrito-acciones-vaciar").addEventListener("click", () => {
+    // Vaciar carrito
+    document.getElementById("carrito-acciones-vaciar").addEventListener("click", () => {
       carrito = [];
-      mostrarCarrito();
-      carritoVacio.classList.remove("disabled");
-      contProductos.classList.add("disabled");
-  });
-
-  // Finalizar venta
-  document.getElementById("finalizar").addEventListener("click", () => {
-      if (carrito.length === 0) { alert("El carrito está vacío."); return; }
-      let total = parseFloat(document.getElementById("total").textContent.replace("$",""));
-      let efectivo = parseFloat(document.getElementById("efectivo").value);
-      if (isNaN(efectivo) || efectivo < total) { alert("Efectivo insuficiente."); return; }
-
-      // Generar ticket (ejemplo: abrir ventana con JSON)
-      alert("Venta finalizada. Total: $" + total.toFixed(2));
-      carrito = [];
-      mostrarCarrito();
+      contProductos.innerHTML = "";
+      document.getElementById("total").textContent = "$0.00";
       carritoVacio.classList.remove("disabled");
       contProductos.classList.add("disabled");
       document.getElementById("efectivo").value = "";
       document.getElementById("cambio").textContent = "0.00";
-  });
+    });
+
+    // Finalizar venta
+    document.getElementById("finalizar").addEventListener("click", () => {
+      if (carrito.length === 0) { alert("El carrito está vacío."); return; }
+      const total = parseFloat(document.getElementById("total").textContent.replace("$",""));
+      const efectivo = parseFloat(document.getElementById("efectivo").value);
+      if (isNaN(efectivo) || efectivo < total) { alert("Efectivo insuficiente."); return; }
+
+      alert("Venta finalizada. Total: $" + total.toFixed(2));
+      carrito = [];
+      contProductos.innerHTML = "";
+      document.getElementById("total").textContent = "$0.00";
+      carritoVacio.classList.remove("disabled");
+      contProductos.classList.add("disabled");
+      document.getElementById("efectivo").value = "";
+      document.getElementById("cambio").textContent = "0.00";
+    });
   </script>
+
+  <!-- CAMBIO DE IDIOMA + MODO OSCURO (persistentes) -->
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const els = {
+    languageSelect: document.getElementById("language-select"),
+    toggleTheme: document.getElementById("toggle-theme"),
+    cobroTitle: document.getElementById("cobro-title"),
+    efectivoLabel: document.getElementById("efectivo-label"),
+    totalLabel: document.getElementById("total-label"),
+    vaciarBtn: document.getElementById("carrito-acciones-vaciar"),
+    finalizarBtn: document.getElementById("finalizar"),
+    cambioContainer: document.getElementById("cambio-label"),
+    cambioSpan: document.getElementById("cambio"),
+    footerText: document.getElementById("footer-text"),
+    cajeroVacio: document.getElementById("carrito-vacio"),
+    cajeroComprado: document.getElementById("carrito-comprado"),
+    buscarInput: document.getElementById("buscar")
+  };
+
+  const translations = {
+    es: {
+      cobro: "COBRO",
+      efectivo: "Efectivo recibido:",
+      total: "Total:",
+      vaciar: "Vaciar carrito",
+      finalizar: "Finalizar Venta",
+      cambioLabel: "Cambio:",
+      footer: "© Market.GO — Todos los derechos reservados",
+      vacio: "El cajero está vacío",
+      comprado: "Gracias por tu compra",
+      buscarPH: "Buscar producto o escanear código..."
+    },
+    en: {
+      cobro: "CHECKOUT",
+      efectivo: "Cash received:",
+      total: "Total:",
+      vaciar: "Empty cart",
+      finalizar: "Finish Sale",
+      cambioLabel: "Change:",
+      footer: "© Market.GO — All rights reserved",
+      vacio: "The cashier is empty",
+      comprado: "Thank you for your purchase",
+      buscarPH: "Search product or scan code..."
+    }
+  };
+
+  function applyLanguage(lang) {
+    const t = translations[lang] || translations.es;
+    els.cobroTitle.textContent = t.cobro;
+    els.efectivoLabel.textContent = t.efectivo;
+    els.totalLabel.textContent = t.total;
+    els.vaciarBtn.textContent = t.vaciar;
+    els.finalizarBtn.textContent = t.finalizar;
+    els.cambioContainer.innerHTML = `${t.cambioLabel} $<span id="cambio">${els.cambioSpan.textContent}</span>`;
+    els.footerText.textContent = t.footer;
+    els.cajeroVacio.textContent = t.vacio;
+    const emoji = els.cajeroComprado.querySelector("i");
+    els.cajeroComprado.textContent = t.comprado + " ";
+    if (emoji) els.cajeroComprado.appendChild(emoji);
+    els.buscarInput.placeholder = t.buscarPH;
+    localStorage.setItem("language", lang);
+    els.languageSelect.value = lang;
+  }
+
+  // 🔹 Alternar CSS para modo oscuro
+  function applyTheme(theme) {
+    const head = document.querySelector("head");
+    let darkLink = document.getElementById("dark-theme-css");
+
+    if (theme === "dark") {
+      if (!darkLink) {
+        darkLink = document.createElement("link");
+        darkLink.rel = "stylesheet";
+        darkLink.href = "csscajeronegro.css";
+        darkLink.id = "dark-theme-css";
+        head.appendChild(darkLink);
+      }
+      els.toggleTheme.textContent = "☀️ Modo Claro";
+    } else {
+      if (darkLink) darkLink.remove();
+      els.toggleTheme.textContent = "🌙 Modo Oscuro";
+    }
+
+    localStorage.setItem("theme", theme);
+  }
+
+  // Inicializar desde localStorage
+  const savedLang = localStorage.getItem("language") || "es";
+  applyLanguage(savedLang);
+
+  const savedTheme = localStorage.getItem("theme") || "light";
+  applyTheme(savedTheme);
+
+  // Listeners
+  els.languageSelect.addEventListener("change", (e) => applyLanguage(e.target.value));
+  els.toggleTheme.addEventListener("click", () => {
+    const nextTheme = localStorage.getItem("theme") === "dark" ? "light" : "dark";
+    applyTheme(nextTheme);
+  });
+});
+</script>
+
 
 </body>
 </html>

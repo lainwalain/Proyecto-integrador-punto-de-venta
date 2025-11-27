@@ -1,31 +1,18 @@
 <?php
-// Conexión a la base de datos
-$conexion = new mysqli("localhost", "root", "", "cajero");
+// buscar.php
+require_once __DIR__ . '/db.php';
+header('Content-Type: application/json; charset=utf-8');
 
-// Verificar conexión
-if ($conexion->connect_error) {
-    die("Error de conexión: " . $conexion->connect_error);
+$q = $_GET['busqueda'] ?? '';
+$q = trim($q);
+if ($q === '') {
+    echo json_encode([]);
+    exit;
 }
 
-// Recibir parámetro de búsqueda
-$busqueda = isset($_GET['busqueda']) ? $conexion->real_escape_string($_GET['busqueda']) : "";
-
-// Consultar productos que coincidan
-$sql = "SELECT id, nombre, precio FROM productos 
-        WHERE nombre LIKE '%$busqueda%' LIMIT 10";
-
-$resultado = $conexion->query($sql);
-
-// Preparar respuesta en JSON
-$productos = [];
-while ($fila = $resultado->fetch_assoc()) {
-    $productos[] = $fila;
-}
-
-// Devolver JSON
-header('Content-Type: application/json');
-echo json_encode($productos);
-
-// Cerrar conexión
-$conexion->close();
-?>
+// búsqueda simple con LIKE (usa prepared)
+$stmt = $pdo->prepare("SELECT id, name AS nombre, price FROM products WHERE name LIKE ? LIMIT 20");
+$term = "%$q%";
+$stmt->execute([$term]);
+$rows = $stmt->fetchAll();
+echo json_encode($rows);

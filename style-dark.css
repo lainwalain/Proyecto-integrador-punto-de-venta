@@ -21,6 +21,33 @@
       --mobile-menu-duration: 360ms;
       --mobile-menu-ease: cubic-bezier(.2,.9,.2,1);
     }
+.idioma-switch {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin: 20px 0;
+}
+
+.idioma-switch button {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 20px;
+  background: linear-gradient(135deg, #4CAF50, #2E7D32);
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 14px;
+}
+
+.idioma-switch button:hover {
+  transform: scale(1.05);
+  background: linear-gradient(135deg, #66BB6A, #388E3C);
+}
+
+.idioma-switch button.active {
+  background: linear-gradient(135deg, #2196F3, #1565C0);
+}
 
     /* Reset básico */
     *{margin:0;padding:0;box-sizing:border-box}
