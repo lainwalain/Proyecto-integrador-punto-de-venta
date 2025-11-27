@@ -1,6 +1,11 @@
 <?php
+session_start();
 include '../includes/config.php';
 include '../functions/productos_functions.php';
+include '../functions/usuario_functions.php';
+
+// Verificar si el usuario está logueado
+$usuario_logueado = isset($_SESSION['id_usuario']) ? $_SESSION : null;
 ?>
 
 <!DOCTYPE html>
@@ -84,9 +89,20 @@ include '../functions/productos_functions.php';
             color: white;
             border-radius: 15px;
         }
+        
+        .alert-container {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 9999;
+            min-width: 300px;
+        }
     </style>
 </head>
 <body>
+    <!-- Contenedor para alertas -->
+    <div id="alert-container" class="alert-container"></div>
+
     <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
         <div class="container">
             <a class="navbar-brand fw-bold" href="../index.php">
@@ -101,9 +117,18 @@ include '../functions/productos_functions.php';
                     <i class="fas fa-shopping-cart me-1"></i>Carrito
                     <span id="contador-carrito" class="badge bg-warning text-dark ms-1" style="display: none;">0</span>
                 </a>
-                <a class="nav-link" href="../login/index.php">
-                    <i class="fas fa-sign-in-alt me-1"></i>Iniciar Sesión
-                </a>
+                <?php if($usuario_logueado): ?>
+                    <a class="nav-link" href="perfil.php">
+                        <i class="fas fa-user me-1"></i>Mi Perfil
+                    </a>
+                    <a class="nav-link" href="#" onclick="cerrarSesion()">
+                        <i class="fas fa-sign-out-alt me-1"></i>Cerrar Sesión
+                    </a>
+                <?php else: ?>
+                    <a class="nav-link" href="../login/index.php">
+                        <i class="fas fa-sign-in-alt me-1"></i>Iniciar Sesión
+                    </a>
+                <?php endif; ?>
             </div>
         </div>
     </nav>
@@ -112,6 +137,12 @@ include '../functions/productos_functions.php';
         <div class="row">
             <div class="col-12">
                 <h1 class="mb-4"><i class="fas fa-shopping-cart me-2"></i>Tu Carrito de Compras</h1>
+                <?php if(!$usuario_logueado): ?>
+                    <div class="alert alert-warning">
+                        <i class="fas fa-exclamation-triangle me-2"></i>
+                        Debes <a href="../login/index.php" class="alert-link">iniciar sesión</a> para poder procesar tu pedido.
+                    </div>
+                <?php endif; ?>
             </div>
         </div>
 
@@ -145,12 +176,18 @@ include '../functions/productos_functions.php';
                         </div>
                         
                         <div class="d-grid gap-2 mt-4">
-                            <button id="btn-procesar-pago" class="btn btn-success btn-lg" disabled>
-                                <i class="fas fa-credit-card me-2"></i>Proceder al Pago
+                            <button id="btn-procesar-pago" class="btn btn-success btn-lg" <?php echo !$usuario_logueado ? 'disabled' : ''; ?>>
+                                <i class="fas fa-credit-card me-2"></i>
+                                <?php echo $usuario_logueado ? 'Proceder al Pago' : 'Inicia Sesión para Pagar'; ?>
                             </button>
                             <a href="../index.php" class="btn btn-outline-light">
                                 <i class="fas fa-arrow-left me-2"></i>Seguir Comprando
                             </a>
+                            <?php if($usuario_logueado): ?>
+                                <button id="btn-vaciar-carrito" class="btn btn-outline-warning mt-2" style="display: none;">
+                                    <i class="fas fa-trash me-2"></i>Vaciar Carrito
+                                </button>
+                            <?php endif; ?>
                         </div>
                     </div>
                 </div>
@@ -174,6 +211,12 @@ include '../functions/productos_functions.php';
         document.addEventListener('DOMContentLoaded', function() {
             cargarCarrito();
             actualizarContadorCarrito();
+            
+            // Event listener para el botón de procesar pago
+            document.getElementById('btn-procesar-pago').addEventListener('click', procesarPago);
+            
+            // Event listener para el botón de vaciar carrito
+            document.getElementById('btn-vaciar-carrito').addEventListener('click', vaciarCarrito);
         });
 
         function cargarCarrito() {
@@ -182,17 +225,20 @@ include '../functions/productos_functions.php';
             const carritoVacio = document.getElementById('carrito-vacio');
             const resumenPedido = document.getElementById('resumen-pedido');
             const btnProcesarPago = document.getElementById('btn-procesar-pago');
+            const btnVaciarCarrito = document.getElementById('btn-vaciar-carrito');
 
             if (carrito.length === 0) {
                 carritoItems.style.display = 'none';
                 carritoVacio.style.display = 'block';
                 resumenPedido.innerHTML = '<p class="text-center">No hay productos en el carrito</p>';
                 btnProcesarPago.disabled = true;
+                if (btnVaciarCarrito) btnVaciarCarrito.style.display = 'none';
                 return;
             }
 
             carritoItems.style.display = 'block';
             carritoVacio.style.display = 'none';
+            if (btnVaciarCarrito) btnVaciarCarrito.style.display = 'block';
             
             carritoItems.innerHTML = '';
             let subtotal = 0;
@@ -207,7 +253,7 @@ include '../functions/productos_functions.php';
                             <img src="../../almacen/img_productos/${producto.imagen}" 
                                  class="producto-imagen" 
                                  alt="${producto.nombre}"
-                                 onerror="this.src='../../almacen/img_productos'">
+                                 onerror="this.src='../../almacen/img_productos/default.jpg'">
                         </div>
                         <div class="col-md-4">
                             <h6 class="mb-1">${producto.nombre}</h6>
@@ -269,7 +315,8 @@ include '../functions/productos_functions.php';
                 </div>
             `;
 
-            btnProcesarPago.disabled = false;
+            // Solo habilitar el botón si el usuario está logueado y hay productos
+            btnProcesarPago.disabled = !carrito.length;
         }
 
         function cambiarCantidad(index, cambio) {
@@ -309,7 +356,7 @@ include '../functions/productos_functions.php';
             carrito.splice(index, 1);
             localStorage.setItem('carrito', JSON.stringify(carrito));
             
-            mostrarNotificacion(`Producto eliminado: ${productoEliminado}`);
+            mostrarNotificacion(`Producto eliminado: ${productoEliminado}`, 'warning');
             
             cargarCarrito();
             actualizarContadorCarrito();
@@ -326,63 +373,105 @@ include '../functions/productos_functions.php';
             }
         }
 
-        function mostrarNotificacion(mensaje) {
-            const notification = document.createElement('div');
-            notification.className = 'position-fixed bottom-0 end-0 p-3';
-            notification.style.zIndex = '9999';
-            notification.innerHTML = `
-                <div class="toast show" role="alert">
-                    <div class="toast-header bg-danger text-white">
-                        <i class="fas fa-trash me-2"></i>
-                        <strong class="me-auto">Producto Eliminado</strong>
-                        <button type="button" class="btn-close btn-close-white" onclick="this.parentElement.parentElement.parentElement.remove()"></button>
-                    </div>
-                    <div class="toast-body">
-                        ${mensaje}
-                    </div>
+        function mostrarNotificacion(mensaje, tipo = 'info') {
+            const alertContainer = document.getElementById('alert-container');
+            const alertId = 'alert-' + Date.now();
+            
+            const alertHTML = `
+                <div id="${alertId}" class="alert alert-${tipo === 'error' ? 'danger' : tipo} alert-dismissible fade show" role="alert">
+                    ${mensaje}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
                 </div>
             `;
-            document.body.appendChild(notification);
             
+            alertContainer.innerHTML += alertHTML;
+            
+            // Auto-eliminar después de 5 segundos
             setTimeout(() => {
-                if (notification.parentElement) {
-                    notification.parentElement.removeChild(notification);
+                const alertElement = document.getElementById(alertId);
+                if (alertElement) {
+                    alertElement.remove();
                 }
-            }, 3000);
+            }, 5000);
         }
 
-        document.getElementById('btn-procesar-pago').addEventListener('click', function() {
+        function procesarPago() {
             const carrito = JSON.parse(localStorage.getItem('carrito')) || [];
             
             if (carrito.length === 0) {
-                alert('Tu carrito está vacío');
+                mostrarNotificacion('Tu carrito está vacío', 'warning');
                 return;
             }
             
-            const btn = this;
+            const btn = document.getElementById('btn-procesar-pago');
             const originalText = btn.innerHTML;
             
             btn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Procesando...';
             btn.disabled = true;
             
-            setTimeout(() => {
-                alert('¡Pedido procesado exitosamente! En breve recibirás un correo de confirmación.');
-                
-                localStorage.removeItem('carrito');
-                cargarCarrito();
-                actualizarContadorCarrito();
-                
+            // Calcular totales
+            const subtotal = carrito.reduce((sum, item) => sum + (item.precio * item.cantidad), 0);
+            const envio = subtotal > 500 ? 0 : 50;
+            const total = subtotal + envio;
+            
+            // Enviar datos al servidor
+            fetch('../functions/procesar_pago.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    carrito: carrito,
+                    total: total,
+                    subtotal: subtotal,
+                    envio: envio
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    mostrarNotificacion(`¡Pedido procesado exitosamente! Número de pedido: ${data.nro_venta}`, 'success');
+                    
+                    // Limpiar carrito
+                    localStorage.removeItem('carrito');
+                    cargarCarrito();
+                    actualizarContadorCarrito();
+                    
+                    // Redirigir a mis pedidos después de 3 segundos
+                    setTimeout(() => {
+                        window.location.href = 'mis_pedidos.php';
+                    }, 3000);
+                    
+                } else {
+                    mostrarNotificacion('Error al procesar el pedido: ' + data.error, 'error');
+                    btn.innerHTML = originalText;
+                    btn.disabled = false;
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                mostrarNotificacion('Error de conexión con el servidor', 'error');
                 btn.innerHTML = originalText;
                 btn.disabled = false;
-            }, 2000);
-        });
+            });
+        }
 
         function vaciarCarrito() {
+            const carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+            if (carrito.length === 0) return;
+            
             if (confirm('¿Estás seguro de que quieres vaciar todo el carrito?')) {
                 localStorage.removeItem('carrito');
                 cargarCarrito();
                 actualizarContadorCarrito();
-                mostrarNotificacion('Carrito vaciado correctamente');
+                mostrarNotificacion('Carrito vaciado correctamente', 'info');
+            }
+        }
+
+        function cerrarSesion() {
+            if (confirm('¿Estás seguro de que deseas cerrar sesión?')) {
+                localStorage.removeItem('carrito');
+                window.location.href = '../logout.php';
             }
         }
     </script>
