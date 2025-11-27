@@ -22,11 +22,11 @@ session_start();
     
     <style>
         :root {
-            --primary-color: #e67e22;
-            --primary-dark: #d35400;
-            --secondary-color: #f39c12;
-            --accent-color: #27ae60;
-            --light-color: #fef9f3;
+            --primary-color: #2ecc71;
+            --primary-dark: #27ae60;
+            --secondary-color: #16a085;
+            --accent-color: #3498db;
+            --light-color: #f8fbf9;
             --dark-color: #2c3e50;
             --text-color: #333;
             --border-radius: 12px;
@@ -57,25 +57,26 @@ session_start();
             background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%) !important;
             border: none !important;
             transition: var(--transition);
-            box-shadow: 0 4px 15px rgba(230, 126, 34, 0.3);
+            box-shadow: 0 4px 15px rgba(46, 204, 113, 0.3);
         }
         
         .market-go-primary:hover {
             transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(230, 126, 34, 0.4);
+            box-shadow: 0 6px 20px rgba(46, 204, 113, 0.4);
+            background: linear-gradient(135deg, #27ae60, #2ecc71) !important;
         }
         
         .btn-registro {
-            background: linear-gradient(135deg, #27ae60, #2ecc71) !important;
+            background: linear-gradient(135deg, #16a085, #1abc9c) !important;
             border: none !important;
             transition: var(--transition);
-            box-shadow: 0 4px 15px rgba(39, 174, 96, 0.3);
+            box-shadow: 0 4px 15px rgba(22, 160, 133, 0.3);
         }
         
         .btn-registro:hover {
             transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(39, 174, 96, 0.4);
-            background: linear-gradient(135deg, #229954, #27ae60) !important;
+            box-shadow: 0 6px 20px rgba(22, 160, 133, 0.4);
+            background: linear-gradient(135deg, #138d75, #16a085) !important;
         }
         
         .login-box {
@@ -199,7 +200,7 @@ session_start();
         
         .form-control:focus {
             border-color: var(--primary-color);
-            box-shadow: 0 0 0 0.2rem rgba(230, 126, 34, 0.25);
+            box-shadow: 0 0 0 0.2rem rgba(46, 204, 113, 0.25);
         }
         
         .input-group-text {
@@ -570,7 +571,7 @@ session_start();
             passwordInput.type = 'text';
             toggleIcon.classList.remove('fa-eye');
             toggleIcon.classList.add('fa-eye-slash');
-            toggleIcon.style.color = '#e67e22';
+            toggleIcon.style.color = '#2ecc71';
         } else {
             passwordInput.type = 'password';
             toggleIcon.classList.remove('fa-eye-slash');
@@ -588,7 +589,7 @@ session_start();
             passwordInput.type = 'text';
             toggleIcon.classList.remove('fa-eye');
             toggleIcon.classList.add('fa-eye-slash');
-            toggleIcon.style.color = '#e67e22';
+            toggleIcon.style.color = '#2ecc71';
         } else {
             passwordInput.type = 'password';
             toggleIcon.classList.remove('fa-eye-slash');
@@ -609,7 +610,7 @@ session_start();
                 icon: 'warning',
                 title: 'Campos incompletos',
                 text: 'Por favor, complete todos los campos requeridos.',
-                confirmButtonColor: '#e67e22'
+                confirmButtonColor: '#2ecc71'
             });
             return;
         }
@@ -621,7 +622,7 @@ session_start();
                 icon: 'warning',
                 title: 'Email inválido',
                 text: 'Por favor, ingrese un correo electrónico válido.',
-                confirmButtonColor: '#e67e22'
+                confirmButtonColor: '#2ecc71'
             });
             return;
         }
@@ -644,7 +645,7 @@ session_start();
                 icon: 'warning',
                 title: 'Campos incompletos',
                 text: 'Por favor, complete todos los campos requeridos.',
-                confirmButtonColor: '#e67e22'
+                confirmButtonColor: '#2ecc71'
             });
             return;
         }
@@ -656,7 +657,7 @@ session_start();
                 icon: 'warning',
                 title: 'Email inválido',
                 text: 'Por favor, ingrese un correo electrónico válido.',
-                confirmButtonColor: '#e67e22'
+                confirmButtonColor: '#2ecc71'
             });
             return;
         }
@@ -667,7 +668,7 @@ session_start();
                 icon: 'warning',
                 title: 'Contraseña muy corta',
                 text: 'La contraseña debe tener al menos 6 caracteres.',
-                confirmButtonColor: '#e67e22'
+                confirmButtonColor: '#2ecc71'
             });
             return;
         }
@@ -678,7 +679,7 @@ session_start();
                 icon: 'warning',
                 title: 'Contraseñas no coinciden',
                 text: 'Las contraseñas ingresadas no coinciden.',
-                confirmButtonColor: '#e67e22'
+                confirmButtonColor: '#2ecc71'
             });
             return;
         }
@@ -689,7 +690,7 @@ session_start();
 
     document.querySelectorAll('.form-control').forEach(input => {
         input.addEventListener('focus', function() {
-            this.style.borderColor = '#e67e22';
+            this.style.borderColor = '#2ecc71';
         });
         
         input.addEventListener('blur', function() {
