@@ -1,0 +1,16 @@
+.producto-card {
+    transition: transform 0.3s ease;
+    height: 100%;
+}
+.producto-card:hover {
+    transform: translateY(-5px);
+}
+.producto-imagen {
+    height: 200px;
+    object-fit: cover;
+}
+.precio {
+    color: #28a745;
+    font-weight: bold;
+    font-size: 1.2em;
+}

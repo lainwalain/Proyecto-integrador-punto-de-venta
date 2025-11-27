@@ -6,7 +6,7 @@ session_start();
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Market Go - Sistema de Ventas</title>
+    <title>Market Go - Tu Tienda de Abarrotes</title>
 
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -63,6 +63,19 @@ session_start();
         .market-go-primary:hover {
             transform: translateY(-2px);
             box-shadow: 0 6px 20px rgba(230, 126, 34, 0.4);
+        }
+        
+        .btn-registro {
+            background: linear-gradient(135deg, #27ae60, #2ecc71) !important;
+            border: none !important;
+            transition: var(--transition);
+            box-shadow: 0 4px 15px rgba(39, 174, 96, 0.3);
+        }
+        
+        .btn-registro:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(39, 174, 96, 0.4);
+            background: linear-gradient(135deg, #229954, #27ae60) !important;
         }
         
         .login-box {
@@ -281,6 +294,25 @@ session_start();
             color: #777;
         }
         
+        .registro-section {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid #eaeaea;
+            text-align: center;
+        }
+        
+        .registro-link {
+            color: var(--primary-color);
+            font-weight: 600;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+        
+        .registro-link:hover {
+            color: var(--primary-dark);
+            text-decoration: underline;
+        }
+        
         /* Responsive adjustments */
         @media (max-width: 576px) {
             .login-box {
@@ -304,18 +336,20 @@ session_start();
     <!-- Mensajes de sesión -->
     <?php
     if(isset($_SESSION['mensaje'])){
-        $respuesta = $_SESSION['mensaje']; ?>
+        $respuesta = $_SESSION['mensaje']; 
+        $icono = $_SESSION['icono'] ?? 'info'; ?>
         <script>
             Swal.fire({
                 position: 'top-end',
-                icon: 'error',
+                icon: '<?php echo $icono; ?>',
                 title: '<?php echo $respuesta;?>',
                 showConfirmButton: false,
                 timer: 2000
             })
         </script>
     <?php
-        unset($_SESSION['mensaje']); // Limpiar el mensaje después de mostrarlo
+        unset($_SESSION['mensaje']);
+        unset($_SESSION['icono']);
     }
     ?>
 
@@ -334,11 +368,12 @@ session_start();
 
     <div class="card card-outline card-primary shadow-lg">
         <div class="card-header text-center py-3">
-            <h4 class="mb-0">Iniciar Sesión</h4>
+            <h4 class="mb-0">Bienvenido a Market Go</h4>
         </div>
         <div class="card-body p-4">
-            <p class="login-box-msg">Ingresa tus credenciales para acceder al sistema</p>
+            <p class="login-box-msg" id="loginMessage">Inicia sesión en tu cuenta</p>
 
+            <!-- Formulario de Login -->
             <form action="../app/controllers/login/ingreso.php" method="post" id="loginForm">
                 <div class="input-group mb-3">
                     <input type="email" 
@@ -377,20 +412,92 @@ session_start();
                     </div>
                 </div>
                 
-                <div class="divider">
-                    <span class="divider-text">Acceso seguro</span>
-                </div>
-                
                 <div class="row">
                     <div class="col-12">
                         <button type="submit" 
                                 class="btn market-go-primary btn-block py-3" 
                                 id="btnIngresar">
-                            <i class="fas fa-sign-in-alt mr-2"></i>Ingresar al Sistema
+                            <i class="fas fa-sign-in-alt mr-2"></i>Iniciar Sesión
                         </button>
                     </div>
                 </div>
             </form>
+
+            <!-- Formulario de Registro (oculto inicialmente) -->
+            <form action="../app/controllers/login/registro.php" method="post" id="registroForm" style="display: none;">
+                <div class="input-group mb-3">
+                    <input type="text" 
+                           name="nombres" 
+                           class="form-control py-3" 
+                           placeholder="Nombre completo" 
+                           required>
+                    <div class="input-group-append">
+                        <div class="input-group-text">
+                            <span class="fas fa-user text-muted"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="input-group mb-3">
+                    <input type="email" 
+                           name="email" 
+                           class="form-control py-3" 
+                           placeholder="Correo electrónico" 
+                           required>
+                    <div class="input-group-append">
+                        <div class="input-group-text">
+                            <span class="fas fa-envelope text-muted"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="input-group mb-3">
+                    <input type="password" 
+                           name="password_user" 
+                           class="form-control py-3 password-field-registro" 
+                           placeholder="Contraseña" 
+                           required
+                           id="passwordInputRegistro">
+                    <div class="input-group-append">
+                        <div class="input-group-text">
+                            <span class="fas fa-eye password-toggle" id="togglePasswordRegistro"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="input-group mb-3">
+                    <input type="password" 
+                           name="confirm_password" 
+                           class="form-control py-3" 
+                           placeholder="Confirmar contraseña" 
+                           required>
+                    <div class="input-group-append">
+                        <div class="input-group-text">
+                            <span class="fas fa-lock text-muted"></span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="row">
+                    <div class="col-12">
+                        <button type="submit" 
+                                class="btn btn-registro btn-block py-3" 
+                                id="btnRegistrar">
+                            <i class="fas fa-user-plus mr-2"></i>Crear Cuenta
+                        </button>
+                    </div>
+                </div>
+            </form>
+
+            <!-- Sección de registro - SOLO EL LINK -->
+            <div class="registro-section">
+                <p class="mb-2">¿No tienes cuenta?</p>
+                <a href="javascript:void(0)" id="linkRegistro" class="registro-link">
+                    <i class="fas fa-user-plus mr-1"></i>Regístrate aquí
+                </a>
+                <span id="linkLogin" style="display: none;">
+                    <a href="javascript:void(0)" class="registro-link">
+                        <i class="fas fa-sign-in-alt mr-1"></i>Volver al inicio de sesión
+                    </a>
+                </span>
+            </div>
 
             <!-- Características del sistema -->
             <div class="features">
@@ -414,7 +521,7 @@ session_start();
                     <i class="fas fa-store mr-1"></i>Market Go v1.0
                 </p>
                 <p>
-                    Sistema de ventas y gestión para abarrotes
+                    Tu tienda de abarrotes de confianza
                 </p>
             </div>
         </div>
@@ -429,7 +536,32 @@ session_start();
 <script src="https://cdnjs.cloudflare.com/ajax/libs/admin-lte/3.2.0/js/adminlte.min.js"></script>
 
 <script>
-    
+    // Alternar entre login y registro
+    document.getElementById('linkRegistro').addEventListener('click', function() {
+        mostrarRegistro();
+    });
+
+    document.getElementById('linkLogin').addEventListener('click', function() {
+        mostrarLogin();
+    });
+
+    function mostrarRegistro() {
+        document.getElementById('loginForm').style.display = 'none';
+        document.getElementById('registroForm').style.display = 'block';
+        document.getElementById('linkRegistro').style.display = 'none';
+        document.getElementById('linkLogin').style.display = 'inline';
+        document.getElementById('loginMessage').textContent = 'Crea tu cuenta en Market Go';
+    }
+
+    function mostrarLogin() {
+        document.getElementById('loginForm').style.display = 'block';
+        document.getElementById('registroForm').style.display = 'none';
+        document.getElementById('linkRegistro').style.display = 'inline';
+        document.getElementById('linkLogin').style.display = 'none';
+        document.getElementById('loginMessage').textContent = 'Inicia sesión en tu cuenta';
+    }
+
+    // Toggle password para login
     document.getElementById('togglePassword').addEventListener('click', function() {
         const passwordInput = document.getElementById('passwordInput');
         const toggleIcon = this;
@@ -447,10 +579,28 @@ session_start();
         }
     });
 
-    
+    // Toggle password para registro
+    document.getElementById('togglePasswordRegistro').addEventListener('click', function() {
+        const passwordInput = document.getElementById('passwordInputRegistro');
+        const toggleIcon = this;
+        
+        if (passwordInput.type === 'password') {
+            passwordInput.type = 'text';
+            toggleIcon.classList.remove('fa-eye');
+            toggleIcon.classList.add('fa-eye-slash');
+            toggleIcon.style.color = '#e67e22';
+        } else {
+            passwordInput.type = 'password';
+            toggleIcon.classList.remove('fa-eye-slash');
+            toggleIcon.classList.add('fa-eye');
+            toggleIcon.style.color = '';
+        }
+    });
+
+    // Validación del formulario de login
     document.getElementById('loginForm').addEventListener('submit', function(e) {
-        const email = document.querySelector('input[name="email"]');
-        const password = document.querySelector('input[name="password_user"]');
+        const email = document.querySelector('#loginForm input[name="email"]');
+        const password = document.querySelector('#loginForm input[name="password_user"]');
         const btnIngresar = document.getElementById('btnIngresar');
         
         if (!email.value || !password.value) {
@@ -463,7 +613,6 @@ session_start();
             });
             return;
         }
-        
 
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if (!emailRegex.test(email.value)) {
@@ -477,9 +626,65 @@ session_start();
             return;
         }
         
-    
-        btnIngresar.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Ingresando...';
+        btnIngresar.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Iniciando sesión...';
         btnIngresar.disabled = true;
+    });
+
+    // Validación del formulario de registro
+    document.getElementById('registroForm').addEventListener('submit', function(e) {
+        const nombres = document.querySelector('#registroForm input[name="nombres"]');
+        const email = document.querySelector('#registroForm input[name="email"]');
+        const password = document.querySelector('#registroForm input[name="password_user"]');
+        const confirmPassword = document.querySelector('#registroForm input[name="confirm_password"]');
+        const btnRegistrar = document.getElementById('btnRegistrar');
+        
+        if (!nombres.value || !email.value || !password.value || !confirmPassword.value) {
+            e.preventDefault();
+            Swal.fire({
+                icon: 'warning',
+                title: 'Campos incompletos',
+                text: 'Por favor, complete todos los campos requeridos.',
+                confirmButtonColor: '#e67e22'
+            });
+            return;
+        }
+
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(email.value)) {
+            e.preventDefault();
+            Swal.fire({
+                icon: 'warning',
+                title: 'Email inválido',
+                text: 'Por favor, ingrese un correo electrónico válido.',
+                confirmButtonColor: '#e67e22'
+            });
+            return;
+        }
+
+        if (password.value.length < 6) {
+            e.preventDefault();
+            Swal.fire({
+                icon: 'warning',
+                title: 'Contraseña muy corta',
+                text: 'La contraseña debe tener al menos 6 caracteres.',
+                confirmButtonColor: '#e67e22'
+            });
+            return;
+        }
+
+        if (password.value !== confirmPassword.value) {
+            e.preventDefault();
+            Swal.fire({
+                icon: 'warning',
+                title: 'Contraseñas no coinciden',
+                text: 'Las contraseñas ingresadas no coinciden.',
+                confirmButtonColor: '#e67e22'
+            });
+            return;
+        }
+        
+        btnRegistrar.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Creando cuenta...';
+        btnRegistrar.disabled = true;
     });
 
     document.querySelectorAll('.form-control').forEach(input => {
@@ -493,7 +698,6 @@ session_start();
             }
         });
     });
-
 
     document.addEventListener('DOMContentLoaded', function() {
         document.querySelector('.login-box').style.opacity = '0';
