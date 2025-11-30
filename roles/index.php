@@ -30,10 +30,10 @@ include ('../app/controllers/roles/listado_de_roles.php');
         <div class="container-fluid">
 
             <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-12">
                     <div class="card card-outline card-primary">
                         <div class="card-header">
-                            <h3 class="card-title">Roles registrado</h3>
+                            <h3 class="card-title">Roles registrados</h3>
                             <div class="card-tools">
                                 <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
                                 </button>
@@ -62,7 +62,7 @@ include ('../app/controllers/roles/listado_de_roles.php');
                                             <center>
                                                 <div class="btn-group">
                                                     <a href="update.php?id=<?php echo $id_rol; ?>" type="button" class="btn btn-success">
-                                                        <i class="fa fa-pencil-alt"></i> Editar</a>
+                                                        <i class="fa fa-pencil-alt"></i>Editar</a>
                                                 </div>
                                             </center>
                                         </td>
