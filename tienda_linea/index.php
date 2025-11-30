@@ -6,6 +6,10 @@ include 'functions/productos_functions.php';
 $usuario_logueado = isset($_SESSION['id_usuario']) ? $_SESSION : null;
 $productos = obtenerProductos($pdo);
 $categorias = obtenerCategorias($pdo);
+
+// Definir la ruta del logo
+$logoPath = '../public/images/Logo2MarketGo.png';
+$logoExists = file_exists($logoPath);
 ?>
 
 <!DOCTYPE html>
@@ -33,6 +37,48 @@ $categorias = obtenerCategorias($pdo);
             font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             font-size: 16px;
             line-height: 1.6;
+        }
+        
+        /* LOGO STYLES - MÁS GRANDE Y VISIBLE */
+        .navbar-logo {
+            height: 70px; /* Aumentado de 45px */
+            width: auto;
+            margin-right: 15px;
+            transition: all 0.3s ease;
+            filter: drop-shadow(0 2px 6px rgba(0,0,0,0.4));
+        }
+        
+        .navbar-logo:hover {
+            transform: scale(1.08);
+        }
+        
+        .footer-logo {
+            height: 50px; /* Aumentado de 35px */
+            width: auto;
+            margin-right: 10px;
+            filter: brightness(0) invert(1);
+        }
+        
+        .hero-logo {
+            height: 140px; /* Aumentado de 80px */
+            width: auto;
+            margin-bottom: 25px;
+            filter: drop-shadow(0 6px 12px rgba(0,0,0,0.4));
+        }
+        
+        .logo-placeholder {
+            width: 70px;
+            height: 70px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 20px;
+            margin-right: 15px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
         }
         
         /* CARRO DE COMPRAS MEJORADO - MÁS VISIBLE */
@@ -129,13 +175,15 @@ $categorias = obtenerCategorias($pdo);
         .navbar {
             background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%) !important;
             box-shadow: 0 2px 15px rgba(0,0,0,0.15);
-            padding: 12px 0;
+            padding: 15px 0; /* Aumentado para acomodar logo más grande */
         }
         
         .navbar-brand {
             font-weight: 800 !important;
             font-size: 1.8rem !important;
             text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+            display: flex;
+            align-items: center;
         }
         
         .nav-link {
@@ -190,6 +238,7 @@ $categorias = obtenerCategorias($pdo);
             border-radius: 0 0 30px 30px;
             margin-bottom: 2rem;
             text-shadow: 1px 1px 3px rgba(0,0,0,0.3);
+            padding: 40px 0;
         }
         
         .producto-card {
@@ -453,6 +502,18 @@ $categorias = obtenerCategorias($pdo);
                 padding: 14px 20px;
                 font-size: 1.1rem;
             }
+            
+            .navbar-logo {
+                height: 50px;
+            }
+            
+            .hero-logo {
+                height: 100px;
+            }
+            
+            .footer-logo {
+                height: 40px;
+            }
         }
     </style>
 </head>
@@ -475,7 +536,13 @@ $categorias = obtenerCategorias($pdo);
     <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
         <div class="container">
             <a class="navbar-brand fw-bold" href="index.php">
-                <i class="fas fa-store me-2"></i>
+                <?php if($logoExists): ?>
+                    <img src="<?php echo $logoPath; ?>" alt="Market Go" class="navbar-logo">
+                <?php else: ?>
+                    <div class="logo-placeholder">
+                        <i class="fas fa-store"></i>
+                    </div>
+                <?php endif; ?>
                 <span class="market-go-logo">MARKET GO</span>
                 <small class="commercial-badge ms-2">PRO</small>
             </a>
@@ -536,8 +603,10 @@ $categorias = obtenerCategorias($pdo);
 
     <section class="hero text-white py-5">
         <div class="container text-center">
+            <?php if($logoExists): ?>
+                <img src="<?php echo $logoPath; ?>" alt="Market Go" class="hero-logo">
+            <?php endif; ?>
             <h1 class="display-4 fw-bold mb-3">
-                <i class="fas fa-cash-register me-3"></i>
                 MARKET GO PRO
             </h1>
             <p class="lead fs-4 mb-4">Sistema profesional de gestión para tu abarrotes</p>
@@ -720,7 +789,14 @@ $categorias = obtenerCategorias($pdo);
         <div class="container">
             <div class="row">
                 <div class="col-md-4">
-                    <h5><i class="fas fa-store me-2"></i>Market Go Pro</h5>
+                    <h5>
+                        <?php if($logoExists): ?>
+                            <img src="<?php echo $logoPath; ?>" alt="Market Go" class="footer-logo">
+                        <?php else: ?>
+                            <i class="fas fa-store me-2"></i>
+                        <?php endif; ?>
+                        Market Go Pro
+                    </h5>
                     <p class="mb-0">Sistema profesional para abarrotes y negocios</p>
                 </div>
                 <div class="col-md-4">

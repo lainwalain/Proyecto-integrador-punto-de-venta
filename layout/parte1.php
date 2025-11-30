@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="es">
 <head>
     <meta charset="utf-8">
@@ -24,6 +23,89 @@
     <!-- jQuery -->
     <script src="<?php echo $URL;?>/public/templeates/AdminLTE-3.2.0/plugins/jquery/jquery.min.js"></script>
 
+    <style>
+        /* Estilos para el logo más pequeño */
+        .brand-logo-container {
+            display: flex;
+            justify-content: center;
+            padding: 15px 0 10px 0;
+            border-bottom: 1px solid #4b545c;
+            margin-bottom: 5px;
+        }
+        .brand-logo {
+            max-width: 120px;
+            height: auto;
+            transition: all 0.3s ease;
+        }
+        
+        /* Ajustes para mejorar la proporción con el logo más pequeño */
+        .sidebar {
+            padding-top: 0;
+        }
+        
+        .user-panel {
+            margin-top: 15px !important;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #4b545c;
+        }
+        
+        .nav-sidebar > .nav-item {
+            margin-bottom: 3px;
+        }
+        
+        .nav-sidebar .nav-link {
+            padding: 10px 15px;
+            border-radius: 0;
+            transition: all 0.2s ease;
+        }
+        
+        .nav-sidebar .nav-link:hover {
+            background-color: rgba(255,255,255,0.1);
+        }
+        
+        .nav-sidebar .nav-link.active {
+            background-color: #007bff;
+            border-left: 4px solid #fff;
+        }
+        
+        .nav-sidebar .nav-treeview .nav-link {
+            padding: 8px 15px 8px 35px;
+            background-color: rgba(0,0,0,0.2);
+        }
+        
+        .nav-sidebar .nav-treeview .nav-link:hover {
+            background-color: rgba(255,255,255,0.05);
+        }
+        
+        .nav-sidebar .nav-treeview .nav-link.active {
+            background-color: rgba(0,123,255,0.7);
+        }
+        
+        /* Ajustar espaciado del botón de cerrar sesión */
+        .nav-sidebar .nav-item:last-child {
+            margin-top: 15px;
+            border-top: 1px solid #4b545c;
+            padding-top: 12px;
+        }
+        
+        /* Mejorar la legibilidad del texto */
+        .nav-sidebar .nav-link p {
+            margin: 0;
+            font-size: 14px;
+        }
+        
+        .nav-sidebar .nav-link i.nav-icon {
+            font-size: 15px;
+            min-width: 25px;
+        }
+        
+        /* Ajustes para pantallas más pequeñas */
+        @media (max-width: 767.98px) {
+            .brand-logo {
+                max-width: 100px;
+            }
+        }
+    </style>
 </head>
 <body class="hold-transition sidebar-mini">
 
@@ -55,10 +137,11 @@
     <!-- Main Sidebar Container -->
     <aside class="main-sidebar sidebar-dark-primary elevation-4">
         <!-- Brand Logo -->
-        <a href="<?php echo $URL;?>" class="brand-link">
-            <img src="<?php echo $URL;?>/public/images/logo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
-            <span class="brand-text font-weight-light">Market Go</span>
-        </a>
+        <div class="brand-logo-container">
+            <a href="<?php echo $URL;?>" class="brand-link">
+                <img src="<?php echo $URL;?>/public/images/Logo2MarketGo.png" alt="Market Go Logo" class="brand-logo">
+            </a>
+        </div>
 
         <!-- Sidebar -->
         <div class="sidebar">
@@ -74,17 +157,13 @@
                 </div>
             </div>
 
-
             <!-- Sidebar Menu -->
             <nav class="mt-2">
                 <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                     <!-- Add icons to the links using the .nav-icon class
                          with font-awesome or any other icon font library -->
 
-
-
-
-                    <li class="nav-item ">
+                    <li class="nav-item">
                         <a href="#" class="nav-link active">
                             <i class="nav-icon fas fa-users"></i>
                             <p>
@@ -108,13 +187,7 @@
                         </ul>
                     </li>
 
-
-
-
-
-
-
-                    <li class="nav-item ">
+                    <li class="nav-item">
                         <a href="#" class="nav-link active">
                             <i class="nav-icon fas fa-address-card"></i>
                             <p>
@@ -138,11 +211,7 @@
                         </ul>
                     </li>
 
-
-
-
-
-                    <li class="nav-item ">
+                    <li class="nav-item">
                         <a href="#" class="nav-link active">
                             <i class="nav-icon fas fa-tags"></i>
                             <p>
@@ -160,12 +229,7 @@
                         </ul>
                     </li>
 
-
-
-
-
-
-                    <li class="nav-item ">
+                    <li class="nav-item">
                         <a href="#" class="nav-link active">
                             <i class="nav-icon fas fa-list"></i>
                             <p>
@@ -189,10 +253,7 @@
                         </ul>
                     </li>
 
-
-
-
-                    <li class="nav-item ">
+                    <li class="nav-item">
                         <a href="#" class="nav-link active">
                             <i class="nav-icon fas fa-cart-plus"></i>
                             <p>
@@ -216,10 +277,7 @@
                         </ul>
                     </li>
 
-
-
-
-                    <li class="nav-item ">
+                    <li class="nav-item">
                         <a href="#" class="nav-link active">
                             <i class="nav-icon fas fa-car"></i>
                             <p>
@@ -237,11 +295,7 @@
                         </ul>
                     </li>
 
-
-
-
-
-                    <li class="nav-item ">
+                    <li class="nav-item">
                         <a href="#" class="nav-link active">
                             <i class="nav-icon fas fa-shopping-basket"></i>
                             <p>
@@ -259,9 +313,7 @@
                         </ul>
                     </li>
 
-
-
-                    <li class="nav-item ">
+                    <li class="nav-item">
                         <a href="#" class="nav-link active">
                             <i class="nav-icon fas fa-user-friends"></i>
                             <p>
@@ -278,8 +330,6 @@
                             </li>
                         </ul>
                     </li>
-
-
 
                     <li class="nav-item">
                         <a href="<?php echo $URL;?>/app/controllers/login/cerrar_sesion.php" class="nav-link" style="background-color: #ca0a0b">

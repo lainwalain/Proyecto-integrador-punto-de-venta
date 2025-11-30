@@ -135,36 +135,26 @@ session_start();
             text-shadow: 0 2px 4px rgba(0,0,0,0.2);
         }
         
-        .login-logo-container {
+        .brand-title {
             text-align: center;
-            margin-bottom: 20px;
+            margin-bottom: 25px;
             position: relative;
         }
         
-        .login-logo-container img {
-            width: 100px;
-            height: 100px;
-            filter: drop-shadow(0 4px 8px rgba(0,0,0,0.2));
-            transition: var(--transition);
-        }
-        
-        .login-logo-container:hover img {
-            transform: scale(1.05) rotate(5deg);
-        }
-        
         .login-logo {
-            font-size: 2.5rem;
+            font-size: 2.8rem;
             font-weight: 800;
-            margin: 10px 0 5px;
+            margin: 5px 0;
             background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            line-height: 1.2;
         }
         
         .tagline {
             color: white;
-            font-size: 1rem;
+            font-size: 1.1rem;
             font-weight: 500;
             margin-bottom: 30px;
             text-shadow: 0 2px 4px rgba(0,0,0,0.3);
@@ -357,6 +347,10 @@ session_start();
             .phone-input {
                 padding-left: 60px !important;
             }
+            
+            .login-logo {
+                font-size: 2.2rem;
+            }
         }
     </style>
 </head>
@@ -383,17 +377,14 @@ session_start();
     }
     ?>
 
-    <!-- Logo Market Go -->
+    <!-- Título Market Go sin logo -->
     <div class="text-center mb-4">
-        <div class="login-logo-container">
-            <img src="https://cdn-icons-png.flaticon.com/512/3063/3063812.png" 
-                 alt="Market Go" 
-                 width="120">
+        <div class="brand-title">
+            <h3 class="login-logo">
+                <b>MARKET</b>GO
+            </h3>
+            <p class="tagline">Tu solución integral para abarrotes</p>
         </div>
-        <h3 class="login-logo mt-2">
-            <b>MARKET</b>GO
-        </h3>
-        <p class="tagline">Tu solución integral para abarrotes</p>
     </div>
 
     <div class="card card-outline card-primary shadow-lg">
@@ -767,12 +758,6 @@ session_start();
         // Limitar a 10 dígitos (formato México)
         if (this.value.length > 10) {
             this.value = this.value.slice(0, 10);
-        }
-        
-        // Opcional: Agregar formato visual mientras se escribe
-        if (this.value.length >= 2) {
-            // Puedes agregar formato visual aquí si lo deseas
-            // Ejemplo: 55-1234-5678
         }
     });
 
