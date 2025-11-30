@@ -24,11 +24,106 @@ $categorias = obtenerCategorias($pdo);
             --color-accent: #16a085;
             --color-light: #ecf0f1;
             --color-dark: #2c3e50;
+            --color-carrito: #e74c3c;
+            --color-carrito-hover: #c0392b;
         }
         
         body {
             background-color: #f8f9fa;
             font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-size: 16px;
+            line-height: 1.6;
+        }
+        
+        /* CARRO DE COMPRAS MEJORADO - MÁS VISIBLE */
+        .carrito-fijo {
+            position: fixed;
+            top: 50%;
+            right: 20px;
+            transform: translateY(-50%);
+            z-index: 1000;
+            background: linear-gradient(135deg, var(--color-carrito), var(--color-carrito-hover));
+            color: white;
+            border-radius: 50px;
+            padding: 20px 25px;
+            box-shadow: 0 8px 30px rgba(231, 76, 60, 0.4);
+            border: 4px solid white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 700;
+            font-size: 1.2em;
+            min-width: 80px;
+            text-align: center;
+        }
+        
+        .carrito-fijo:hover {
+            transform: translateY(-50%) scale(1.1);
+            box-shadow: 0 12px 40px rgba(231, 76, 60, 0.6);
+            background: linear-gradient(135deg, var(--color-carrito-hover), var(--color-carrito));
+        }
+        
+        .contador-carrito-grande {
+            background: #f39c12;
+            color: white;
+            border-radius: 50%;
+            width: 35px;
+            height: 35px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.1em;
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            border: 3px solid white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+        
+        .icono-carrito-grande {
+            font-size: 1.8em;
+            margin-bottom: 5px;
+        }
+        
+        .texto-carrito {
+            font-size: 0.9em;
+            font-weight: 600;
+        }
+        
+        .total-carrito {
+            background: #f1c40f;
+            color: #2c3e50;
+            padding: 4px 8px;
+            border-radius: 15px;
+            font-weight: bold;
+            font-size: 0.9em;
+            margin-top: 5px;
+        }
+
+        /* BOTÓN FLOTANTE PARA PERSONAS MAYORES */
+        .boton-accesibilidad {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            z-index: 1000;
+            background: linear-gradient(135deg, #3498db, #2980b9);
+            color: white;
+            border-radius: 50%;
+            width: 70px;
+            height: 70px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 6px 25px rgba(52, 152, 219, 0.4);
+            border: 4px solid white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1.8em;
+        }
+        
+        .boton-accesibilidad:hover {
+            transform: scale(1.1);
+            box-shadow: 0 8px 30px rgba(52, 152, 219, 0.6);
         }
         
         .navbar {
@@ -45,17 +140,47 @@ $categorias = obtenerCategorias($pdo);
         
         .nav-link {
             font-weight: 600 !important;
-            font-size: 1rem;
-            padding: 8px 16px !important;
+            font-size: 1.1rem;
+            padding: 12px 20px !important;
             border-radius: 8px;
             transition: all 0.3s ease;
             margin: 0 2px;
         }
 
-        
         .nav-link:hover {
             background: rgba(255,255,255,0.15) !important;
             transform: translateY(-1px);
+        }
+        
+        /* BOTONES MÁS GRANDES Y VISIBLES */
+        .btn-comprar {
+            background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+            border: none;
+            border-radius: 12px;
+            font-weight: 700;
+            padding: 16px 24px;
+            transition: all 0.3s ease;
+            font-size: 1.2rem;
+            min-height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            box-shadow: 0 4px 15px rgba(46, 204, 113, 0.3);
+        }
+        
+        .btn-comprar:hover {
+            background: linear-gradient(135deg, var(--color-secondary), var(--color-primary));
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 8px 25px rgba(46, 204, 113, 0.4);
+        }
+        
+        .btn-comprar:active {
+            transform: translateY(-1px);
+        }
+        
+        .icono-btn-grande {
+            font-size: 1.4em;
         }
         
         .hero {
@@ -70,135 +195,124 @@ $categorias = obtenerCategorias($pdo);
         .producto-card {
             transition: all 0.3s ease;
             border: none;
-            border-radius: 12px;
+            border-radius: 15px;
             overflow: hidden;
             background: white;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-            border: 1px solid #e9ecef;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.12);
+            border: 2px solid #e9ecef;
         }
         
         .producto-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+            transform: translateY(-8px);
+            box-shadow: 0 12px 35px rgba(0,0,0,0.18);
         }
         
         .producto-imagen {
-            height: 200px;
+            height: 220px;
             object-fit: cover;
-            border-bottom: 3px solid var(--color-primary);
+            border-bottom: 4px solid var(--color-primary);
         }
         
         .precio {
             color: var(--color-secondary);
-            font-weight: 700;
-            font-size: 1.4em;
+            font-weight: 800;
+            font-size: 1.6em;
         }
         
         .badge-oferta {
             background: linear-gradient(135deg, #e74c3c, #c0392b);
             color: white;
             position: absolute;
-            top: 12px;
-            right: 12px;
+            top: 15px;
+            right: 15px;
             z-index: 1;
-            font-weight: 600;
-            padding: 6px 12px;
-            border-radius: 20px;
-        }
-        
-        .btn-comprar {
-            background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
-            border: none;
-            border-radius: 8px;
-            font-weight: 600;
-            padding: 12px 20px;
-            transition: all 0.3s ease;
-            font-size: 1rem;
-        }
-        
-        .btn-comprar:hover {
-            background: linear-gradient(135deg, var(--color-secondary), var(--color-primary));
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(46, 204, 113, 0.3);
+            font-weight: 700;
+            padding: 8px 16px;
+            border-radius: 25px;
+            font-size: 1em;
         }
         
         .categoria-badge {
             background: var(--color-light);
             color: var(--color-primary);
-            border: 1px solid var(--color-primary);
-            font-weight: 500;
+            border: 2px solid var(--color-primary);
+            font-weight: 600;
+            font-size: 0.9em;
+            padding: 6px 12px;
         }
         
         .store-info {
             background: linear-gradient(135deg, #fff, #f8f9fa);
-            border-radius: 15px;
+            border-radius: 20px;
             padding: 2.5rem;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.1);
             margin-bottom: 2rem;
-            border: 1px solid #e9ecef;
+            border: 2px solid #e9ecef;
         }
         
         .feature-icon {
-            font-size: 2.5rem;
+            font-size: 2.8rem;
             color: var(--color-primary);
             margin-bottom: 1rem;
         }
         
         .section-title {
             color: var(--color-secondary);
-            border-left: 5px solid var(--color-primary);
+            border-left: 6px solid var(--color-primary);
             padding-left: 20px;
             margin: 2.5rem 0 1.5rem 0;
-            font-weight: 700;
-            font-size: 1.8rem;
+            font-weight: 800;
+            font-size: 2rem;
         }
         
         .search-box {
-            border-radius: 10px;
-            border: 2px solid var(--color-primary);
-            padding: 12px 20px;
-            font-size: 1rem;
+            border-radius: 12px;
+            border: 3px solid var(--color-primary);
+            padding: 16px 24px;
+            font-size: 1.1rem;
         }
         
         .filter-select {
-            border-radius: 10px;
-            border: 2px solid var(--color-primary);
-            padding: 12px 20px;
-            font-size: 1rem;
+            border-radius: 12px;
+            border: 3px solid var(--color-primary);
+            padding: 16px 24px;
+            font-size: 1.1rem;
         }
         
         .btn-login {
             background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
             border: none;
-            border-radius: 8px;
+            border-radius: 12px;
             color: white;
             transition: all 0.3s ease;
-            font-weight: 600;
-            padding: 10px 20px;
+            font-weight: 700;
+            padding: 14px 24px;
+            font-size: 1.1rem;
         }
         
         .btn-login:hover {
             background: linear-gradient(135deg, var(--color-secondary), var(--color-primary));
             transform: translateY(-2px);
             color: white;
-            box-shadow: 0 4px 12px rgba(46, 204, 113, 0.3);
+            box-shadow: 0 6px 20px rgba(46, 204, 113, 0.4);
         }
         
         .btn-logout {
             background: linear-gradient(135deg, #e74c3c, #c0392b);
             border: none;
-            border-radius: 8px;
+            border-radius: 12px;
             color: white;
             transition: all 0.3s ease;
-            font-weight: 600;
-            padding: 10px 20px;
+            font-weight: 700;
+            padding: 14px 24px;
+            font-size: 1.1rem;
         }
         
         .btn-logout:hover {
             background: linear-gradient(135deg, #c0392b, #e74c3c);
             transform: translateY(-2px);
             color: white;
-            box-shadow: 0 4px 12px rgba(231, 76, 60, 0.3);
+            box-shadow: 0 6px 20px rgba(231, 76, 60, 0.4);
         }
         
         .market-go-logo {
@@ -211,8 +325,8 @@ $categorias = obtenerCategorias($pdo);
         }
         
         .user-avatar {
-            width: 40px;
-            height: 40px;
+            width: 50px;
+            height: 50px;
             border-radius: 50%;
             background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
             color: white;
@@ -220,45 +334,47 @@ $categorias = obtenerCategorias($pdo);
             align-items: center;
             justify-content: center;
             font-weight: bold;
-            font-size: 16px;
+            font-size: 18px;
             margin-right: 10px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
         }
         
         .user-dropdown {
             background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
             border: none;
-            border-radius: 12px;
-            min-width: 220px;
-            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+            border-radius: 15px;
+            min-width: 250px;
+            box-shadow: 0 10px 35px rgba(0,0,0,0.2);
         }
         
         .user-dropdown .dropdown-item {
             color: white;
-            font-weight: 500;
-            padding: 10px 16px;
+            font-weight: 600;
+            padding: 12px 20px;
             transition: all 0.2s ease;
+            font-size: 1.05rem;
         }
         
         .user-dropdown .dropdown-item:hover {
-            background: rgba(255,255,255,0.15);
+            background: rgba(255,255,255,0.2);
             color: white;
-            transform: translateX(5px);
+            transform: translateX(8px);
         }
         
         .dropdown-header {
             color: white;
-            font-weight: 600;
+            font-weight: 700;
+            font-size: 1.1rem;
         }
         
         .hero h1 {
             font-weight: 800;
-            font-size: 3.2rem;
+            font-size: 3.5rem;
             margin-bottom: 1rem;
         }
         
         .hero .lead {
-            font-size: 1.3rem;
+            font-size: 1.4rem;
             font-weight: 500;
             opacity: 0.95;
         }
@@ -266,10 +382,10 @@ $categorias = obtenerCategorias($pdo);
         .commercial-badge {
             background: linear-gradient(135deg, #3498db, #2980b9);
             color: white;
-            padding: 4px 12px;
-            border-radius: 6px;
-            font-size: 0.8rem;
-            font-weight: 600;
+            padding: 6px 14px;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            font-weight: 700;
         }
         
         .text-primary {
@@ -279,9 +395,83 @@ $categorias = obtenerCategorias($pdo);
         .bg-primary-light {
             background-color: #f0f9f4;
         }
+        
+        /* ESTILOS PARA TEXTO MÁS GRANDE (ACCEBILIDAD) */
+        .texto-grande .producto-card h5 {
+            font-size: 1.4rem;
+        }
+        
+        .texto-grande .producto-card .precio {
+            font-size: 1.8rem;
+        }
+        
+        .texto-grande .btn-comprar {
+            font-size: 1.3rem;
+            padding: 18px 28px;
+        }
+        
+        .texto-grande .nav-link {
+            font-size: 1.2rem;
+            padding: 14px 22px !important;
+        }
+        
+        /* NOTIFICACIONES MEJORADAS */
+        .notificacion-grande {
+            min-width: 350px;
+            font-size: 1.1rem;
+        }
+        
+        .notificacion-grande .toast-body {
+            padding: 20px;
+            font-weight: 600;
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 768px) {
+            .carrito-fijo {
+                bottom: 20px;
+                top: auto;
+                right: 20px;
+                transform: none;
+                padding: 15px 20px;
+            }
+            
+            .carrito-fijo:hover {
+                transform: scale(1.1);
+            }
+            
+            .boton-accesibilidad {
+                bottom: 100px;
+                left: 20px;
+            }
+            
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .btn-comprar {
+                padding: 14px 20px;
+                font-size: 1.1rem;
+            }
+        }
     </style>
 </head>
 <body>
+    <!-- BOTÓN DE ACCESIBILIDAD PARA TEXTO GRANDE -->
+    <div class="boton-accesibilidad" onclick="alternarTextoGrande()" title="Texto más grande para mejor visibilidad">
+        <i class="fas fa-text-height"></i>
+    </div>
+
+    <!-- CARRO DE COMPRAS FIJO Y VISIBLE -->
+    <div class="carrito-fijo" onclick="irAlCarrito()">
+        <div class="icono-carrito-grande">
+            <i class="fas fa-shopping-cart"></i>
+        </div>
+        <div class="texto-carrito">Mi Carrito</div>
+        <div class="contador-carrito-grande" id="contador-carrito-grande">0</div>
+        <div class="total-carrito" id="total-carrito-grande">$0.00</div>
+    </div>
+
     <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
         <div class="container">
             <a class="navbar-brand fw-bold" href="index.php">
@@ -509,11 +699,11 @@ $categorias = obtenerCategorias($pdo);
                                                 )"
                                                 <?= $producto['stock'] <= 0 ? 'disabled' : '' ?>>
                                             <?php if($producto['stock'] > 0): ?>
-                                                <i class="fas fa-cart-plus me-2"></i>
-                                                Agregar al Carrito
+                                                <i class="fas fa-cart-plus icono-btn-grande"></i>
+                                                AGREGAR AL CARRITO
                                             <?php else: ?>
-                                                <i class="fas fa-times me-2"></i>
-                                                Agotado
+                                                <i class="fas fa-times icono-btn-grande"></i>
+                                                AGOTADO
                                             <?php endif; ?>
                                         </button>
                                     </div>
@@ -538,9 +728,17 @@ $categorias = obtenerCategorias($pdo);
                     <p class="mb-1">Lunes a Sábado: 6:00 AM - 10:00 PM</p>
                     <p class="mb-0">Domingos: 7:00 AM - 3:00 PM</p>
                 </div>
-                <div class="col-md-4">
+               <div class="col-md-4">
                     <h6>Contacto Comercial</h6>
-                    <p class="mb-1"><i class="fas fa-phone me-2"></i>3141665887</p>
+                    <p class="mb-1">
+                        <i class="fas fa-phone me-2"></i>
+                        <a href="https://wa.me/5213141665887" 
+                        target="_blank" 
+                        class="text-decoration-none text-white"
+                        style="transition: all 0.3s ease;">
+                            3141665887
+                        </a>
+                    </p>
                     <p class="mb-0"><i class="fas fa-map-marker-alt me-2"></i>Manzanillo, Colima, México</p>
                 </div>
             </div>
@@ -553,6 +751,16 @@ $categorias = obtenerCategorias($pdo);
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
+    // FUNCIONES MEJORADAS PARA ACCESIBILIDAD
+    function alternarTextoGrande() {
+        document.body.classList.toggle('texto-grande');
+        mostrarNotificacion('Modo texto grande ' + (document.body.classList.contains('texto-grande') ? 'activado' : 'desactivado'));
+    }
+
+    function irAlCarrito() {
+        window.location.href = 'pages/carrito.php';
+    }
+
     function agregarAlCarrito(idProducto, nombre, precio, imagen) {
         let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
         
@@ -573,7 +781,7 @@ $categorias = obtenerCategorias($pdo);
         localStorage.setItem('carrito', JSON.stringify(carrito));
         actualizarContadorCarrito();
         
-        mostrarNotificacion('¡Agregado! ' + nombre);
+        mostrarNotificacion('¡Producto agregado! ' + nombre);
     }
 
     function mostrarNotificacion(mensaje) {
@@ -581,10 +789,10 @@ $categorias = obtenerCategorias($pdo);
         notification.className = 'position-fixed bottom-0 end-0 p-3';
         notification.style.zIndex = '9999';
         notification.innerHTML = `
-            <div class="toast show" role="alert">
+            <div class="toast show notificacion-grande" role="alert">
                 <div class="toast-header bg-success text-white">
                     <i class="fas fa-check-circle me-2"></i>
-                    <strong class="me-auto">Producto Agregado</strong>
+                    <strong class="me-auto">¡Éxito!</strong>
                     <button type="button" class="btn-close btn-close-white" onclick="this.parentElement.parentElement.parentElement.remove()"></button>
                 </div>
                 <div class="toast-body">
@@ -598,17 +806,31 @@ $categorias = obtenerCategorias($pdo);
             if (notification.parentElement) {
                 notification.parentElement.removeChild(notification);
             }
-        }, 3000);
+        }, 4000);
     }
 
     function actualizarContadorCarrito() {
         const carrito = JSON.parse(localStorage.getItem('carrito')) || [];
         const totalItems = carrito.reduce((sum, item) => sum + item.cantidad, 0);
+        const totalPrecio = carrito.reduce((sum, item) => sum + (item.precio * item.cantidad), 0);
         
+        // Contador en navbar
         const contador = document.getElementById('contador-carrito');
         if (contador) {
             contador.textContent = totalItems;
             contador.style.display = totalItems > 0 ? 'inline' : 'none';
+        }
+        
+        // Contador en carrito flotante
+        const contadorGrande = document.getElementById('contador-carrito-grande');
+        const totalGrande = document.getElementById('total-carrito-grande');
+        
+        if (contadorGrande) {
+            contadorGrande.textContent = totalItems;
+        }
+        
+        if (totalGrande) {
+            totalGrande.textContent = '$' + totalPrecio.toFixed(2);
         }
     }
 
@@ -635,9 +857,11 @@ $categorias = obtenerCategorias($pdo);
         });
     }
 
+    // Event listeners
     document.getElementById('buscador').addEventListener('input', filtrarProductos);
     document.getElementById('filtro-categoria').addEventListener('change', filtrarProductos);
     
+    // Inicializar
     document.addEventListener('DOMContentLoaded', actualizarContadorCarrito);
     </script>
 </body>
