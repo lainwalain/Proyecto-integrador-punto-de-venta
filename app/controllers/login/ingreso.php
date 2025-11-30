@@ -15,7 +15,7 @@ foreach ($usuarios as $usuario){
     $email_tabla = $usuario['email'];
     $nombres = $usuario['nombres'];
     $password_user_tabla = $usuario['password_user'];
-    $id_rol_tabla = $usuario['id_rol']; // Obtener el rol
+    $id_rol_tabla = $usuario['id_rol'];
     $id_usuario_tabla = $usuario['id_usuario'];
 }
 
@@ -30,6 +30,9 @@ if( ($contador > 0) && (password_verify($password_user, $password_user_tabla)) )
     if ($id_rol_tabla == 1) {
         // Administrador - va al panel admin
         header('Location: '.$URL.'/index.php');
+    } else if ($id_rol_tabla == 3) {
+        // VENDEDOR (Rol 3) - va al cajero
+        header('Location: '.$URL.'/cajero/index.php');
     } else {
         // Usuario normal - va a la tienda online
         header('Location: '.$URL.'/tienda_linea/index.php');

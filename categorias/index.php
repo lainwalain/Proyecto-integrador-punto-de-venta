@@ -34,7 +34,7 @@ include ('../app/controllers/categorias/listado_de_categoria.php');
         <div class="container-fluid">
 
             <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-12">
                     <div class="card card-outline card-primary">
                         <div class="card-header">
                             <h3 class="card-title">Categorías registrados</h3>
