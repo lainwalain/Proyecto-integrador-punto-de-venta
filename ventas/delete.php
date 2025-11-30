@@ -153,7 +153,7 @@ include ('../app/controllers/clientes/cargar_cliente.php');
                                 </div>
                                 <div class="col-md-3">
                                     <div class="form-group">
-                                        <label for="">Nit/Ci del cliente</label>
+                                        <label for="">RFC del cliente</label>
                                         <input type="text" value="<?php echo $nit_ci_cliente; ?>" class="form-control" id="nit_ci_cliente" disabled>
                                     </div>
                                 </div>
@@ -339,7 +339,7 @@ include ('../app/controllers/clientes/cargar_cliente.php');
                         <input type="text" name="nombre_cliente" class="form-control">
                     </div>
                     <div class="form-group">
-                        <label for="">Nit/CI del cliente</label>
+                        <label for="">RFC del cliente</label>
                         <input type="text" name="nit_ci_cliente" class="form-control">
                     </div>
                     <div class="form-group">

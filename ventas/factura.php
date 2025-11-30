@@ -1,17 +1,11 @@
 <?php
-// Include the main TCPDF library (search for installation path).
-
-
-
+// Include the main TCPDF library
 require_once('../app/TCPDF-main/tcpdf.php');
 include('../app/config.php');
 include ('../app/controllers/ventas/literal.php');
 
-
-
 session_start();
 if(isset($_SESSION['sesion_email'])){
-    // echo "si existe sesion de ".$_SESSION['sesion_email'];
     $email_sesion = $_SESSION['sesion_email'];
     $sql = "SELECT us.id_usuario as id_usuario, us.nombres as nombres, us.email as email, rol.rol as rol 
                   FROM tb_usuarios as us INNER JOIN tb_roles as rol ON us.id_rol = rol.id_rol WHERE email='$email_sesion'";
@@ -28,10 +22,6 @@ if(isset($_SESSION['sesion_email'])){
     header('Location: '.$URL.'/login');
 }
 
-
-
-
-
 $id_venta_get = $_GET['id_venta'];
 $nro_venta_get = $_GET['nro_venta'];
 
@@ -41,7 +31,6 @@ $query_ventas = $pdo->prepare($sql_ventas);
 $query_ventas->execute();
 $ventas_datos = $query_ventas->fetchAll(PDO::FETCH_ASSOC);
 
-
 foreach ($ventas_datos as $ventas_dato)
 {
     $fyh_creacion = $ventas_dato['fyh_creacion'];
@@ -50,21 +39,20 @@ foreach ($ventas_datos as $ventas_dato)
     $total_pagado = $ventas_dato['total_pagado'];
 }
 
-//convierte precio total a literal
+// Convierte precio total a literal
 $monto_literal = numtoletras($total_pagado);
-
 $fecha = date("d/m/Y", strtotime($fyh_creacion));
-
+$hora = date("H:i:s", strtotime($fyh_creacion));
 
 // create new PDF document
 $pdf = new TCPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, array(215,279), true, 'UTF-8', false);
 
 // set document information
 $pdf->setCreator(PDF_CREATOR);
-$pdf->setAuthor('Sistema de parqueo');
-$pdf->setTitle('Sistema de parqueo');
-$pdf->setSubject('Sistema de parqueo');
-$pdf->setKeywords('TCPDF, PDF, example, test, guide');
+$pdf->setAuthor('Market Go');
+$pdf->setTitle('Factura Market Go');
+$pdf->setSubject('Factura de Venta');
+$pdf->setKeywords('Market Go, Factura, México');
 
 // remove default header/footer
 $pdf->setPrintHeader(false);
@@ -79,17 +67,8 @@ $pdf->setMargins(15, 15, 15);
 // set auto page breaks
 $pdf->setAutoPageBreak(true, 5);
 
-
 // set image scale factor
 $pdf->setImageScale(PDF_IMAGE_SCALE_RATIO);
-
-// set some language-dependent strings (optional)
-if (@file_exists(dirname(__FILE__).'/lang/eng.php')) {
-    require_once(dirname(__FILE__).'/lang/eng.php');
-    $pdf->setLanguageArray($l);
-}
-
-// ---------------------------------------------------------
 
 // set font
 $pdf->setFont('Helvetica', '', 12);
@@ -97,60 +76,92 @@ $pdf->setFont('Helvetica', '', 12);
 // add a page
 $pdf->AddPage();
 
-
-
-
 // create some HTML content
-$html ='
+$html = '
+<style>
+    .header-title {
+        font-size: 16px;
+        font-weight: bold;
+        color: #2ecc71;
+    }
+    .empresa-info {
+        font-size: 10px;
+    }
+    .factura-title {
+        font-size: 20px;
+        font-weight: bold;
+        text-align: center;
+        color: #2c3e50;
+    }
+    .datos-cliente {
+        border: 1px solid #000000;
+        padding: 8px;
+        font-size: 11px;
+    }
+    .tabla-productos {
+        font-size: 10px;
+    }
+    .total-section {
+        font-size: 12px;
+        font-weight: bold;
+    }
+    .footer-text {
+        font-size: 9px;
+        text-align: center;
+        color: #666;
+    }
+</style>
+
 <table border="0" style="font-size: 10px">
 <tr>
-    <td style="text-align: center;width: 230px">
-    <img src="../public/images/logo.jpg" width="80px" alt=""> <br><br>
-        <b>SISTEMA DE VENTAS HILARI WEB</b> <br>
-    Zona Alto Lima 1ra Sección Av. Litoral #2345 <br>
-    23884774 - 75657007 <br>
-    LA PAZ - BOLIVIA
+    <td style="text-align: center; width: 250px">
+        <div class="header-title">MARKET GO</div>
+        <div class="empresa-info">
+            <b>Tu Tienda de Abarrotes</b> <br>
+            Manzanillo, Colima, México <br>
+            Tel: 3141665887 <br>
+            RFC: MGO250129ABC <br>
+            Régimen: Régimen Simplificado de Confianza
+        </div>
     </td>
-    <td style="width: 150px"></td>
-    <td style="font-size: 16px;width: 290px"><br><br><br>
-        <b>NIT: </b>10001099920 <br>
-        <b>Nro factura:</b> '.$id_venta_get.' <br>
-        <b>Nro de autorización: </b>100020029930
-        <p style="text-align: center"><B>ORIGINAL</B></p>
+    <td style="width: 120px"></td>
+    <td style="font-size: 12px; width: 250px">
+        <br><br>
+        <b>FOLIO:</b> '.$id_venta_get.' <br>
+        <b>FECHA:</b> '.$fecha.' <br>
+        <b>HORA:</b> '.$hora.' <br>
+        <b>NO. DE VENTA:</b> '.$nro_venta_get.' <br>
+        <p style="text-align: center; background-color: #2ecc71; color: white; padding: 5px; border-radius: 5px"><b>ORIGINAL</b></p>
     </td>
 </tr>
 </table>
 
-<p style="text-align: center;font-size: 25px"><b>FACTURA</b></p>
+<p class="factura-title">FACTURA</p>
 
-<div style="border: 1px solid #000000">
-<table border="0" cellpadding="6px">
+<div class="datos-cliente">
+<table border="0" cellpadding="4px">
 <tr>
-    <td><b>Fecha:</b> '.$fecha.'</td>
-    <td></td>
-    <td><b>Nit/CI: </b>'.$nit_ci_cliente.'</td>
+    <td><b>Cliente:</b> '.$nombre_cliente.'</td>
 </tr>
 <tr>
-    <td colspan="3"><b>Señor(es): </b>'.$nombre_cliente.' </td>
+    <td><b>RFC/CURP:</b> '.$nit_ci_cliente.'</td>
 </tr>
 </table>
 </div>
 
 <br>
 
-<table border="1" cellpadding="5" style="font-size: 12px">
-<tr style="text-align: center;background-color: #d6d6d6">
-    <th style="width: 40px"><b>Nro</b></th>
-    <th style="width: 150px"><b>Producto</b></th>
-    <th style="width: 235px"><b>Descripción</b></th>
-    <th style="width: 65px"><b>Cantidad</b></th>
-    <th style="width: 98px"><b>Precio Unitario</b></th>
-    <th style="width: 69px"><b>Sub total</b></th>
-</tr>
-';
+<table border="1" cellpadding="4" class="tabla-productos">
+<tr style="text-align: center; background-color: #2ecc71; color: white;">
+    <th style="width: 30px"><b>#</b></th>
+    <th style="width: 120px"><b>Producto</b></th>
+    <th style="width: 50px"><b>Cantidad</b></th>
+    <th style="width: 70px"><b>Precio Unitario</b></th>
+    <th style="width: 70px"><b>Subtotal</b></th>
+</tr>';
+
 $contador_de_carrito = 0;
 $cantidad_total = 0;
-$precio_unitario_total = 0;
 $precio_total = 0;
 
 $sql_carrito = "SELECT *,pro.nombre as nombre_producto, pro.descripcion as descripcion, pro.precio_venta as precio_venta, 
@@ -161,77 +172,92 @@ WHERE nro_venta = '$nro_venta_get' ORDER BY id_carrito ASC ";
 $query_carrito = $pdo->prepare($sql_carrito);
 $query_carrito->execute();
 $carrito_datos = $query_carrito->fetchAll(PDO::FETCH_ASSOC);
+
 foreach ($carrito_datos as $carrito_dato){
     $id_carrito = $carrito_dato['id_carrito'];
     $contador_de_carrito = $contador_de_carrito + 1;
     $cantidad_total = $cantidad_total + $carrito_dato['cantidad'];
-    $precio_unitario_total = $precio_unitario_total + floatval($carrito_dato['precio_venta']);
-    $subtotal = $carrito_dato['cantidad'] * $carrito_dato['precio_venta'];
+    $subtotal = $carrito_dato['cantidad'] * floatval($carrito_dato['precio_venta']);
     $precio_total = $precio_total + $subtotal;
 
-    $html .='
+    $html .= '
     <tr>
         <td style="text-align: center">'.$contador_de_carrito.'</td>
         <td>'.$carrito_dato['nombre_producto'].'</td>
-        <td>'.$carrito_dato['descripcion'].'</td>
         <td style="text-align: center">'.$carrito_dato['cantidad'].'</td>
-        <td style="text-align: center">Bs. '.$carrito_dato['precio_venta'].'</td>
-        <td style="text-align: center">Bs. '.$subtotal.'</td>
-    </tr>
-    ';
-
+        <td style="text-align: right">$ '.number_format($carrito_dato['precio_venta'], 2).'</td>
+        <td style="text-align: right">$ '.number_format($subtotal, 2).'</td>
+    </tr>';
 }
 
-$html .='
+// Calcular IVA (16%) y subtotal
+$iva = $precio_total * 0.16;
+$subtotal_sin_iva = $precio_total - $iva;
 
-<tr>
-    <td colspan="3" style="text-align: right;background-color: #d6d6d6"><b>Total</b></td>
-    <td style="text-align: center;background-color: #d6d6d6">'.$cantidad_total.'</td>
-    <td style="text-align: center;background-color: #d6d6d6">Bs. '.$precio_unitario_total.'</td>
-    <td style="text-align: center;background-color: #d6d6d6">Bs. '.$precio_total.'</td>
+$html .= '
+<tr style="background-color: #f8f9fa;">
+    <td colspan="2" style="text-align: right; font-weight: bold">SUBTOTAL</td>
+    <td style="text-align: center; font-weight: bold">'.$cantidad_total.'</td>
+    <td></td>
+    <td style="text-align: right; font-weight: bold">$ '.number_format($subtotal_sin_iva, 2).'</td>
+</tr>
+<tr style="background-color: #f8f9fa;">
+    <td colspan="4" style="text-align: right; font-weight: bold">IVA (16%)</td>
+    <td style="text-align: right; font-weight: bold">$ '.number_format($iva, 2).'</td>
+</tr>
+<tr style="background-color: #2ecc71; color: white;">
+    <td colspan="4" style="text-align: right; font-weight: bold">TOTAL</td>
+    <td style="text-align: right; font-weight: bold">$ '.number_format($precio_total, 2).'</td>
 </tr>
 </table>
 
-<p style="text-align: right">
-         <b>Monto Total: </b> Bs. '.$precio_total.'
-        </p>
-        <p>
-            <b>Son: </b>'.$monto_literal.'
-        </p>
-        <br>
-         -------------------------------------------------------------------------------- <br>
-         <b>USUARIO:</b> '.$email_sesion.' <br>
-         
-        <p style="text-align: center">"ESTA FACTURA CONTRIBUYE AL DESARROLLO DEL PAÍS, EL USO ILÍCITO DE ÉSTA SERÁ SANCIONADO DE ACUERDO A LA LEY"
-        </p>
-        <p style="text-align: center"><b>GRACIAS POR SU PREFERENCIA</b></p>
-';
+<div class="total-section">
+    <p style="text-align: right">
+        <b>Monto Total: </b> $ '.number_format($precio_total, 2).'
+    </p>
+    <p>
+        <b>Son: </b>'.$monto_literal.' PESOS MEXICANOS
+    </p>
+</div>
+
+<br>
+
+<div style="border-top: 1px solid #ccc; padding-top: 10px;">
+    <p><b>Atendido por:</b> '.$nombres_sesion.' ('.$email_sesion.')</p>
+</div>
+
+<div class="footer-text">
+    <p>"Este documento es una representación impresa de un CFDI"</p>
+    <p><b>MARKET GO - SISTEMA DE VENTAS</b></p>
+    <p>Manzanillo, Colima, México • Tel: 3141665887</p>
+    <p>¡Gracias por su preferencia! Vuelva pronto</p>
+</div>';
 
 // output the HTML content
 $pdf->writeHTML($html, true, false, true, false, '');
 
-
-
+// QR Code con información de la factura
 $style = array(
     'border' => 0,
     'vpadding' => '3',
     'hpadding' => '3',
     'fgcolor' => array(0, 0, 0),
-    'bgcolor' => false, //array(255,255,255)
-    'module_width' => 1, // width of a single module in points
-    'module_height' => 1 // height of a single module in points
+    'bgcolor' => false,
+    'module_width' => 1,
+    'module_height' => 1
 );
 
-$QR = 'Factura realizada por el sistema de ventas HILARI WEB, al cliente '.$nombre_cliente.' con nit/ci: '.$nit_ci_cliente.' 
-en fecha: '.$fecha.' con el monto total de '.$precio_total.' ';
-$pdf->write2DBarcode($QR,'QRCODE,L',  170,240,40,40, $style);
+$QR_info = 'MARKET GO - Factura Digital
+Folio: '.$id_venta_get.'
+Cliente: '.$nombre_cliente.'
+RFC: '.$nit_ci_cliente.'
+Fecha: '.$fecha.'
+Hora: '.$hora.'
+Total: $ '.number_format($precio_total, 2).'
+Atendido por: '.$nombres_sesion;
 
+$pdf->write2DBarcode($QR_info, 'QRCODE,L', 160, 240, 40, 40, $style);
 
-
-
-//Close and output PDF document
-$pdf->Output('example_002.pdf', 'I');
-
-//============================================================+
-// END OF FILE
-//============================================================+
+// Close and output PDF document
+$pdf->Output('Factura_MarketGo_'.$id_venta_get.'.pdf', 'I');
+?>
