@@ -47,7 +47,7 @@ include ('../app/controllers/clientes/listado_de_clientes.php');
                                 <tr>
                                     <th><center>Nro</center></th>
                                     <th><center>Nombre del cliente</center></th>
-                                    <th><center>Nit/CI del cliente</center></th>
+                                    <th><center>RFC del cliente</center></th>
                                     <th><center>Celular</center></th>
                                     <th><center>Correo</center></th>
                                 </tr>
@@ -79,7 +79,7 @@ include ('../app/controllers/clientes/listado_de_clientes.php');
                                 <tr>
                                     <th><center>Nro</center></th>
                                     <th><center>Nombre del cliente</center></th>
-                                    <th><center>Nit/CI del cliente</center></th>
+                                    <th><center>RFC del cliente</center></th>
                                     <th><center>Celular</center></th>
                                     <th><center>Correo</center></th>
                                 </tr>

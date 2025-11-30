@@ -28,7 +28,7 @@ include ('../app/controllers/roles/update_roles.php');
         <div class="container-fluid">
 
             <div class="row">
-                <div class="col-md-5">
+                <div class="col-md-10">
                     <div class="card card-success">
                         <div class="card-header">
                             <h3 class="card-title">Llene los datos con cuidado</h3>

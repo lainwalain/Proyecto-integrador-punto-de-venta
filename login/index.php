@@ -81,7 +81,7 @@ session_start();
         
         .login-box {
             width: 100%;
-            max-width: 420px;
+            max-width: 450px;
             animation: fadeIn 0.8s ease-out;
         }
         
@@ -313,7 +313,33 @@ session_start();
             color: var(--primary-dark);
             text-decoration: underline;
         }
-        
+
+        /* Estilo para el campo de teléfono México */
+        .phone-input-group {
+            position: relative;
+        }
+
+        .phone-prefix {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #777;
+            font-weight: 500;
+            z-index: 3;
+        }
+
+        .phone-input {
+            padding-left: 65px !important;
+        }
+
+        .phone-format {
+            font-size: 0.75rem;
+            color: #6c757d;
+            margin-top: 5px;
+            text-align: left;
+        }
+
         /* Responsive adjustments */
         @media (max-width: 576px) {
             .login-box {
@@ -326,7 +352,10 @@ session_start();
             
             .features {
                 flex-direction: column;
-                gap: 15px;
+            }
+            
+            .phone-input {
+                padding-left: 60px !important;
             }
         }
     </style>
@@ -438,6 +467,7 @@ session_start();
                         </div>
                     </div>
                 </div>
+                
                 <div class="input-group mb-3">
                     <input type="email" 
                            name="email" 
@@ -450,6 +480,28 @@ session_start();
                         </div>
                     </div>
                 </div>
+
+                <!-- CAMPO DE TELÉFONO PARA MÉXICO -->
+                <div class="input-group mb-3 phone-input-group">
+                    <div class="phone-prefix">+52</div>
+                    <input type="tel" 
+                           name="telefono" 
+                           class="form-control py-3 phone-input" 
+                           placeholder="Número de teléfono" 
+                           required
+                           pattern="[0-9]{10}"
+                           title="Ingrese un número de teléfono válido de 10 dígitos"
+                           maxlength="10">
+                    <div class="input-group-append">
+                        <div class="input-group-text">
+                            <span class="fas fa-phone text-muted"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="phone-format">
+
+                </div>
+                
                 <div class="input-group mb-3">
                     <input type="password" 
                            name="password_user" 
@@ -463,6 +515,7 @@ session_start();
                         </div>
                     </div>
                 </div>
+                
                 <div class="input-group mb-3">
                     <input type="password" 
                            name="confirm_password" 
@@ -487,7 +540,7 @@ session_start();
                 </div>
             </form>
 
-            <!-- Sección de registro - SOLO EL LINK -->
+            <!-- Sección de registro -->
             <div class="registro-section">
                 <p class="mb-2">¿No tienes cuenta?</p>
                 <a href="javascript:void(0)" id="linkRegistro" class="registro-link">
@@ -635,11 +688,13 @@ session_start();
     document.getElementById('registroForm').addEventListener('submit', function(e) {
         const nombres = document.querySelector('#registroForm input[name="nombres"]');
         const email = document.querySelector('#registroForm input[name="email"]');
+        const telefono = document.querySelector('#registroForm input[name="telefono"]');
         const password = document.querySelector('#registroForm input[name="password_user"]');
         const confirmPassword = document.querySelector('#registroForm input[name="confirm_password"]');
         const btnRegistrar = document.getElementById('btnRegistrar');
         
-        if (!nombres.value || !email.value || !password.value || !confirmPassword.value) {
+        // Validar campos completos
+        if (!nombres.value || !email.value || !telefono.value || !password.value || !confirmPassword.value) {
             e.preventDefault();
             Swal.fire({
                 icon: 'warning',
@@ -650,6 +705,7 @@ session_start();
             return;
         }
 
+        // Validar email
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if (!emailRegex.test(email.value)) {
             e.preventDefault();
@@ -662,6 +718,20 @@ session_start();
             return;
         }
 
+        // Validar teléfono México (10 dígitos numéricos)
+        const phoneRegex = /^[0-9]{10}$/;
+        if (!phoneRegex.test(telefono.value)) {
+            e.preventDefault();
+            Swal.fire({
+                icon: 'warning',
+                title: 'Teléfono inválido',
+                text: 'Por favor, ingrese un número de teléfono válido de 10 dígitos.',
+                confirmButtonColor: '#2ecc71'
+            });
+            return;
+        }
+
+        // Validar contraseña
         if (password.value.length < 6) {
             e.preventDefault();
             Swal.fire({
@@ -673,6 +743,7 @@ session_start();
             return;
         }
 
+        // Validar que las contraseñas coincidan
         if (password.value !== confirmPassword.value) {
             e.preventDefault();
             Swal.fire({
@@ -688,6 +759,24 @@ session_start();
         btnRegistrar.disabled = true;
     });
 
+    // Formatear automáticamente el número de teléfono para México
+    document.querySelector('input[name="telefono"]').addEventListener('input', function(e) {
+        // Remover cualquier carácter que no sea número
+        this.value = this.value.replace(/[^0-9]/g, '');
+        
+        // Limitar a 10 dígitos (formato México)
+        if (this.value.length > 10) {
+            this.value = this.value.slice(0, 10);
+        }
+        
+        // Opcional: Agregar formato visual mientras se escribe
+        if (this.value.length >= 2) {
+            // Puedes agregar formato visual aquí si lo deseas
+            // Ejemplo: 55-1234-5678
+        }
+    });
+
+    // Efectos de focus en los campos
     document.querySelectorAll('.form-control').forEach(input => {
         input.addEventListener('focus', function() {
             this.style.borderColor = '#2ecc71';
@@ -700,6 +789,7 @@ session_start();
         });
     });
 
+    // Animación de entrada
     document.addEventListener('DOMContentLoaded', function() {
         document.querySelector('.login-box').style.opacity = '0';
         document.querySelector('.login-box').style.transform = 'translateY(20px)';

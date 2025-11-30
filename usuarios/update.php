@@ -31,7 +31,7 @@ include ('../app/controllers/roles/listado_de_roles.php');
         <div class="container-fluid">
 
             <div class="row">
-                <div class="col-md-5">
+                <div class="col-md-10">
                     <div class="card card-success">
                         <div class="card-header">
                             <h3 class="card-title">Llene los datos con cuidado</h3>
@@ -70,14 +70,6 @@ include ('../app/controllers/roles/listado_de_roles.php');
                                                 }
                                                 ?>
                                             </select>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="">Contraseña</label>
-                                            <input type="text" name="password_user" class="form-control">
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="">Repita la Contraseña</label>
-                                            <input type="text" name="password_repeat" class="form-control">
                                         </div>
                                         <hr>
                                         <div class="form-group">
