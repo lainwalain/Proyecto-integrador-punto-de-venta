@@ -345,3 +345,124 @@
         </div>
         <!-- /.sidebar -->
     </aside>
+ <div style="position: fixed; bottom: 20px; left: 20px; z-index: 9999;">
+  <button id="btnDarkMode" class="dark-toggle-btn">
+    <i class="fas fa-moon me-1"></i>Dark
+  </button>
+</div>
+<style>
+.dark-toggle-btn {
+  background: linear-gradient(135deg, #1e3a8a, #3b82f6); /* gradiente azul */
+  color: #fff;
+  border: none;
+  border-radius: 30px;
+  padding: 10px 18px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  transition: all 0.3s ease;
+}
+
+.dark-toggle-btn:hover {
+  background: linear-gradient(135deg, #3b82f6, #1e3a8a);
+  transform: scale(1.05);
+  box-shadow: 0 6px 16px rgba(0,0,0,0.4);
+}
+
+.dark-toggle-btn i {
+  font-size: 16px;
+}
+</style>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const btnDark = document.getElementById("btnDarkMode");
+
+  const darkCSS = `
+    /* Transición suave */
+    html, body, .wrapper, .content-wrapper, .content, .container-fluid,
+    .navbar, .main-header, .main-sidebar, .sidebar, .card, .small-box,
+    .form-control, .form-select, input, textarea, select,
+    footer, .main-footer {
+      transition: background-color 0.35s ease, color 0.35s ease, border-color 0.35s ease;
+    }
+
+    /* Fondo y texto */
+    html.dark-mode, html.dark-mode body {
+      background-color:#0b1220 !important; color:#f9fafb !important;
+    }
+    html.dark-mode h1, html.dark-mode h2, html.dark-mode h3,
+    html.dark-mode h4, html.dark-mode h5, html.dark-mode h6, html.dark-mode strong {
+      color:#f9fafb !important;
+    }
+    html.dark-mode p, html.dark-mode label, html.dark-mode .text-muted {
+      color:#d1d5db !important;
+    }
+
+    /* Navbar y header */
+    html.dark-mode .navbar, html.dark-mode .main-header, html.dark-mode .content-header {
+      background:#0f172a !important; color:#f9fafb !important;
+    }
+
+    /* Sidebar */
+    html.dark-mode .main-sidebar, html.dark-mode .sidebar {
+      background:#0f172a !important; color:#e5e7eb !important;
+    }
+
+    /* Cards y cajas */
+    html.dark-mode .card, html.dark-mode .small-box {
+      background:#111827 !important; color:#f9fafb !important; border-color:#1f2937 !important;
+    }
+
+    /* Formularios */
+    html.dark-mode .form-control, html.dark-mode input, html.dark-mode textarea, html.dark-mode select {
+      background:#1f2937 !important; color:#f9fafb !important; border:1px solid #374151 !important;
+    }
+
+    /* Footer */
+    html.dark-mode footer, html.dark-mode .main-footer {
+      background:#0b1220 !important; color:#f9fafb !important;
+    }
+
+    /* 🔹 Íconos azules en modo oscuro */
+    html.dark-mode i, html.dark-mode .fas, html.dark-mode .far, html.dark-mode .fab {
+      color:#3b82f6 !important; /* Azul vivo */
+    }
+  `;
+
+  // Inyectar estilos una sola vez
+  let styleTag = document.getElementById("dark-mode-styles");
+  if (!styleTag) {
+    styleTag = document.createElement("style");
+    styleTag.id = "dark-mode-styles";
+    styleTag.textContent = darkCSS;
+    document.head.appendChild(styleTag);
+  }
+
+  // Estado inicial
+  const pref = localStorage.getItem("theme");
+  if (pref === "dark") {
+    document.documentElement.classList.add("dark-mode");
+    btnDark.innerHTML = '<i class="fas fa-sun me-1"></i>Light';
+  } else {
+    document.documentElement.classList.remove("dark-mode");
+    btnDark.innerHTML = '<i class="fas fa-moon me-1"></i>Dark';
+  }
+
+  // Toggle
+  btnDark.addEventListener("click", () => {
+    const isDark = document.documentElement.classList.toggle("dark-mode");
+    if (isDark) {
+      btnDark.innerHTML = '<i class="fas fa-sun me-1"></i>Light';
+      localStorage.setItem("theme","dark");
+    } else {
+      btnDark.innerHTML = '<i class="fas fa-moon me-1"></i>Dark';
+      localStorage.setItem("theme","light");
+    }
+  });
+});
+</script>

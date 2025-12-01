@@ -238,5 +238,155 @@ $estadisticas = obtenerEstadisticasUsuario($pdo, $usuario_logueado['id_usuario']
         }
     }
     </script>
+    <script>
+document.addEventListener("DOMContentLoaded", function () {
+  const translations = {
+    es: {
+      inicio: "Inicio",
+      carrito: "Carrito",
+      perfil: "Mi Perfil",
+      cerrarSesion: "Cerrar Sesión",
+      pedidosRealizados: "Pedidos Realizados",
+      totalGastado: "Total Gastado",
+      ultimaCompra: "Última Compra",
+      infoPersonal: "Información Personal",
+      nombreCompleto: "Nombre Completo",
+      correo: "Correo Electrónico",
+      rol: "Rol en el Sistema",
+      fechaRegistro: "Fecha de Registro",
+      accionesRapidas: "Acciones Rápidas",
+      verPedidos: "Ver Mis Pedidos",
+      irCarrito: "Ir al Carrito",
+      seguirComprando: "Seguir Comprando",
+      ayuda: "¿Necesitas ayuda? Contacta a soporte",
+      miembroDesde: "Miembro desde:"
+    },
+    en: {
+      inicio: "Home",
+      carrito: "Cart",
+      perfil: "My Profile",
+      cerrarSesion: "Log Out",
+      pedidosRealizados: "Orders Placed",
+      totalGastado: "Total Spent",
+      ultimaCompra: "Last Purchase",
+      infoPersonal: "Personal Information",
+      nombreCompleto: "Full Name",
+      correo: "Email Address",
+      rol: "System Role",
+      fechaRegistro: "Registration Date",
+      accionesRapidas: "Quick Actions",
+      verPedidos: "View My Orders",
+      irCarrito: "Go to Cart",
+      seguirComprando: "Continue Shopping",
+      ayuda: "Need help? Contact support",
+      miembroDesde: "Member since:"
+    }
+  };
+
+  let currentLang = localStorage.getItem("lang") || "es";
+  const btnLanguage = document.getElementById("btnLanguage");
+
+  function applyLanguage(lang) {
+    const t = translations[lang];
+
+    document.querySelector(".navbar-nav a[href='../index.php']").innerHTML = `<i class="fas fa-home me-1"></i>${t.inicio}`;
+    document.querySelector(".navbar-nav a[href='carrito.php']").innerHTML = `<i class="fas fa-shopping-cart me-1"></i>${t.carrito}`;
+    document.querySelector(".navbar-nav a[href='perfil.php']").innerHTML = `<i class="fas fa-user me-1"></i>${t.perfil}`;
+    document.querySelector(".navbar-nav a[onclick='cerrarSesion()']").innerHTML = `<i class="fas fa-sign-out-alt me-1"></i>${t.cerrarSesion}`;
+
+    // Estadísticas
+    const statCards = document.querySelectorAll(".stat-card p.text-muted");
+    if (statCards.length >= 3) {
+      statCards[0].textContent = t.pedidosRealizados;
+      statCards[1].textContent = t.totalGastado;
+      statCards[2].textContent = t.ultimaCompra;
+    }
+
+    // Info personal
+    const infoCard = document.querySelector(".info-card h4");
+    if (infoCard) infoCard.innerHTML = `<i class="fas fa-user-circle me-2"></i>${t.infoPersonal}`;
+
+    const labels = document.querySelectorAll(".info-card label");
+    if (labels.length >= 4) {
+      labels[0].textContent = t.nombreCompleto;
+      labels[1].textContent = t.correo;
+      labels[2].textContent = t.rol;
+      labels[3].textContent = t.fechaRegistro;
+    }
+
+    // Acciones rápidas
+    const accionesCard = document.querySelectorAll(".info-card h4")[1];
+    if (accionesCard) accionesCard.innerHTML = `<i class="fas fa-bolt me-2"></i>${t.accionesRapidas}`;
+
+    const accionesBtns = document.querySelectorAll(".info-card .btn");
+    if (accionesBtns.length >= 3) {
+      accionesBtns[0].innerHTML = `<i class="fas fa-shopping-bag me-2"></i>${t.verPedidos}`;
+      accionesBtns[1].innerHTML = `<i class="fas fa-shopping-cart me-2"></i>${t.irCarrito}`;
+      accionesBtns[2].innerHTML = `<i class="fas fa-store me-2"></i>${t.seguirComprando}`;
+    }
+
+    const ayudaText = document.querySelector(".info-card small.text-muted");
+    if (ayudaText) ayudaText.innerHTML = `<i class="fas fa-info-circle me-1"></i>${t.ayuda}`;
+
+    const miembroDesde = document.querySelector(".profile-header small");
+    if (miembroDesde) {
+      const original = miembroDesde.innerHTML.split("<br>");
+      miembroDesde.innerHTML = `${t.miembroDesde}<br>${original[1]}`;
+    }
+
+    btnLanguage.innerHTML = lang === "es" ? `<i class="fas fa-globe me-1"></i>English` : `<i class="fas fa-globe me-1"></i>Español`;
+  }
+
+  applyLanguage(currentLang);
+
+  btnLanguage.addEventListener("click", () => {
+    currentLang = currentLang === "es" ? "en" : "es";
+    localStorage.setItem("lang", currentLang);
+    applyLanguage(currentLang);
+  });
+});
+</script>
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const DARK_STYLE_ID = "dark-mode-overrides";
+  const btn = document.getElementById("btnDarkMode");
+
+  const darkCSS = `
+    body { background-color:#0b1220 !important; color:#e5e7eb !important; }
+    .navbar { background:linear-gradient(135deg,#0f172a,#111827)!important; }
+    .profile-header { background:linear-gradient(135deg,#0f172a,#111827)!important; color:#f3f4f6!important; }
+    .stat-card, .info-card { background:#111827!important; color:#f3f4f6!important; box-shadow:0 8px 30px rgba(0,0,0,0.6)!important; }
+    .badge-rol { background:linear-gradient(135deg,#0ea5e9,#1d4ed8)!important; }
+    .btn-primary { background:linear-gradient(135deg,#22c55e,#16a34a)!important; color:#0b1220!important; }
+    .btn-outline-primary { border-color:#22c55e!important; color:#22c55e!important; }
+    .btn-outline-secondary { border-color:#9ca3af!important; color:#9ca3af!important; }
+  `;
+
+  function isDarkEnabled() { return !!document.getElementById(DARK_STYLE_ID); }
+  function enableDark() {
+    if (isDarkEnabled()) return;
+    const style = document.createElement("style");
+    style.id = DARK_STYLE_ID;
+    style.textContent = darkCSS;
+    document.head.appendChild(style);
+    btn.innerHTML = `<i class="fas fa-sun"></i> Light`;
+    localStorage.setItem("theme","dark");
+  }
+  function disableDark() {
+    const style = document.getElementById(DARK_STYLE_ID);
+    if (style) style.remove();
+    btn.innerHTML = `<i class="fas fa-moon"></i> Dark`;
+    localStorage.setItem("theme","light");
+  }
+
+  const pref = localStorage.getItem("theme") || "light";
+  if (pref==="dark") enableDark(); else disableDark();
+
+  btn.addEventListener("click", () => {
+    if (isDarkEnabled()) disableDark(); else enableDark();
+  });
+});
+</script>
+
 </body>
 </html>

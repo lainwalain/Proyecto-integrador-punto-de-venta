@@ -128,6 +128,16 @@ $usuario_logueado = isset($_SESSION['id_usuario']) ? $_SESSION : null;
                     <a class="nav-link" href="../login/index.php">
                         <i class="fas fa-sign-in-alt me-1"></i>Iniciar Sesión
                     </a>
+                    <!-- Contenedor de botones -->
+<div style="position: fixed; top: 15px; right: 20px; z-index: 9999; display:flex; gap:10px;">
+  <button id="btnLanguage" class="btn btn-sm">
+    <i class="fas fa-globe me-1"></i>English
+  </button>
+  <button id="btnDarkMode" class="btn btn-sm">
+    <i class="fas fa-moon"></i>Dark
+  </button>
+</div>
+
                 <?php endif; ?>
             </div>
         </div>
@@ -475,5 +485,211 @@ $usuario_logueado = isset($_SESSION['id_usuario']) ? $_SESSION : null;
             }
         }
     </script>
+    <script>
+document.addEventListener("DOMContentLoaded", function () {
+  const translations = {
+    es: {
+      inicio: "Inicio",
+      carrito: "Carrito",
+      perfil: "Mi Perfil",
+      cerrarSesion: "Cerrar Sesión",
+      iniciarSesion: "Iniciar Sesión",
+      tituloCarrito: "Tu Carrito de Compras",
+      alertaLogin: "Debes iniciar sesión para poder procesar tu pedido.",
+      carritoVacio: "Tu carrito está vacío",
+      carritoVacioDesc: "Agrega algunos productos increíbles de nuestra tienda",
+      seguirComprando: "Seguir Comprando",
+      resumen: "Resumen del Pedido",
+      procesarPago: "Proceder al Pago",
+      loginParaPagar: "Inicia Sesión para Pagar",
+      vaciarCarrito: "Vaciar Carrito",
+      envioInfo: "Información de Envío",
+      envioGratis: "• Envío gratis en compras mayores a $500 MX",
+      tiempoEntrega: "• Tiempo de entrega: 1 a 2 horas",
+      zonaCobertura: "• Zona de cobertura: Manzanillo, Colima y áreas cercanas"
+    },
+    en: {
+      inicio: "Home",
+      carrito: "Cart",
+      perfil: "My Profile",
+      cerrarSesion: "Log Out",
+      iniciarSesion: "Log In",
+      tituloCarrito: "Your Shopping Cart",
+      alertaLogin: "You must log in to process your order.",
+      carritoVacio: "Your cart is empty",
+      carritoVacioDesc: "Add some amazing products from our store",
+      seguirComprando: "Continue Shopping",
+      resumen: "Order Summary",
+      procesarPago: "Proceed to Payment",
+      loginParaPagar: "Log In to Pay",
+      vaciarCarrito: "Empty Cart",
+      envioInfo: "Shipping Information",
+      envioGratis: "• Free shipping on orders over $500 MX",
+      tiempoEntrega: "• Delivery time: 1 to 2 hours",
+      zonaCobertura: "• Coverage area: Manzanillo, Colima and nearby areas"
+    }
+  };
+
+  let currentLang = localStorage.getItem("lang") || "es";
+  const btnLanguage = document.getElementById("btnLanguage");
+
+  function applyLanguage(lang) {
+    const t = translations[lang];
+
+    // Navbar
+    document.querySelector(".navbar-nav a[href='../index.php']").innerHTML = `<i class="fas fa-home me-1"></i>${t.inicio}`;
+    document.querySelector(".navbar-nav a[href='carrito.php']").innerHTML = `<i class="fas fa-shopping-cart me-1"></i>${t.carrito}`;
+    const perfilLink = document.querySelector(".navbar-nav a[href='perfil.php']");
+    if (perfilLink) perfilLink.innerHTML = `<i class="fas fa-user me-1"></i>${t.perfil}`;
+    const cerrarLink = document.querySelector(".navbar-nav a[onclick='cerrarSesion()']");
+    if (cerrarLink) cerrarLink.innerHTML = `<i class="fas fa-sign-out-alt me-1"></i>${t.cerrarSesion}`;
+    const loginLink = document.querySelector(".navbar-nav a[href='../login/index.php']");
+    if (loginLink) loginLink.innerHTML = `<i class="fas fa-sign-in-alt me-1"></i>${t.iniciarSesion}`;
+
+    // Título principal
+    const titulo = document.querySelector("h1.mb-4");
+    if (titulo) titulo.innerHTML = `<i class="fas fa-shopping-cart me-2"></i>${t.tituloCarrito}`;
+
+    // Alerta login
+    const alerta = document.querySelector(".alert.alert-warning");
+    if (alerta) alerta.innerHTML = `<i class="fas fa-exclamation-triangle me-2"></i>${t.alertaLogin}`;
+
+    // Carrito vacío
+    const vacio = document.getElementById("carrito-vacio");
+    if (vacio) {
+      vacio.querySelector("h3").textContent = t.carritoVacio;
+      vacio.querySelector("p").textContent = t.carritoVacioDesc;
+      const btnSeguir = vacio.querySelector("a.btn-primary");
+      if (btnSeguir) btnSeguir.innerHTML = `<i class="fas fa-store me-2"></i>${t.seguirComprando}`;
+    }
+
+    // Resumen del pedido
+    const resumenTitle = document.querySelector(".resumen-pedido h5");
+    if (resumenTitle) resumenTitle.innerHTML = `<i class="fas fa-receipt me-2"></i>${t.resumen}`;
+
+    const btnPago = document.getElementById("btn-procesar-pago");
+    if (btnPago) {
+      btnPago.innerHTML = `<i class="fas fa-credit-card me-2"></i>${btnPago.disabled ? t.loginParaPagar : t.procesarPago}`;
+    }
+
+    const btnVaciar = document.getElementById("btn-vaciar-carrito");
+    if (btnVaciar) btnVaciar.innerHTML = `<i class="fas fa-trash me-2"></i>${t.vaciarCarrito}`;
+
+    // Botón "Seguir Comprando" en resumen
+    const btnSeguirResumen = document.querySelector(".resumen-pedido a.btn-outline-light");
+    if (btnSeguirResumen) btnSeguirResumen.innerHTML = `<i class="fas fa-arrow-left me-2"></i>${t.seguirComprando}`;
+
+    // Información de envío
+    const envioCard = document.querySelector(".card.mt-3 h6");
+    if (envioCard) envioCard.innerHTML = `<i class="fas fa-shipping-fast me-2"></i>${t.envioInfo}`;
+    const envioSmall = document.querySelector(".card.mt-3 small");
+    if (envioSmall) envioSmall.innerHTML = `${t.envioGratis}<br>${t.tiempoEntrega}<br>${t.zonaCobertura}`;
+
+    // Botón idioma
+    btnLanguage.innerHTML = lang === "es" ? `<i class="fas fa-globe me-1"></i>English` : `<i class="fas fa-globe me-1"></i>Español`;
+  }
+
+  applyLanguage(currentLang);
+
+  btnLanguage.addEventListener("click", () => {
+    currentLang = currentLang === "es" ? "en" : "es";
+    localStorage.setItem("lang", currentLang);
+    applyLanguage(currentLang);
+  });
+});
+</script>
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const DARK_STYLE_ID = "dark-mode-overrides";
+  const btn = document.getElementById("btnDarkMode");
+
+  const darkCSS = `
+    /* Fondo y texto base */
+    body { background-color:#0b1220 !important; color:#f9fafb !important; }
+    h1,h2,h3,h4,h5,h6,strong { color:#f9fafb !important; }
+    .text-muted { color:#d1d5db !important; }
+
+    /* Navbar */
+    .navbar { background:linear-gradient(135deg,#0f172a,#111827)!important; }
+    .navbar-brand { color:#f9fafb !important; }
+    .nav-link { color:#e5e7eb !important; }
+    .nav-link:hover { color:#ffffff !important; background:rgba(255,255,255,0.08)!important; border-radius:8px; }
+
+    /* Tarjetas */
+    .card { background:#111827!important; color:#f9fafb!important; box-shadow:0 8px 30px rgba(0,0,0,0.6)!important; }
+    .card-title, .card-body, .card-text { color:#f9fafb!important; }
+    .card small { color:#d1d5db!important; }
+
+    /* Alertas */
+    .alert { background:#1f2937!important; color:#f9fafb!important; border-color:#374151!important; }
+    .alert a { color:#93c5fd!important; }
+
+    /* Carrito vacío */
+    .carrito-vacio h3 { color:#f9fafb!important; }
+    .carrito-vacio p { color:#d1d5db!important; }
+    .carrito-vacio i { color:#64748b!important; }
+
+    /* Resumen del pedido */
+    .resumen-pedido { background:#111827!important; color:#f9fafb!important; }
+    .resumen-pedido h5 { color:#f9fafb!important; }
+    .resumen-pedido small { color:#d1d5db!important; }
+
+    /* Botones */
+    .btn-primary {
+      background:linear-gradient(135deg,#22c55e,#16a34a)!important;
+      color:#0b1220!important; border:none!important;
+      box-shadow:0 6px 20px rgba(34,197,94,0.35)!important;
+    }
+    .btn-primary:hover { background:linear-gradient(135deg,#16a34a,#22c55e)!important; }
+
+    .btn-success {
+      background:linear-gradient(135deg,#16a34a,#22c55e)!important;
+      color:#0b1220!important;
+    }
+
+    .btn-danger {
+      background:linear-gradient(135deg,#ef4444,#b91c1c)!important;
+      color:#f9fafb!important;
+    }
+
+    .btn-outline-light { border-color:#f9fafb!important; color:#f9fafb!important; }
+    .btn-outline-light:hover { background:#f9fafb!important; color:#0b1220!important; }
+
+    .btn-outline-warning { border-color:#f59e0b!important; color:#f59e0b!important; }
+    .btn-outline-warning:hover { background:#f59e0b!important; color:#0b1220!important; }
+
+    /* Totales y etiquetas */
+    .total-carrito, .precio { color:#34d399!important; }
+    .badge.bg-light.text-dark { background:#374151!important; color:#f9fafb!important; }
+  `;
+
+  function isDarkEnabled() { return !!document.getElementById(DARK_STYLE_ID); }
+  function enableDark() {
+    if (isDarkEnabled()) return;
+    const style = document.createElement("style");
+    style.id = DARK_STYLE_ID;
+    style.textContent = darkCSS;
+    document.head.appendChild(style);
+    if (btn) btn.innerHTML = '<i class="fas fa-sun me-1"></i>Light';
+    localStorage.setItem("theme","dark");
+  }
+  function disableDark() {
+    const style = document.getElementById(DARK_STYLE_ID);
+    if (style) style.remove();
+    if (btn) btn.innerHTML = '<i class="fas fa-moon me-1"></i>Dark';
+    localStorage.setItem("theme","light");
+  }
+
+  const pref = localStorage.getItem("theme") || "light";
+  if (pref==="dark") enableDark(); else disableDark();
+
+  if (btn) {
+    btn.addEventListener("click", () => {
+      if (isDarkEnabled()) disableDark(); else enableDark();
+    });
+  }
+});
+</script>
+
 </body>
 </html>

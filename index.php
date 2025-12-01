@@ -244,10 +244,164 @@ include ('app/controllers/clientes/listado_de_clientes.php');
         </div><!-- /.container-fluid -->
     </div>
     <!-- /.content -->
-</div>
-<!-- /.content-wrapper -->
 
-<?php include ('layout/parte2.php'); ?>
+
+<!-- /.content-wrapper -->
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  const translations = {
+    es: {
+      bienvenida: "Market Go te da la bienvenida",
+      usuarios: "Usuarios Registrados",
+      roles: "Roles Registrados",
+      categorias: "Categorías Registradas",
+      productos: "Productos Registrados",
+      proveedores: "Proveedores Registrados",
+      compras: "Compras Registradas",
+      ventas: "Ventas Registradas",
+      clientes: "Clientes Registrados",
+      detalle: "Más detalle"
+    },
+    en: {
+      bienvenida: "Market Go welcomes you",
+      usuarios: "Registered Users",
+      roles: "Registered Roles",
+      categorias: "Registered Categories",
+      productos: "Registered Products",
+      proveedores: "Registered Suppliers",
+      compras: "Registered Purchases",
+      ventas: "Registered Sales",
+      clientes: "Registered Customers",
+      detalle: "More details"
+    }
+  };
+
+  let currentLang = localStorage.getItem("lang") || "es";
+  const btnLanguage = document.getElementById("btnLanguage");
+
+  function applyLanguage(lang) {
+    const t = translations[lang];
+
+    // Encabezado
+    const header = document.querySelector(".content-header h1");
+    if (header) {
+      const rol = header.innerHTML.split("-")[1] || "";
+      header.innerHTML = `${t.bienvenida} - ${rol.trim()}`;
+    }
+
+    // Cajas
+    const boxes = document.querySelectorAll(".small-box");
+    boxes.forEach(box => {
+      const p = box.querySelector(".inner p");
+      if (p) {
+        if (p.textContent.includes("Usuarios")) p.textContent = t.usuarios;
+        if (p.textContent.includes("Roles")) p.textContent = t.roles;
+        if (p.textContent.includes("Categorías")) p.textContent = t.categorias;
+        if (p.textContent.includes("Productos")) p.textContent = t.productos;
+        if (p.textContent.includes("Proveedores")) p.textContent = t.proveedores;
+        if (p.textContent.includes("Compras")) p.textContent = t.compras;
+        if (p.textContent.includes("Ventas")) p.textContent = t.ventas;
+        if (p.textContent.includes("Clientes")) p.textContent = t.clientes;
+      }
+      const footer = box.querySelector(".small-box-footer");
+      if (footer) footer.innerHTML = `${t.detalle} <i class="fas fa-arrow-circle-right"></i>`;
+    });
+
+    btnLanguage.innerHTML = lang === "es"
+      ? `<i class="fas fa-globe me-1"></i>English`
+      : `<i class="fas fa-globe me-1"></i>Español`;
+  }
+
+  applyLanguage(currentLang);
+
+  btnLanguage.addEventListener("click", () => {
+    currentLang = currentLang === "es" ? "en" : "es";
+    localStorage.setItem("lang", currentLang);
+    applyLanguage(currentLang);
+  });
+});
+</script>
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const DARK_STYLE_ID = "dark-mode-overrides";
+  const btn = document.getElementById("btnDarkMode");
+
+  const darkCSS = `
+    html, body {
+      height:100% !important;
+      background-color:#0b1220 !important;
+      color:#f9fafb !important;
+    }
+    .content-wrapper, .content, .container-fluid {
+      min-height:100% !important;
+      background-color:#0b1220 !important;
+      color:#f9fafb !important;
+    }
+    h1,h2,h3,h4,h5,h6,strong { color:#f9fafb !important; }
+    .text-muted { color:#d1d5db !important; }
+
+    .navbar, .content-header {
+      background:#0f172a !important;
+      color:#f9fafb !important;
+    }
+
+    .card, .small-box {
+      background:#111827 !important;
+      color:#f9fafb !important;
+      box-shadow:0 8px 30px rgba(0,0,0,0.6) !important;
+      border-color:#1f2937 !important;
+    }
+
+    .small-box-footer {
+      background:#1f2937 !important;
+      color:#93c5fd !important;
+    }
+    .small-box-footer:hover { color:#ffffff !important; }
+
+    /* Colores contextuales */
+    .small-box.bg-warning { background:#f59e0b !important; color:#111827 !important; }
+    .small-box.bg-info    { background:#0ea5e9 !important; color:#f8fafc !important; }
+    .small-box.bg-success { background:#16a34a !important; color:#f8fafc !important; }
+    .small-box.bg-primary { background:#1d4ed8 !important; color:#f8fafc !important; }
+    .small-box.bg-dark    { background:#374151 !important; color:#f9fafb !important; }
+    .small-box.bg-danger  { background:#dc2626 !important; color:#f8fafc !important; }
+
+    footer, .main-footer {
+      background-color:#0b1220 !important;
+      color:#f9fafb !important;
+      border-top:1px solid #1f2937 !important;
+    }
+  `;
+
+  function isDarkEnabled() { return !!document.getElementById(DARK_STYLE_ID); }
+  function enableDark() {
+    if (isDarkEnabled()) return;
+    const style = document.createElement("style");
+    style.id = DARK_STYLE_ID;
+    style.textContent = darkCSS;
+    document.head.appendChild(style);
+    if (btn) btn.innerHTML = '<i class="fas fa-sun me-1"></i>Light';
+    localStorage.setItem("theme","dark");
+  }
+  function disableDark() {
+    const style = document.getElementById(DARK_STYLE_ID);
+    if (style) style.remove();
+    if (btn) btn.innerHTML = '<i class="fas fa-moon me-1"></i>Dark';
+    localStorage.setItem("theme","light");
+  }
+
+  const pref = localStorage.getItem("theme") || "light";
+  if (pref==="dark") enableDark(); else disableDark();
+
+  if (btn) {
+    btn.addEventListener("click", () => {
+      if (isDarkEnabled()) disableDark(); else enableDark();
+    });
+  }
+});
+</script>
+
+<?php include   ('layout/parte2.php'); ?>
 
 
 

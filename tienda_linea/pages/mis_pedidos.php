@@ -260,5 +260,190 @@ $estadisticas = obtenerEstadisticasUsuario($pdo, $usuario_logueado['id_usuario']
         }
     }
     </script>
+ <script>
+document.addEventListener("DOMContentLoaded", function () {
+  const translations = {
+    es: {
+      // ... lo que ya tenías
+      noPedidos: "No tienes pedidos aún",
+      comenzarComprar: "Comenzar a Comprar",
+      perfilListo: "Tu perfil de cliente está listo. Realiza tu primera compra para ver tus pedidos.",
+      perfilCrear: "Realiza tu primera compra para crear tu perfil de cliente y ver tus pedidos aquí."
+    },
+    en: {
+      // ... lo que ya tenías
+      noPedidos: "You have no orders yet",
+      comenzarComprar: "Start Shopping",
+      perfilListo: "Your customer profile is ready. Make your first purchase to see your orders.",
+      perfilCrear: "Make your first purchase to create your customer profile and view your orders here."
+    }
+  };
+
+  let currentLang = localStorage.getItem("lang") || "es";
+  const btnLanguage = document.getElementById("btnLanguage");
+
+  function applyLanguage(lang) {
+    const t = translations[lang];
+
+    // ... resto de cambios ya implementados
+
+    // Empty state
+    const emptyState = document.querySelector(".empty-state");
+    if (emptyState) {
+      emptyState.querySelector("h3").textContent = t.noPedidos;
+      const btn = emptyState.querySelector("a.btn-primary");
+      if (btn) btn.innerHTML = `<i class="fas fa-store me-2"></i>${t.comenzarComprar}`;
+
+      const p = emptyState.querySelector("p.text-muted");
+      if (p) {
+        // Detectar si el texto corresponde a perfil listo o perfil crear
+        if (p.textContent.includes("Tu perfil de cliente está listo")) {
+          p.textContent = t.perfilListo;
+        } else {
+          p.textContent = t.perfilCrear;
+        }
+      }
+    }
+
+    btnLanguage.innerHTML = lang === "es"
+      ? `<i class="fas fa-globe me-1"></i>English`
+      : `<i class="fas fa-globe me-1"></i>Español`;
+  }
+
+  applyLanguage(currentLang);
+
+  btnLanguage.addEventListener("click", () => {
+    currentLang = currentLang === "es" ? "en" : "es";
+    localStorage.setItem("lang", currentLang);
+    applyLanguage(currentLang);
+  });
+});
+</script>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const DARK_STYLE_ID = "dark-mode-overrides";
+  const btn = document.getElementById("btnDarkMode");
+
+  const darkCSS = `
+    /* Base y tipografía */
+    body { background-color:#0b1220 !important; color:#f9fafb !important; }
+    h1,h2,h3,h4,h5,h6,strong { color:#f9fafb !important; }
+    .text-muted { color:#d1d5db !important; }
+
+    /* Navbar */
+    .navbar { background:linear-gradient(135deg,#0f172a,#111827)!important; }
+    .navbar-brand span { color:#f9fafb !important; }
+    .badge.bg-light.text-dark { background:#374151 !important; color:#f9fafb !important; }
+    .nav-link { color:#e5e7eb !important; }
+    .nav-link:hover { color:#ffffff !important; background:rgba(255,255,255,0.08) !important; border-radius:8px; }
+
+    /* Tarjetas y secciones */
+    .card, .pedido-card {
+      background:#111827 !important; color:#f9fafb !important;
+      box-shadow:0 8px 30px rgba(0,0,0,0.6) !important; border-color:#1f2937 !important;
+    }
+    .pedido-card:hover { box-shadow:0 10px 36px rgba(0,0,0,0.7) !important; }
+
+    /* Alertas informativas */
+    .alert-info {
+      background:#0f172a !important; color:#e5e7eb !important; border-color:#1f2937 !important;
+    }
+    .info-alert { border-left:4px solid #0ea5e9 !important; }
+    .alert-info h6 { color:#f9fafb !important; }
+
+    /* Empty state */
+    .empty-state { color:#d1d5db !important; }
+    .empty-state i { color:#64748b !important; }
+
+    /* Estadísticas rápidas (cards con contextual bg) */
+    .card.bg-primary.text-white {
+      background:#1d4ed8 !important; color:#f8fafc !important; border:none !important;
+    }
+    .card.bg-success.text-white {
+      background:#16a34a !important; color:#f8fafc !important; border:none !important;
+    }
+    .card.bg-info.text-white {
+      background:#0ea5e9 !important; color:#f8fafc !important; border:none !important;
+    }
+    .card.bg-warning.text-white {
+      background:#f59e0b !important; color:#111827 !important; border:none !important;
+    }
+    .card.bg-primary .card-body small,
+    .card.bg-success .card-body small,
+    .card.bg-info .card-body small { color:#f3f4f6 !important; }
+    .card.bg-warning .card-body small { color:#111827 !important; }
+
+    /* Historial título */
+    h5.text-muted { color:#e5e7eb !important; }
+
+    /* Bloques de totales y cliente en cada pedido */
+    .col-md-2 small.text-muted { color:#d1d5db !important; }
+    .col-md-2 strong.text-success { color:#34d399 !important; }
+    .col-md-4.text-end small.text-muted { color:#d1d5db !important; }
+
+    /* Estado del pedido */
+    .estado-badge {
+      background:linear-gradient(135deg,#22c55e,#16a34a) !important; color:#0b1220 !important;
+      box-shadow:0 2px 10px rgba(22,163,74,0.25) !important;
+    }
+
+    /* Botones */
+    .btn-primary {
+      background:linear-gradient(135deg,#22c55e,#16a34a) !important; color:#0b1220 !important; border:none !important;
+      box-shadow:0 6px 20px rgba(34,197,94,0.35) !important;
+    }
+    .btn-primary:hover {
+      background:linear-gradient(135deg,#16a34a,#22c55e) !important;
+    }
+    .btn-outline-primary {
+      border-color:#22c55e !important; color:#22c55e !important;
+    }
+    .btn-outline-primary:hover {
+      background:#22c55e !important; color:#0b1220 !important;
+    }
+    .btn-outline-secondary {
+      border-color:#9ca3af !important; color:#e5e7eb !important;
+    }
+    .btn-outline-secondary:hover {
+      background:#9ca3af !important; color:#0b1220 !important;
+    }
+
+    /* Badge clara */
+    .badge.bg-light { background:#374151 !important; color:#f9fafb !important; }
+  `;
+
+  function isDarkEnabled() {
+    return !!document.getElementById(DARK_STYLE_ID);
+  }
+
+  function enableDark() {
+    if (isDarkEnabled()) return;
+    const style = document.createElement("style");
+    style.id = DARK_STYLE_ID;
+    style.textContent = darkCSS;
+    document.head.appendChild(style);
+    if (btn) btn.innerHTML = '<i class="fas fa-sun me-1"></i>Light';
+    localStorage.setItem("theme", "dark");
+  }
+
+  function disableDark() {
+    const style = document.getElementById(DARK_STYLE_ID);
+    if (style) style.remove();
+    if (btn) btn.innerHTML = '<i class="fas fa-moon me-1"></i>Dark';
+    localStorage.setItem("theme", "light");
+  }
+
+  const pref = localStorage.getItem("theme") || "light";
+  if (pref === "dark") enableDark(); else disableDark();
+
+  if (btn) {
+    btn.addEventListener("click", () => {
+      if (isDarkEnabled()) disableDark(); else enableDark();
+    });
+  }
+});
+</script>
+
 </body>
 </html>

@@ -257,8 +257,8 @@ $logoExists = file_exists($logoPath);
         }
         
         .producto-imagen {
-            height: 220px;
-            object-fit: cover;
+            height: 300px;
+            object-fit: center;
             border-bottom: 4px solid var(--color-primary);
         }
         
@@ -515,6 +515,33 @@ $logoExists = file_exists($logoPath);
                 height: 40px;
             }
         }
+#btnLanguage {
+    background-color: #212529;     
+    color: #f8f9fa;                  
+    border: 1px solid #0d6efd;       
+    border-radius: 25px;             
+    padding: 6px 14px;               
+    font-weight: 500;                
+    display: flex;                  
+    align-items: center;
+    gap: 6px;                        
+    cursor: pointer;
+    transition: all 0.3s ease;       
+
+}
+#btnLanguage:hover {
+    background-color: #0d6efd;       
+    color: #fff;                     
+    transform: scale(1.05);        
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3); 
+}
+
+
+#btnLanguage:active {
+    transform: scale(0.95);          
+    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+}
+
     </style>
 </head>
 <body>
@@ -940,5 +967,540 @@ $logoExists = file_exists($logoPath);
     // Inicializar
     document.addEventListener('DOMContentLoaded', actualizarContadorCarrito);
     </script>
+   
+<!-- Botón de idioma en la parte superior derecha -->
+<div style="position: fixed; top: 15px; right: 20px; z-index: 9999;">
+    <button id="btnLanguage" class="btn btn-sm btn-outline-light bg-dark">
+        <i class="fas fa-globe me-1"></i>English
+    </button>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const translations = {
+        es: {
+            // Carrito y navbar
+            carrito: "Mi Carrito",
+            inicio: "Inicio",
+            carritoNav: "Carrito",
+            miCuenta: "Mi Cuenta",
+            miPerfil: "Mi Perfil",
+            misPedidos: "Mis Pedidos",
+            cerrarSesion: "Cerrar Sesión",
+            iniciarSesion: "Iniciar Sesión",
+            // Hero
+            heroText: "Sistema profesional de gestión para tu abarrotes",
+            inventarioTitle: "Gestión de Inventario",
+            inventarioDesc: "Control total de stock y ventas",
+            preciosTitle: "Precios Competitivos",
+            preciosDesc: "Los mejores precios mayoristas",
+            enviosTitle: "Envíos Inmediatos",
+            enviosDesc: "Entrega rápida y confiable",
+            soporteTitle: "Soporte 24/7",
+            soporteDesc: "Atención personalizada",
+            // Ofertas
+            ofertasTitle: "¡Ofertas Comerciales de la Semana!",
+            ofertasDesc: "Precios mayoristas especiales para negocios y abarrotes",
+            mayoristasTitle: "Precios Mayoristas",
+            mayoristasDesc: "Descuentos especiales por volumen",
+            stockTitle: "Stock Garantizado",
+            stockDesc: "Disponibilidad inmediata",
+            calidadTitle: "Calidad Comercial",
+            calidadDesc: "Productos para reventa",
+            // Buscador y filtro
+            buscador: "Buscar productos... Ej: arroz, aceite, azúcar, lácteos...",
+            filtro: "📦 Todas las categorías",
+            // Catálogo
+            catalogoTitle: "Catálogo de Productos",
+            proximamente: "¡Próximamente más productos!",
+            inventarioMsg: "Estamos actualizando nuestro inventario. Vuelve pronto para ver nuestras novedades",
+            ofertaBadge: "OFERTA",
+            stockDisponible: "Stock disponible",
+            ultimasUnidades: "Últimas unidades",
+            agregarCarrito: "AGREGAR AL CARRITO",
+            agotado: "AGOTADO",
+            // Footer
+            footerDesc: "Sistema profesional para abarrotes y negocios",
+            horario: "Horario Comercial",
+            lunesSabado: "Lunes a Sábado: 6:00 AM - 10:00 PM",
+            domingo: "Domingos: 7:00 AM - 3:00 PM",
+            contacto: "Contacto Comercial",
+            direccion: "Manzanillo, Colima, México",
+            copyright: "© 2024 Market Go Pro. Sistema de gestión para comercios."
+        },
+        en: {
+            // Cart and navbar
+            carrito: "My Cart",
+            inicio: "Home",
+            carritoNav: "Cart",
+            miCuenta: "My Account",
+            miPerfil: "My Profile",
+            misPedidos: "My Orders",
+            cerrarSesion: "Log Out",
+            iniciarSesion: "Log In",
+            // Hero
+            heroText: "Professional management system for your grocery store",
+            inventarioTitle: "Inventory Management",
+            inventarioDesc: "Complete control of stock and sales",
+            preciosTitle: "Competitive Prices",
+            preciosDesc: "Best wholesale prices",
+            enviosTitle: "Immediate Shipping",
+            enviosDesc: "Fast and reliable delivery",
+            soporteTitle: "24/7 Support",
+            soporteDesc: "Personalized assistance",
+            // Offers
+            ofertasTitle: "Weekly Commercial Offers!",
+            ofertasDesc: "Special wholesale prices for businesses and groceries",
+            mayoristasTitle: "Wholesale Prices",
+            mayoristasDesc: "Special discounts for bulk purchases",
+            stockTitle: "Guaranteed Stock",
+            stockDesc: "Immediate availability",
+            calidadTitle: "Commercial Quality",
+            calidadDesc: "Products for resale",
+            // Search and filter
+            buscador: "Search products... e.g., rice, oil, sugar, dairy...",
+            filtro: "📦 All categories",
+            // Catalog
+            catalogoTitle: "Product Catalog",
+            proximamente: "More products coming soon!",
+            inventarioMsg: "We are updating our inventory. Come back soon to see our new arrivals",
+            ofertaBadge: "OFFER",
+            stockDisponible: "Stock available",
+            ultimasUnidades: "Last units",
+            agregarCarrito: "ADD TO CART",
+            agotado: "OUT OF STOCK",
+            // Footer
+            footerDesc: "Professional system for groceries and businesses",
+            horario: "Business Hours",
+            lunesSabado: "Monday to Saturday: 6:00 AM - 10:00 PM",
+            domingo: "Sundays: 7:00 AM - 3:00 PM",
+            contacto: "Business Contact",
+            direccion: "Manzanillo, Colima, Mexico",
+            copyright: "© 2024 Market Go Pro. Management system for businesses."
+        }
+    };
+
+    const btnLanguage = document.getElementById("btnLanguage");
+    let currentLang = localStorage.getItem("lang") || "es";
+
+    function setButtonLabel(lang) {
+        btnLanguage.innerHTML = lang === "es"
+            ? `<i class="fas fa-globe me-1"></i>English`
+            : `<i class="fas fa-globe me-1"></i>Español`;
+    }
+
+    function applyLanguage(lang) {
+        const t = translations[lang];
+
+        // Carrito fijo
+        const textoCarrito = document.querySelector(".texto-carrito");
+        if (textoCarrito) textoCarrito.textContent = t.carrito;
+
+        // Navbar
+        const linkInicio = document.querySelector(".navbar-nav a.nav-link.active");
+        if (linkInicio) linkInicio.innerHTML = `<i class="fas fa-home me-2"></i>${t.inicio}`;
+
+        const linkCarrito = document.querySelector(".navbar-nav a.nav-link[href='pages/carrito.php']");
+        if (linkCarrito) {
+            const badge = document.getElementById("contador-carrito");
+            const badgeHtml = badge ? badge.outerHTML : `<span id="contador-carrito" class="badge bg-warning text-dark ms-1" style="display: none;">0</span>`;
+            linkCarrito.innerHTML = `<i class="fas fa-shopping-cart me-2"></i>${t.carritoNav}${badgeHtml}`;
+        }
+
+        const cuentaSpan = document.querySelector(".nav-item.dropdown span.fw-semibold");
+        if (cuentaSpan) cuentaSpan.textContent = t.miCuenta;
+
+        const perfilLink = document.querySelector("a[href='pages/perfil.php']");
+        if (perfilLink) perfilLink.innerHTML = `<i class="fas fa-user me-2"></i>${t.miPerfil}`;
+
+        const pedidosLink = document.querySelector("a[href='pages/mis_pedidos.php']");
+        if (pedidosLink) pedidosLink.innerHTML = `<i class="fas fa-shopping-bag me-2"></i>${t.misPedidos}`;
+
+        const cerrarLink = document.querySelector("a.dropdown-item[onclick='cerrarSesion()']");
+        if (cerrarLink) cerrarLink.innerHTML = `<i class="fas fa-sign-out-alt me-2"></i>${t.cerrarSesion}`;
+
+        const loginBtn = document.querySelector(".btn-login");
+        if (loginBtn) loginBtn.innerHTML = `<i class="fas fa-sign-in-alt me-2"></i>${t.iniciarSesion}`;
+
+        const logoutBtn = document.querySelector(".btn-logout");
+        if (logoutBtn) logoutBtn.innerHTML = `<i class="fas fa-sign-out-alt me-2"></i>${t.cerrarSesion}`;
+
+        // Hero
+        const heroLead = document.querySelector(".hero p.lead");
+        if (heroLead) heroLead.textContent = t.heroText;
+
+        const heroCols = document.querySelectorAll(".hero .row .col-md-3");
+        if (heroCols.length >= 4) {
+            heroCols[0].querySelector("h5").textContent = t.inventarioTitle;
+            heroCols[0].querySelector("p").textContent = t.inventarioDesc;
+            heroCols[1].querySelector("h5").textContent = t.preciosTitle;
+            heroCols[1].querySelector("p").textContent = t.preciosDesc;
+            heroCols[2].querySelector("h5").textContent = t.enviosTitle;
+            heroCols[2].querySelector("p").textContent = t.enviosDesc;
+            heroCols[3].querySelector("h5").textContent = t.soporteTitle;
+            heroCols[3].querySelector("p").textContent = t.soporteDesc;
+        }
+
+        // Ofertas
+        const ofertasH3 = document.querySelector(".store-info h3");
+        if (ofertasH3) ofertasH3.innerHTML = `<i class="fas fa-bullhorn me-2"></i>${t.ofertasTitle}`;
+        const ofertasLead = document.querySelector(".store-info p.lead");
+        if (ofertasLead) ofertasLead.textContent = t.ofertasDesc;
+
+        const ofertasCols = document.querySelectorAll(".store-info .row .col-md-4");
+        if (ofertasCols.length >= 3) {
+            ofertasCols[0].querySelector("h5").textContent = t.mayoristasTitle;
+            ofertasCols[0].querySelector("p").textContent = t.mayoristasDesc;
+            ofertasCols[1].querySelector("h5").textContent = t.stockTitle;
+            ofertasCols[1].querySelector("p").textContent = t.stockDesc;
+            ofertasCols[2].querySelector("h5").textContent = t.calidadTitle;
+            ofertasCols[2].querySelector("p").textContent = t.calidadDesc;
+        }
+
+        // Buscador y filtro
+        const buscador = document.getElementById("buscador");
+        if (buscador) buscador.placeholder = t.buscador;
+
+        const filtroOption = document.querySelector("#filtro-categoria option[value='']");
+        if (filtroOption) filtroOption.textContent = t.filtro;
+
+        // Catálogo - título
+        const catalogoTitle = document.querySelector(".section-title");
+        if (catalogoTitle) catalogoTitle.innerHTML = `<i class="fas fa-box-open me-2"></i>${t.catalogoTitle}`;
+
+        // Catálogo - alerta de vacío
+        const alerta = document.querySelector(".alert.alert-warning.text-center.py-4");
+        if (alerta) {
+            const h4 = alerta.querySelector("h4");
+            const p = alerta.querySelector("p");
+            if (h4) h4.textContent = t.proximamente;
+            if (p) p.textContent = t.inventarioMsg;
+        }
+
+        // Catálogo - tarjetas de producto
+        const productCards = document.querySelectorAll("#lista-productos .producto-card");
+        productCards.forEach(card => {
+            // Badge de oferta
+            const ofertaBadge = card.querySelector(".badge-oferta");
+            if (ofertaBadge) {
+                ofertaBadge.innerHTML = `<i class="fas fa-bolt me-1"></i>${t.ofertaBadge}`;
+            }
+
+            // Stock
+            const stockSmall = card.querySelector(".card-text small");
+            if (stockSmall) {
+                // Mantener el número de stock (lo que esté entre paréntesis)
+                const text = stockSmall.textContent;
+                const match = text.match(/\((\d+)\)/);
+                const count = match ? match[1] : null;
+
+                // Elegir label según clase (success = disponible, warning = últimas)
+                const isAvailable = stockSmall.classList.contains("text-success");
+                const label = isAvailable ? t.stockDisponible : t.ultimasUnidades;
+
+                stockSmall.innerHTML = `<i class="fas fa-warehouse me-1"></i>${label}${count ? ` (${count})` : ""}`;
+            }
+
+            // Botón comprar / agotado
+            const btn = card.querySelector(".btn-comprar");
+            if (btn) {
+                const isDisabled = btn.hasAttribute("disabled");
+                if (isDisabled) {
+                    btn.innerHTML = `<i class="fas fa-times icono-btn-grande"></i>${t.agotado}`;
+                } else {
+                    btn.innerHTML = `<i class="fas fa-cart-plus icono-btn-grande"></i>${t.agregarCarrito}`;
+                }
+            }
+        });
+
+        // Footer
+        const footerCol1Desc = document.querySelector("footer .col-md-4:nth-child(1) p.mb-0");
+        if (footerCol1Desc) footerCol1Desc.textContent = t.footerDesc;
+
+        const footerCol2Title = document.querySelector("footer .col-md-4:nth-child(2) h6");
+        if (footerCol2Title) footerCol2Title.textContent = t.horario;
+        const footerCol2Line1 = document.querySelector("footer .col-md-4:nth-child(2) p.mb-1");
+        if (footerCol2Line1) footerCol2Line1.textContent = t.lunesSabado;
+        const footerCol2Line2 = document.querySelector("footer .col-md-4:nth-child(2) p.mb-0");
+        if (footerCol2Line2) footerCol2Line2.textContent = t.domingo;
+
+        const footerCol3Title = document.querySelector("footer .col-md-4:nth-child(3) h6");
+        if (footerCol3Title) footerCol3Title.textContent = t.contacto;
+        const footerAddress = document.querySelector("footer .col-md-4:nth-child(3) p.mb-0");
+        if (footerAddress) {
+            // Mantener el icono y solo cambiar el texto si contiene el icono de ubicación
+            if (footerAddress.querySelector(".fa-map-marker-alt")) {
+                footerAddress.innerHTML = `<i class="fas fa-map-marker-alt me-2"></i>${t.direccion}`;
+            } else {
+                footerAddress.textContent = t.direccion;
+            }
+        }
+
+        const copyright = document.querySelector("footer .text-center p.mb-0");
+        if (copyright) copyright.textContent = t.copyright;
+
+        // Botón idioma
+        setButtonLabel(lang);
+    }
+
+    // Inicializar con preferencia guardada
+    applyLanguage(currentLang);
+    setButtonLabel(currentLang);
+
+    // Alternar idioma y persistir
+    btnLanguage.addEventListener("click", function () {
+        currentLang = currentLang === "es" ? "en" : "es";
+        localStorage.setItem("lang", currentLang);
+        applyLanguage(currentLang);
+    });
+});
+</script>
+
+<div style="position: fixed; top: 60px; right: 20px; z-index: 9999;">
+  <button id="btnDarkMode" class="btn btn-sm" style="
+    background:#212529; color:#f8f9fa; border:1px solid #0d6efd; border-radius:25px; padding:6px 14px;
+    display:flex; align-items:center; gap:6px; transition:all .3s ease;">
+    <i class="fas fa-moon"></i> Dark
+  </button>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const DARK_STYLE_ID = "dark-mode-overrides";
+  const btn = document.getElementById("btnDarkMode");
+
+  const darkCSS = `
+  :root {
+    --color-primary: #22c55e; /* tono verde más vivo en oscuro */
+    --color-secondary: #16a34a;
+    --color-accent: #0ea5e9;
+    --color-light: #111827;
+    --color-dark: #0b1220;
+    --color-carrito: #e74c3c;
+    --color-carrito-hover: #c0392b;
+  }
+
+  body {
+    background-color: #0b1220 !important;
+    color: #e5e7eb !important;
+  }
+
+  /* Navbar y branding */
+  .navbar {
+    background: linear-gradient(135deg, #0f172a 0%, #111827 100%) !important;
+    box-shadow: 0 2px 20px rgba(0,0,0,0.6) !important;
+  }
+  .navbar-brand { color: #f3f4f6 !important; }
+  .nav-link { color: #cbd5e1 !important; }
+  .nav-link:hover {
+    background: rgba(255,255,255,0.10) !important;
+    color: #fff !important;
+  }
+  .market-go-logo {
+    color: #f9fafb !important;
+    text-shadow: 0 1px 3px rgba(0,0,0,0.5) !important;
+  }
+  .commercial-badge {
+    background: linear-gradient(135deg, #0ea5e9, #1d4ed8) !important;
+    color: #f8fafc !important;
+  }
+
+  /* Logos */
+  .navbar-logo { filter: drop-shadow(0 2px 6px rgba(0,0,0,0.7)) brightness(0.9) contrast(1.05) !important; }
+  .footer-logo { filter: brightness(1) invert(0) !important; }
+  .logo-placeholder { box-shadow: 0 4px 14px rgba(0,0,0,0.5) !important; }
+
+  /* Hero */
+  .hero {
+    background: linear-gradient(rgba(34,197,94,0.25), rgba(16,185,129,0.25)), 
+                url('https://images.unsplash.com/photo-1604719312566-8912dc04c7a7?ixlib=rb-4.0.3') center/cover !important;
+    color: #f3f4f6 !important;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.6) !important;
+  }
+  .hero h1 { color: #f8fafc !important; }
+  .hero .lead { color: #d1d5db !important; }
+
+  /* Carrito flotante */
+  .carrito-fijo {
+    background: linear-gradient(135deg, var(--color-carrito), var(--color-carrito-hover)) !important;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.6) !important;
+    border-color: #0f172a !important;
+  }
+  .carrito-fijo:hover { box-shadow: 0 12px 50px rgba(0,0,0,0.7) !important; }
+  .contador-carrito-grande {
+    background: #f59e0b !important; color: #111827 !important; border-color: #111827 !important;
+  }
+  .total-carrito { background: #f59e0b !important; color: #111827 !important; }
+  .texto-carrito { color: #f3f4f6 !important; }
+
+  /* Botón accesibilidad */
+  .boton-accesibilidad {
+    background: linear-gradient(135deg, #2563eb, #1d4ed8) !important;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.6) !important;
+    border-color: #0f172a !important;
+    color: #f8fafc !important;
+  }
+
+  /* Tarjetas de producto */
+  .producto-card {
+    background: #0f172a !important;
+    border-color: #1f2937 !important;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.5) !important;
+  }
+  .producto-card:hover { box-shadow: 0 12px 40px rgba(0,0,0,0.6) !important; }
+  .producto-imagen { background: #0b1220 !important; border-bottom: 4px solid var(--color-primary) !important; }
+  .card-title { color: #e5e7eb !important; }
+  .card-text { color: #94a3b8 !important; }
+  .precio { color: #34d399 !important; }
+  .badge-oferta { background: linear-gradient(135deg, #ef4444, #b91c1c) !important; }
+  .categoria-badge {
+    background: #111827 !important; color: #34d399 !important; border-color: #34d399 !important;
+  }
+
+  /* Store info / ofertas */
+  .store-info {
+    background: linear-gradient(135deg, #0f172a, #111827) !important;
+    border-color: #1f2937 !important;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.5) !important;
+  }
+  .feature-icon { color: #34d399 !important; }
+  .text-primary { color: var(--color-primary) !important; }
+  .bg-primary-light { background-color: #0b1a13 !important; }
+  .section-title { color: #34d399 !important; border-left-color: #22c55e !important; }
+
+  /* Buscador y filtro */
+  .search-box, .filter-select {
+    background: #0b1220 !important; color: #e5e7eb !important; border-color: #22c55e !important;
+  }
+  .search-box::placeholder { color: #94a3b8 !important; }
+
+  /* Botones login/logout y comprar */
+  .btn-login {
+    background: linear-gradient(135deg, var(--color-primary), var(--color-secondary)) !important;
+    color: #0b1220 !important;
+    box-shadow: 0 6px 20px rgba(34,197,94,0.35) !important;
+    border: none !important;
+  }
+  .btn-login:hover {
+    background: linear-gradient(135deg, var(--color-secondary), var(--color-primary)) !important;
+    transform: translateY(-2px) !important;
+    color: #0b1220 !important;
+    box-shadow: 0 6px 20px rgba(34, 197, 94, 0.45) !important;
+  }
+
+  .btn-logout {
+    background: linear-gradient(135deg, #ef4444, #b91c1c) !important;
+    border: none !important; border-radius: 12px !important;
+    color: #fef2f2 !important;
+    box-shadow: 0 6px 20px rgba(239, 68, 68, 0.35) !important;
+  }
+  .btn-logout:hover {
+    background: linear-gradient(135deg, #b91c1c, #ef4444) !important;
+    transform: translateY(-2px) !important;
+    color: #fff !important;
+    box-shadow: 0 6px 22px rgba(239, 68, 68, 0.45) !important;
+  }
+
+  .btn-comprar {
+    background: linear-gradient(135deg, #22c55e, #16a34a) !important;
+    color: #0b1220 !important;
+    box-shadow: 0 6px 20px rgba(34, 197, 94, 0.35) !important;
+  }
+  .btn-comprar:hover {
+    background: linear-gradient(135deg, #16a34a, #22c55e) !important;
+    transform: translateY(-3px) scale(1.02) !important;
+    box-shadow: 0 10px 30px rgba(34, 197, 94, 0.45) !important;
+  }
+
+  /* Usuario: avatar y dropdown */
+  .user-avatar {
+    background: linear-gradient(135deg, var(--color-primary), var(--color-secondary)) !important;
+    color: #0b1220 !important;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.5) !important;
+  }
+  .user-dropdown {
+    background: #0b1220 !important;
+    border: 1px solid #1f2937 !important;
+    box-shadow: 0 10px 35px rgba(0,0,0,0.6) !important;
+  }
+  .user-dropdown .dropdown-item {
+    color: #cbd5e1 !important;
+  }
+  .user-dropdown .dropdown-item:hover {
+    background: #111827 !important;
+    color: #fff !important;
+    transform: translateX(8px) !important;
+  }
+  .dropdown-header {
+    color: #e5e7eb !important;
+  }
+
+  /* Footer */
+  footer.bg-dark {
+    background: #0f172a !important;
+    color: #e5e7eb !important;
+    border-top: 1px solid #1f2937 !important;
+  }
+  footer .text-white { color: #e5e7eb !important; }
+  footer a.text-white { color: #93c5fd !important; }
+  footer hr { border-color: #1f2937 !important; }
+
+  /* Accesibilidad: texto grande */
+  .texto-grande .producto-card h5 { color: #f3f4f6 !important; }
+  .texto-grande .producto-card .precio { color: #34d399 !important; }
+  .texto-grande .btn-comprar { font-size: 1.3rem !important; }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .carrito-fijo {
+      bottom: 20px !important; top: auto !important; right: 20px !important; transform: none !important;
+      padding: 15px 20px !important;
+    }
+    .carrito-fijo:hover { transform: scale(1.1) !important; }
+    .boton-accesibilidad { bottom: 100px !important; left: 20px !important; }
+    .hero h1 { font-size: 2.5rem !important; }
+    .btn-comprar { padding: 14px 20px !important; font-size: 1.1rem !important; }
+    .navbar-logo { height: 50px !important; }
+    .hero-logo { height: 100px !important; }
+    .footer-logo { height: 40px !important; }
+  }
+  `;
+
+  function isDarkEnabled() {
+    return !!document.getElementById(DARK_STYLE_ID);
+  }
+
+  function enableDark() {
+    if (isDarkEnabled()) return;
+    const style = document.createElement("style");
+    style.id = DARK_STYLE_ID;
+    style.textContent = darkCSS;
+    document.head.appendChild(style);
+    btn.innerHTML = `<i class="fas fa-sun"></i> Light`;
+    btn.style.background = "#0d9488";
+    btn.style.color = "#052e2b";
+    localStorage.setItem("theme", "dark");
+  }
+
+  function disableDark() {
+    const style = document.getElementById(DARK_STYLE_ID);
+    if (style) style.remove();
+    btn.innerHTML = `<i class="fas fa-moon"></i> Dark`;
+    btn.style.background = "#212529";
+    btn.style.color = "#f8f9fa";
+    localStorage.setItem("theme", "light");
+  }
+
+  // Init from preference
+  const pref = localStorage.getItem("theme") || "light";
+  if (pref === "dark") enableDark(); else disableDark();
+
+  // Toggle
+  btn.addEventListener("click", () => {
+    if (isDarkEnabled()) disableDark(); else enableDark();
+  });
+});
+</script>
+
 </body>
 </html>

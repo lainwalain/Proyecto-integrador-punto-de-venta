@@ -786,5 +786,104 @@ session_start();
         }, 300);
     });
 </script>
+<!-- Botón de idioma en la parte superior derecha -->
+<div style="position: absolute; top: 15px; right: 20px;">
+    <button id="btnLanguage" class="btn btn-sm btn-outline-primary">
+        <i class="fas fa-globe mr-1"></i>English
+    </button>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const translations = {
+        es: {
+            tagline: "Tu solución integral para abarrotes",
+            header: "Bienvenido a Market Go",
+            loginMessage: "Inicia sesión en tu cuenta",
+            email: "Correo electrónico",
+            password: "Contraseña",
+            remember: "Recordar mis datos",
+            loginBtn: "Iniciar Sesión",
+            registroNombre: "Nombre completo",
+            registroEmail: "Correo electrónico",
+            registroTelefono: "Número de teléfono",
+            registroPassword: "Contraseña",
+            registroConfirmar: "Confirmar contraseña",
+            registroBtn: "Crear Cuenta",
+            registroPregunta: "¿No tienes cuenta?",
+            registroLink: "Regístrate aquí",
+            volverLogin: "Volver al inicio de sesión",
+            feature1: "Ventas Rápidas",
+            feature2: "Control de Inventario",
+            feature3: "Reportes Detallados",
+            info: "Tu tienda de abarrotes de confianza"
+        },
+        en: {
+            tagline: "Your all-in-one grocery solution",
+            header: "Welcome to Market Go",
+            loginMessage: "Sign in to your account",
+            email: "Email address",
+            password: "Password",
+            remember: "Remember me",
+            loginBtn: "Sign In",
+            registroNombre: "Full name",
+            registroEmail: "Email address",
+            registroTelefono: "Phone number",
+            registroPassword: "Password",
+            registroConfirmar: "Confirm password",
+            registroBtn: "Create Account",
+            registroPregunta: "Don't have an account?",
+            registroLink: "Register here",
+            volverLogin: "Back to login",
+            feature1: "Quick Sales",
+            feature2: "Inventory Control",
+            feature3: "Detailed Reports",
+            info: "Your trusted grocery store"
+        }
+    };
+
+    let currentLang = "es";
+
+    const btnLanguage = document.getElementById("btnLanguage");
+
+    btnLanguage.addEventListener("click", function () {
+        currentLang = currentLang === "es" ? "en" : "es";
+        const t = translations[currentLang];
+
+        // Cambiar textos
+        document.querySelector(".tagline").textContent = t.tagline;
+        document.querySelector(".card-header h4").textContent = t.header;
+        document.getElementById("loginMessage").textContent = t.loginMessage;
+
+        document.querySelector("#loginForm input[name='email']").placeholder = t.email;
+        document.querySelector("#loginForm input[name='password_user']").placeholder = t.password;
+        document.querySelector("label[for='remember']").textContent = t.remember;
+        document.getElementById("btnIngresar").innerHTML = `<i class="fas fa-sign-in-alt mr-2"></i>${t.loginBtn}`;
+
+        document.querySelector("#registroForm input[name='nombres']").placeholder = t.registroNombre;
+        document.querySelector("#registroForm input[name='email']").placeholder = t.registroEmail;
+        document.querySelector("#registroForm input[name='telefono']").placeholder = t.registroTelefono;
+        document.querySelector("#registroForm input[name='password_user']").placeholder = t.registroPassword;
+        document.querySelector("#registroForm input[name='confirm_password']").placeholder = t.registroConfirmar;
+        document.getElementById("btnRegistrar").innerHTML = `<i class="fas fa-user-plus mr-2"></i>${t.registroBtn}`;
+
+        document.querySelector(".registro-section p").textContent = t.registroPregunta;
+        document.getElementById("linkRegistro").innerHTML = `<i class="fas fa-user-plus mr-1"></i>${t.registroLink}`;
+        document.querySelector("#linkLogin a").innerHTML = `<i class="fas fa-sign-in-alt mr-1"></i>${t.volverLogin}`;
+
+        document.querySelectorAll(".features .feature")[0].querySelector("p").textContent = t.feature1;
+        document.querySelectorAll(".features .feature")[1].querySelector("p").textContent = t.feature2;
+        document.querySelectorAll(".features .feature")[2].querySelector("p").textContent = t.feature3;
+
+        document.querySelector(".system-info p:last-child").textContent = t.info;
+
+        // Cambiar texto del botón
+        btnLanguage.innerHTML = currentLang === "es" 
+            ? `<i class="fas fa-globe mr-1"></i>English` 
+            : `<i class="fas fa-globe mr-1"></i>Español`;
+    });
+});
+</script>
+
 </body>
 </html>
